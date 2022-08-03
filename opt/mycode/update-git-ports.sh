@@ -19,7 +19,7 @@ for i in $packages; do
         git -C /usr/pkgmk/source/$i remote update
         if git -C /usr/pkgmk/source/$i status -uno|grep 'git pull'; then
             (
-                cd /usr/cruxports/*/$i
+                cd /usr/sports/*/$i
                 pkgmk -f
             ) && reinstall+=$i
         fi

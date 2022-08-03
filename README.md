@@ -1,18 +1,18 @@
-# Cruxports for Linux
+# sports, simple ports
 
-My shell version of cruxports has some nifty additions, like support for git repositories. There's tons of software you have to compile yourself from git. This c4L manages those programs, the compilation, installation and deinstallation.
+My shell version of this ports system has some nifty features, like support for git repositories. There's tons of software you have to compile yourself from git. This manages those programs, the compilation, installation and deinstallation.
 
-# How to install cruxports:
+# How to install sports:
 ```
-sudo install -o $USER -d /usr/cruxports
-git clone --recurse-submodules https://github.com/hboetes/cruxports_linux.git /usr/cruxports
-cd /usr/cruxports/core/pkgutils/
+sudo install -o $USER -d /usr/sports
+git clone https://github.com/hboetes/sports.git /usr/sports
+cd /usr/sports/core/pkgutils/
 ./bootstrap
 ```
 # How to use them.
 
 ```
-cd /usr/cruxport/opt/emacs
+cd /usr/sports/opt/emacs
 pkgmk -i
 ```
 

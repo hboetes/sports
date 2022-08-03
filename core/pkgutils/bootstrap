@@ -37,7 +37,7 @@ if ! command -v sudo > /dev/null 2>&1; then
 fi
 
 echo "Setting the right permissions for the portsdir."
-sudo chown -R ${USER}:$rtgrp /usr/cruxports
+sudo chown -R ${USER}:$rtgrp /usr/sports
 
 echo installing pkgutils
 sudo install -m 755 -d                    /usr/local/lib
@@ -73,15 +73,15 @@ fi
 echo "Setting the right permissions on the builddir."
 sudo chown    ${USER}:$rtgrp /usr/pkgmk/*
 
-if [ ! -d /usr/cruxports/core/pkgutils/.git ]; then
+if [ ! -d /usr/sports/core/pkgutils/.git ]; then
     echo 'Installing the source code repo at the proper location.'
-    mkdir -p /usr/cruxports/core
-    git clone git@github.com:hboetes/c4O.git -C /usr/cruxports/core/pkgutils
+    mkdir -p /usr/sports/core
+    git clone git@github.com:hboetes/c4O.git -C /usr/sports/core/pkgutils
 fi
 
 cat << EOF
-Congratulations, you have got cruxports installed. And you didn't even have to reboot. ;-)
-For the next update of cruxports you can run:
-  % cd /usr/cruxports/core/pkgutils
+Congratulations, you have got sports installed. And you didn't even have to reboot. ;-)
+For the next update of sports you can run:
+  % cd /usr/sports/core/pkgutils
   % pkgmk -u
 EOF
