@@ -1,0 +1,14 @@
+# Description: turn off monitor for wayland
+
+name=dpms-off
+version=git
+release=0
+branch=master
+source=(https://github.com/lilydjwg/dpms-off.git)
+
+build()
+{
+    cd $name
+    cargo build --release
+    install -D target/release/$name $PKG/usr/local/bin/$name
+}

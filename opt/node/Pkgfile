@@ -1,0 +1,15 @@
+# Description: nodejs
+# URL:         https://nodejs.org/
+
+name=node
+version=18.3.0
+release=1
+machine=$(uname -m)
+source=(https://nodejs.org/dist/v$version/node-v$version-linux-$machine.tar.xz)
+
+build()
+{
+    cd node-v$version-linux-$machine
+    install -d $PKG/usr/local
+    mv bin include lib share $PKG/usr/local
+}

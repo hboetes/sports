@@ -1,0 +1,17 @@
+# Description: Commodore emulator
+# URL:         http://vice-emu.sourceforge.net/
+
+name=vice
+version=3.3
+release=1
+source=(https://sourceforge.net/projects/vice-emu/files/releases/vice-$version.tar.gz)
+
+build()
+{
+    cd $name-$version
+    ./autogen.sh
+    ./configure
+    make
+    make install DESTDIR=$PKG
+    rm -rf $PKG/usr/local/share/info
+}

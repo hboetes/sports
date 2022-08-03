@@ -1,0 +1,16 @@
+# Description: simple, fast and free app to remove unnecessary files from your computer
+# URL:         https://github.com/qarmin/czkawka.git
+
+name=czkawka
+version=git
+release=1
+source=(https://github.com/qarmin/czkawka.git)
+
+build()
+{
+    export PATH=$PATH:/home/han/.cargo/bin
+    cd $name
+    cargo build --release
+    install -D target/release/${name}_gui   $PKG/usr/local/bin/${name}_gui
+    install -D target/release/${name}_cli   $PKG/usr/local/bin/${name}_cli
+}

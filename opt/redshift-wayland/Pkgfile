@@ -1,0 +1,23 @@
+# Description: i3 for wayland
+# URL:         https://github.com/swaywm/sway.git
+
+name=redshift-wayland
+version=git
+release=1.12
+branch=wayland
+source=(https://github.com/minus7/redshift.git)
+
+build()
+{
+    cd $name
+    ./bootstrap
+    ./configure \
+     --prefix=/usr/local \
+     --enable-drm \
+     --enable-randr \
+     --enable-geoclue2 \
+     --with-systemduserunitdir=/usr/lib/systemd/user \
+     --enable-wayland
+    make
+    make install DESTDIR=$PKG
+}

@@ -1,0 +1,16 @@
+# Description: jack audio daemon
+
+name=mpv
+version=git
+release=0
+branch=master
+source=(https://github.com/mpv-player/mpv.git)
+
+build()
+{
+    cd $name
+    ./bootstrap.py
+    ./waf configure --prefix /usr/local
+    ./waf
+    ./waf install --destdir=$PKG
+}

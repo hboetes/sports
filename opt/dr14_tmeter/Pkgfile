@@ -1,0 +1,14 @@
+# Description: measure dynamic range of recordings
+# URL:         https://github.com/simon-r/dr14_t.meter.git
+
+name=dr14_tmeter
+version=git
+release=1.0.16
+branch=master
+source=(https://github.com/simon-r/dr14_t.meter.git)
+
+build()
+{
+    cd $name
+    python3 setup.py install --root $PKG
+}

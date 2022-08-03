@@ -1,0 +1,39 @@
+#compdef find (OpenBSD)
+# Sebastian Stark <seb@todesplanet.de>
+
+_arguments \
+  '*-amin:access time (minutes)' \
+  '*-anewer:file to compare (access time):_files' \
+  '*-atime:access time (days)' \
+  '*-cmin:inode change time (minutes)' \
+  '*-cnewer:file to compare (inode change time):_files' \
+  '*-ctime:inode change time (minutes)' \
+  '*-empty' \
+  '*-exec:program: _command_names -e:*\;::program arguments: _normal' \
+  '*-execdir:program: _command_names -e:*\;::program arguments: _normal' \
+  '*-flags:special file flag:(arch opaque nodump sappnd schg uappnd uchg)' \
+  '*-follow' \
+  '*-fstype:filesystem type:(local rdonly union xfs umap procfs portal null nfs msdos mfs kernfs ffs fdesc ext2fs cd9660 ados)' \
+  '*-group:group:_groups' \
+  '*-iname:name pattern to search (case insensitive):' \
+  '*-inum:inode number' \
+  '*-links:number of links:' \
+  '*-ls' \
+  '*-maxdepth:maximum search depth:' \
+  '*-mindepth:minimum search depth:' \
+  '*-mmin:modification time (minutes):' \
+  '*-mtime:modification time (days):' \
+  '*-name:name pattern to search:' \
+  '*-newer:file to compare (modification time):_files' \
+  '*-nouser' \
+  '*-nogroup' \
+  '*-ok:program: _command_names -e:*\;::program arguments: _normal' \
+  '*-path:path pattern to search:' \
+  '*-perm:file permission bits:' \
+  '*-print' \
+  '*-print0' \
+  '*-prune' \
+  '*-size:file size:' \
+  '*-type:file type:((b\:block\ special\ file c\:character\ special\ file d\:directory p\:named\ pipe f\:normal\ file l\:symbolic\ link s\:socket))' \
+  '*-user:user:_users' \
+  '*:directory:_files -/'

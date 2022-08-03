@@ -1,0 +1,16 @@
+# Description: ancient fics client
+# URL:         https://github.com/fbergo/eboard.git
+
+name=eboard
+version=git
+release=1
+source=(https://github.com/fbergo/eboard.git)
+
+build()
+{
+    cd $name
+    ./configure
+    make
+    mkdir -p $PKG/usr/local/share/eboard/
+    make install DESTDIR=$PKG
+}

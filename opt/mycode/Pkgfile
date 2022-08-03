@@ -1,0 +1,37 @@
+# Description: my code
+# URL:
+# Depends on:
+
+name=mycode
+version=1.1
+release=1
+source=(
+    afe.sh
+    count_to_three.c
+    dropscript.sh
+    empty_message.c
+    slowcat.c
+    find_unlinked.sh
+    makeindexhtml.sh
+    mirrortest.sh
+    remind.sh
+    statusbar_right.c
+    update-git-ports.sh
+    whitelist-generator.sh
+    wallpaper.sh
+)
+
+build()
+{
+    install -d $PKG/usr/local/{,s}bin
+    for i in *.c; do
+        make ${i%.c}
+        install ${i%.c} $PKG/usr/local/bin
+    done
+    for i in *.sh; do
+        install $i $PKG/usr/local/bin/${i%.sh}
+    done
+    # for i in *.sbinsh; do
+    #     install $i $PKG/usr/local/sbin/${i%.sbinsh}
+    # done
+}

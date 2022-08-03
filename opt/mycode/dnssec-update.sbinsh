@@ -1,0 +1,37 @@
+#!/usr/local/bin/zsh
+
+cd /var/nsd/zones/master
+# First let's increase the serial.
+domain=boetes.org
+counter=01
+serial=$(awk '/serial/ {print $1}' $domain)
+date=$(date '+%Y%m%d')
+
+if [[ ${serial:0:8} == $date ]]; then
+    counter=$(printf '%02d' $((${serial:8:10} + 1)) )
+fi
+
+newserial=$date$counter
+
+sed -i "/serial/s|\([[:space:]]*\)[0-9]*\(.*\)|\1$newserial\2|" $domain
+
+# secondary=$(dig -t A +short ns.llorien.org)
+# second=$(dig -t A +short ns2.boetes.org)
+
+# if [[ $secondary != $second ]]; then
+#     # Replace the secondary nameserver's IP in the config file
+#     sed -i "/secondary/s|: \(.*\) |: $secondary |" ../../etc/nsd.conf
+#     # Replace the secondary nameserver's IP in the zonefile
+#     sed -i "s|\(^ns2.boetes.org.*A\)\(.*\)|\1       $secondary|" $domain
+# fi
+
+/usr/local/bin/ldns-signzone -o $domain $domain K$domain.+010+31190 K$domain.+010+31863 K$domain.+010+51398
+
+# if [[ $secondary != $second ]]; then
+#     /usr/sbin/rcctl restart nsd
+# else
+#     /usr/sbin/nsd-control notify
+# fi
+
+/usr/sbin/nsd-control reload
+/usr/sbin/unbound-control reload

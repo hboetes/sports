@@ -1,0 +1,16 @@
+# Description: ssh-hpn patched version
+# URL:         https://github.com/rapier1/openssh-portable.git
+
+name=openssh
+version=git
+release=8.8
+source=(https://github.com/rapier1/openssh-portable.git)
+
+build()
+{
+    cd $name
+    autoreconf
+    ./configure
+    make
+    make install DESTDIR=$PKG
+}

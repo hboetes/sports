@@ -1,0 +1,529 @@
+Already on 'master'
+Your branch is up to date with 'origin/master'.
+Already up to date.
+=======> Building `/usr/pkgmk/package/rspamd_git-git.pkg.tar.gz'.
+pkgmk: rm -rf /usr/pkgmk/work/rspamd
+cp -r /usr/pkgmk/source/rspamd /usr/pkgmk/work/rspamd/src
+cp rspamd.patch /usr/pkgmk/work/rspamd/src
+cp rspamd.rc /usr/pkgmk/work/rspamd/src
+pkgmk: build
++build:2> install -D -m 755 /usr/pkgmk/work/rspamd/src/rspamd.rc /usr/pkgmk/work/rspamd/pkg/etc/rc.d/rspamd
++build:3> cd rspamd
++build:4> git submodule update --recursive --remote
++build:5> patch -p0 -i /usr/pkgmk/work/rspamd/src/rspamd.patch
+Hmm...  Looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|$OpenBSD: patch-CMakeLists_txt,v 1.28 2021/11/07 11:40:10 sthen Exp $
+|
+|Index: CMakeLists.txt
+|--- CMakeLists.txt.orig
+|+++ CMakeLists.txt
+--------------------------
+Patching file CMakeLists.txt using Plan A...
+Hunk #1 succeeded at 347.
+Hmm...  The next patch looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|$OpenBSD: patch-cmake_Toolset_cmake,v 1.6 2021/08/20 12:12:07 sthen Exp $
+|
+|Fails on ports-gcc arches: see CMakeError.log
+|
+|egcc: error: unrecognized command line option '-fuse-ld=lld'; did you mean '-fuse-ld=bfd'?
+|
+|Index: cmake/Toolset.cmake
+|--- cmake/Toolset.cmake.orig
+|+++ cmake/Toolset.cmake
+--------------------------
+Patching file cmake/Toolset.cmake using Plan A...
+Hunk #1 succeeded at 65.
+Hunk #2 succeeded at 145.
+Hunk #3 succeeded at 166.
+Hmm...  The next patch looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|$OpenBSD: patch-contrib_xxhash_CMakeLists_txt,v 1.2 2017/03/08 17:02:13 sthen Exp $
+|--- contrib/xxhash/CMakeLists.txt.orig	Sun Dec 25 11:19:45 2016
+|+++ contrib/xxhash/CMakeLists.txt	Sun Mar  5 15:28:36 2017
+--------------------------
+Patching file contrib/xxhash/CMakeLists.txt using Plan A...
+Hunk #1 succeeded at 3.
+Hmm...  The next patch looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|$OpenBSD: patch-interface_README_md,v 1.2 2021/08/20 12:12:07 sthen Exp $
+|
+|Index: interface/README.md
+|--- interface/README.md.orig
+|+++ interface/README.md
+--------------------------
+Patching file interface/README.md using Plan A...
+Hunk #1 succeeded at 16.
+Hmm...  The next patch looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|$OpenBSD: patch-src_CMakeLists_txt,v 1.15 2021/08/20 12:12:07 sthen Exp $
+|
+|Index: src/CMakeLists.txt
+|--- src/CMakeLists.txt.orig
+|+++ src/CMakeLists.txt
+--------------------------
+Patching file src/CMakeLists.txt using Plan A...
+Hunk #1 succeeded at 232.
+Hmm...  The next patch looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|$OpenBSD: patch-src_client_CMakeLists_txt,v 1.7 2021/08/20 12:12:07 sthen Exp $
+|
+|Index: src/client/CMakeLists.txt
+|--- src/client/CMakeLists.txt.orig
+|+++ src/client/CMakeLists.txt
+--------------------------
+Patching file src/client/CMakeLists.txt using Plan A...
+Hunk #1 succeeded at 9.
+Hmm...  The next patch looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|$OpenBSD: patch-src_lua_lua_cryptobox_c,v 1.1 2021/11/30 23:20:50 tb Exp $
+|
+|Fix build with opaque EVP_MD_CTX and HMAC_CTX in LibreSSL 3.5.
+|
+|Index: src/lua/lua_cryptobox.c
+|--- src/lua/lua_cryptobox.c.orig
+|+++ src/lua/lua_cryptobox.c
+--------------------------
+Patching file src/lua/lua_cryptobox.c using Plan A...
+Hunk #1 succeeded at 993 (offset 2 lines).
+Hunk #2 succeeded at 1001 (offset 2 lines).
+Hunk #3 succeeded at 1059 (offset 2 lines).
+Hunk #4 succeeded at 1459 (offset 7 lines).
+Hmm...  The next patch looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|$OpenBSD: patch-src_rspamadm_CMakeLists_txt,v 1.12 2021/08/20 12:12:07 sthen Exp $
+|
+|Index: src/rspamadm/CMakeLists.txt
+|--- src/rspamadm/CMakeLists.txt.orig
+|+++ src/rspamadm/CMakeLists.txt
+--------------------------
+Patching file src/rspamadm/CMakeLists.txt using Plan A...
+Hunk #1 succeeded at 23.
+done
++build:6> mkdir build
++build:7> cd build
++build:9> cmake .. '-DCMAKE_C_OPT_FLAGS=-O2 -pipe -fno-common' '-DOPENBSD_BUILD=1' '-DCONFDIR=/etc/rspamd' '-DDBDIR=/var/rspamd' '-DLOGDIR=/var/log/rspamd' '-DMANDIR=/usr/local/man' '-DRUNDIR=/var/run/rspamd' '-DRSPAMD_USER=_rspamd' '-DENABLE_LTO=OFF' '-DENABLE_LUAJIT=OFF'
+-- The C compiler identification is Clang 11.1.0
+-- The CXX compiler identification is Clang 11.1.0
+-- The ASM compiler identification is Clang
+-- Found assembler: /usr/bin/cc
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found RAGEL: /usr/local/bin/ragel (found version "6.9") 
+-- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.2") 
+-- Found Perl: /usr/bin/perl (found version "5.32.1") 
+-- Defaulting to release build.
+-- CMAKE_BUILD_TYPE: RELEASE
+-- IPO not enabled for the Release build
+-- Final CFLAGS: -O2 -pipe -fno-common -O3 -DNDEBUG -fomit-frame-pointer -fassociative-math -freciprocal-math -fno-signed-zeros -ffp-contract=fast
+-- Final CXXFLAGS: -O2 -pipe -fno-common -O3 -DNDEBUG -fomit-frame-pointer -fassociative-math -freciprocal-math -fno-signed-zeros -ffp-contract=fast
+-- Final link flags for shlib: 
+-- Final link flags for exe: 
+-- Compilation of slash macro convention asm set is supported
+-- Compilation of dollar macro convention asm set is -NOT- supported
+-- Compilation of avx2 asm set is supported
+-- Performing Test HAVE_AVX2_C_COMPILER
+-- Performing Test HAVE_AVX2_C_COMPILER - Success
+-- Compilation of avx asm set is supported
+-- Compilation of sse2 asm set is supported
+-- Compilation of sse3 asm set is supported
+-- Compilation of ssse3 asm set is supported
+-- Compilation of sse41 asm set is supported
+-- Compilation of sse42 asm set is supported
+-- Enable sse2 on x86_64 architecture
+-- Configuring for BSD system
+-- Cannot find header libutil.h for package LIBUTIL
+-- Found incomplete package LIBUTIL in '/usr/lib' (/usr/lib/libutil.so.15.1); no includes.
+-- Checking for one of the modules 'lua53'
+-- Cannot find library lua;lua-5.3 for package LIBLUA, ignoring
+-- Cannot find header lua.h for package LIBLUA
+-- Checking for one of the modules 'lua54'
+-- Cannot find library lua;lua-5.4 for package LIBLUA, ignoring
+-- Cannot find header lua.h for package LIBLUA
+-- Checking for one of the modules 'lua52'
+-- Cannot find library lua;lua-5.2 for package LIBLUA, ignoring
+-- Cannot find header lua.h for package LIBLUA
+-- Checking for one of the modules 'lua51'
+-- Found package LIBLUA in pkg-config modules lua51
+-- Checking for one of the modules 'glib-2.0>=2.28'
+-- Found package GLIB2 in pkg-config modules glib-2.0>=2.28
+-- Checking for one of the modules 'pcre2;pcre2-8;libpcre2;libpcre2-8'
+-- Found package PCRE in pkg-config modules pcre2;pcre2-8;libpcre2;libpcre2-8
+-- Checking for one of the modules 'sqlite3;sqlite'
+-- Found package SQLITE3 in pkg-config modules sqlite3;sqlite
+-- Checking for one of the modules 'icu-uc'
+-- Found package ICUDATA in pkg-config modules icu-uc
+-- Checking for one of the modules 'icu-uc'
+-- Found package ICUC in pkg-config modules icu-uc
+-- Checking for one of the modules 'icu-io'
+-- Found package ICUIO in pkg-config modules icu-io
+-- Checking for one of the modules 'icu-i18n'
+-- Found package ICUI18N in pkg-config modules icu-i18n
+-- Checking for one of the modules 'openssl;libcrypt'
+-- Found package LIBCRYPT in pkg-config modules openssl;libcrypt
+-- Checking for one of the modules 'openssl;libssl'
+-- Found package LIBSSL in pkg-config modules openssl;libssl
+-- Checking for one of the modules 'z'
+-- Found package LIBZ in '/usr/lib' (/usr/lib/libz.so.6.0) and '/usr/include' (zlib.h).
+-- Checking for one of the modules 'libsodium>=1.0.0'
+-- Found package SODIUM in pkg-config modules libsodium>=1.0.0
+-- Performing Test SUPPORT_WALL
+-- Performing Test SUPPORT_WALL - Success
+-- Performing Test SUPPORT_WEXTRA
+-- Performing Test SUPPORT_WEXTRA - Success
+-- Performing Test SUPPORT_WPOINTER
+-- Performing Test SUPPORT_WPOINTER - Success
+-- Performing Test SUPPORT_WPARAM
+-- Performing Test SUPPORT_WPARAM - Success
+-- Performing Test SUPPORT_WFUNCTION
+-- Performing Test SUPPORT_WFUNCTION - Success
+-- Performing Test SUPPORT_WSTRICT_ALIASING
+-- Performing Test SUPPORT_WSTRICT_ALIASING - Success
+-- Performing Test SUPPORT_WUNUSED_VAR
+-- Performing Test SUPPORT_WUNUSED_VAR - Success
+-- Performing Test SUPPORT_WPOINTER_SIGN
+-- Performing Test SUPPORT_WPOINTER_SIGN - Success
+-- Performing Test SUPPORT_WSIGN_COMPARE
+-- Performing Test SUPPORT_WSIGN_COMPARE - Success
+-- Performing Test SUPPORT_WSTRICT_PROTOTYPES
+-- Performing Test SUPPORT_WSTRICT_PROTOTYPES - Success
+-- Performing Test SUPPORT_PEDANTIC_FLAG
+-- Performing Test SUPPORT_PEDANTIC_FLAG - Success
+-- Performing Test SUPPORT_WNO_UNUSED_CONST
+-- Performing Test SUPPORT_WNO_UNUSED_CONST - Success
+-- Performing Test SUPPORT_WMISSING_NORETURN
+-- Performing Test SUPPORT_WMISSING_NORETURN - Success
+-- Performing Test SUPPORT_WMISSING_FORMAT_ATTRIBUTE
+-- Performing Test SUPPORT_WMISSING_FORMAT_ATTRIBUTE - Success
+-- Performing Test SUPPORT_WNULL_DEREFERENCE
+-- Performing Test SUPPORT_WNULL_DEREFERENCE - Success
+-- Performing Test SUPPORT_WDUPLICATED_COND
+-- Performing Test SUPPORT_WDUPLICATED_COND - Failed
+-- Performing Test SUPPORT_WIMPLICIT_FALLTHROUGH
+-- Performing Test SUPPORT_WIMPLICIT_FALLTHROUGH - Success
+-- Performing Test SUPPORT_FPIC
+-- Performing Test SUPPORT_FPIC - Success
+-- Looking for include file sys/types.h
+-- Looking for include file sys/types.h - found
+-- Looking for include file sys/uio.h
+-- Looking for include file sys/uio.h - found
+-- Looking for include file fcntl.h
+-- Looking for include file fcntl.h - found
+-- Looking for include file math.h
+-- Looking for include file math.h - found
+-- Looking for include file stdio.h
+-- Looking for include file stdio.h - found
+-- Looking for include file stdlib.h
+-- Looking for include file stdlib.h - found
+-- Looking for include file string.h
+-- Looking for include file string.h - found
+-- Looking for include file strings.h
+-- Looking for include file strings.h - found
+-- Looking for include file time.h
+-- Looking for include file time.h - found
+-- Looking for include file unistd.h
+-- Looking for include file unistd.h - found
+-- Looking for include file stdint.h
+-- Looking for include file stdint.h - found
+-- Looking for include file inttypes.h
+-- Looking for include file inttypes.h - found
+-- Looking for include file stdbool.h
+-- Looking for include file stdbool.h - found
+-- Looking for include file endian.h
+-- Looking for include file endian.h - found
+-- Looking for include file sys/endian.h
+-- Looking for include file sys/endian.h - found
+-- Looking for include file machine/endian.h
+-- Looking for include file machine/endian.h - found
+-- Looking for include file sys/socket.h
+-- Looking for include file sys/socket.h - found
+-- Looking for include file sys/mman.h
+-- Looking for include file sys/mman.h - found
+-- Looking for include file sys/un.h
+-- Looking for include file sys/un.h - found
+-- Looking for include file sys/stat.h
+-- Looking for include file sys/stat.h - found
+-- Looking for include file sys/wait.h
+-- Looking for include file sys/wait.h - found
+-- Looking for include file sys/param.h
+-- Looking for include file sys/param.h - found
+-- Looking for include file sys/cdefs.h
+-- Looking for include file sys/cdefs.h - found
+-- Looking for include file sys/file.h
+-- Looking for include file sys/file.h - found
+-- Looking for include file sys/resource.h
+-- Looking for include file sys/resource.h - found
+-- Looking for include file netinet/in.h
+-- Looking for include file netinet/in.h - found
+-- Looking for include file netinet/tcp.h
+-- Looking for include file netinet/tcp.h - not found
+-- Looking for include file arpa/inet.h
+-- Looking for include file arpa/inet.h - found
+-- Looking for include file netdb.h
+-- Looking for include file netdb.h - found
+-- Looking for include file syslog.h
+-- Looking for include file syslog.h - found
+-- Looking for include file siginfo.h
+-- Looking for include file siginfo.h - not found
+-- Looking for include file locale.h
+-- Looking for include file locale.h - found
+-- Looking for include file libgen.h
+-- Looking for include file libgen.h - found
+-- Looking for include file pwd.h
+-- Looking for include file pwd.h - found
+-- Looking for include file grp.h
+-- Looking for include file grp.h - found
+-- Looking for include file glob.h
+-- Looking for include file glob.h - found
+-- Looking for include file poll.h
+-- Looking for include file poll.h - found
+-- Looking for include file readpassphrase.h
+-- Looking for include file readpassphrase.h - found
+-- Looking for include file termios.h
+-- Looking for include file termios.h - found
+-- Looking for include file paths.h
+-- Looking for include file paths.h - found
+-- Looking for include file ctype.h
+-- Looking for include file ctype.h - found
+-- Looking for include file cpuid.h
+-- Looking for include file cpuid.h - found
+-- Looking for include file dirent.h
+-- Looking for include file dirent.h - found
+-- Looking for include file ucontext.h
+-- Looking for include file ucontext.h - not found
+-- Looking for include file sys/ucontext.h
+-- Looking for include file sys/ucontext.h - not found
+-- Looking for setproctitle
+-- Looking for setproctitle - found
+-- Looking for getpagesize
+-- Looking for getpagesize - found
+-- Looking for nanosleep
+-- Looking for nanosleep - found
+-- Looking for flock
+-- Looking for flock - found
+-- Looking for tanh in m
+-- Looking for tanh in m - found
+-- Looking for mkstemp
+-- Looking for mkstemp - found
+-- Looking for clock_gettime
+-- Looking for clock_gettime - found
+-- Looking for PATH_MAX
+-- Looking for PATH_MAX - found
+-- Looking for MAXPATHLEN
+-- Looking for MAXPATHLEN - found
+-- Looking for MAP_ANON
+-- Looking for MAP_ANON - found
+-- Looking for IPV6_V6ONLY
+-- Looking for IPV6_V6ONLY - found
+-- Looking for posix_fallocate
+-- Looking for posix_fallocate - not found
+-- Looking for fallocate
+-- Looking for fallocate - not found
+-- Looking for _SC_NPROCESSORS_ONLN
+-- Looking for _SC_NPROCESSORS_ONLN - found
+-- Looking for setbit
+-- Looking for setbit - found
+-- Looking for getaddrinfo
+-- Looking for getaddrinfo - found
+-- Looking for sched_yield
+-- Looking for sched_yield - found
+-- Looking for nftw
+-- Looking for nftw - found
+-- Looking for memrchr
+-- Looking for memrchr - found
+-- Looking for PCRE2_CONFIG_JIT
+-- Looking for PCRE2_CONFIG_JIT - found
+-- Looking for SOCK_SEQPACKET
+-- Looking for SOCK_SEQPACKET - found
+-- Looking for O_NOFOLLOW
+-- Looking for O_NOFOLLOW - found
+-- Looking for O_CLOEXEC
+-- Looking for O_CLOEXEC - found
+-- Looking for SSL_set_tlsext_host_name
+-- Looking for SSL_set_tlsext_host_name - found
+-- Looking for FIPS_mode
+-- Looking for FIPS_mode - not found
+-- Looking for dirfd
+-- Looking for dirfd - found
+-- Looking for fpathconf
+-- Looking for fpathconf - found
+-- Looking for sigaltstack
+-- Looking for sigaltstack - found
+-- Looking for open_memstream
+-- Looking for open_memstream - found
+-- Looking for fmemopen
+-- Looking for fmemopen - found
+-- Looking for clock_getcpuclockid
+-- Looking for clock_getcpuclockid - found
+-- Looking for RUSAGE_SELF
+-- Looking for RUSAGE_SELF - found
+-- pthread_mutexattr_setpshared is -NOT- supported
+-- Looking for SA_SIGINFO
+-- Looking for SA_SIGINFO - found
+-- Looking for CLOCK_PROCESS_CPUTIME_ID
+-- Looking for CLOCK_PROCESS_CPUTIME_ID - found
+-- Looking for CLOCK_VIRTUAL
+-- Looking for CLOCK_VIRTUAL - not found
+-- Performing Test HAVE_ATOMIC_BUILTINS
+-- Performing Test HAVE_ATOMIC_BUILTINS - Success
+-- atomic builtins are supported
+-- Performing Test HAVE_RDTSC
+-- Performing Test HAVE_RDTSC - Success
+-- rdtsc intrinsic is supported
+-- Performing Test HAVE_SANE_SHMEM
+-- Performing Test HAVE_SANE_SHMEM - Success
+-- shmem support is compatible with POSIX
+-- Looking for include file sys/inotify.h
+-- Looking for include file sys/inotify.h - not found
+-- Looking for include file sys/epoll.h
+-- Looking for include file sys/epoll.h - not found
+-- Looking for 3 include files sys/types.h, ..., sys/time.h
+-- Looking for 3 include files sys/types.h, ..., sys/time.h - found
+-- Looking for include file sys/queue.h
+-- Looking for include file sys/queue.h - found
+-- Looking for include file sys/signalfd.h
+-- Looking for include file sys/signalfd.h - not found
+-- Looking for include file port.h
+-- Looking for include file port.h - not found
+-- Looking for include file memory.h
+-- Looking for include file memory.h - found
+-- Looking for include file sys/select.h
+-- Looking for include file sys/select.h - found
+-- Looking for include file sys/eventfd.h
+-- Looking for include file sys/eventfd.h - not found
+-- Looking for include file sys/timerfd.h
+-- Looking for include file sys/timerfd.h - not found
+-- Looking for include file linux/fs.h
+-- Looking for include file linux/fs.h - not found
+-- Looking for include file linux/aio_abi.h
+-- Looking for include file linux/aio_abi.h - not found
+-- Looking for kqueue
+-- Looking for kqueue - found
+-- Looking for poll
+-- Looking for poll - found
+-- Looking for select
+-- Looking for select - found
+-- Looking for clock_gettime in rt
+-- Looking for clock_gettime in rt - not found
+-- Looking for ceil in m
+-- Looking for ceil in m - found
+-- UTF8: AVX2 support is added
+-- UTF8: SSE41 support is added
+-- Version: 8.0.1
+-- Build type: Release
+-- Looking for strtod_l
+-- Looking for strtod_l - not found
+-- Compiler type CLANG: /usr/bin/c++
+-- Cryptobox: AVX2 support is added (chacha20)
+-- Cryptobox: AVX2 support is added (base64)
+-- Cryptobox: AVX support is added (chacha20)
+-- Cryptobox: SSE2 support is added (chacha20)
+-- Cryptobox: SSE42 support is added (base64)
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /usr/pkgmk/work/rspamd/src/rspamd/build
++build:20> make
+[  1%] Building C object contrib/lua-bit/CMakeFiles/rspamd-bit.dir/bit.c.o
+[  1%] Linking C static library librspamd-bit.a
+[  1%] Built target rspamd-bit
+[  1%] Building CXX object contrib/google-ced/CMakeFiles/rspamd-ced.dir/ced_c.cc.o
+[  1%] Building CXX object contrib/google-ced/CMakeFiles/rspamd-ced.dir/compact_enc_det_hint_code.cc.o
+[  2%] Building CXX object contrib/google-ced/CMakeFiles/rspamd-ced.dir/util/encodings/encodings.cc.o
+[  2%] Building CXX object contrib/google-ced/CMakeFiles/rspamd-ced.dir/util/languages/languages.cc.o
+[  2%] Building CXX object contrib/google-ced/CMakeFiles/rspamd-ced.dir/compact_enc_det.cc.o
+[  2%] Linking CXX static library librspamd-ced.a
+[  2%] Built target rspamd-ced
+[  2%] Building C object contrib/fastutf8/CMakeFiles/rspamd-fastutf8.dir/sse41.c.o
+[  2%] Building C object contrib/fastutf8/CMakeFiles/rspamd-fastutf8.dir/fastutf8.c.o
+[  3%] Building C object contrib/fastutf8/CMakeFiles/rspamd-fastutf8.dir/avx2.c.o
+[  3%] Linking C static library librspamd-fastutf8.a
+[  3%] Built target rspamd-fastutf8
+[  3%] Building C object contrib/libottery/CMakeFiles/ottery.dir/aes_cryptobox.c.o
+[  3%] Building C object contrib/libottery/CMakeFiles/ottery.dir/ottery_entropy.c.o
+[  4%] Building C object contrib/libottery/CMakeFiles/ottery.dir/ottery_global.c.o
+[  4%] Building C object contrib/libottery/CMakeFiles/ottery.dir/chacha_cryptobox.c.o
+/usr/pkgmk/work/rspamd/src/rspamd/contrib/libottery/aes_cryptobox.c:31:13: warning: unknown pragma ignored [-Wunknown-pragmas]
+#pragma GCC push_options
+            ^
+/usr/pkgmk/work/rspamd/src/rspamd/contrib/libottery/aes_cryptobox.c:32:13: warning: unknown pragma ignored [-Wunknown-pragmas]
+#pragma GCC target("aes")
+            ^
+[  4%] Building C object contrib/libottery/CMakeFiles/ottery.dir/ottery_cpuinfo.c.o
+[  4%] Building C object contrib/libottery/CMakeFiles/ottery.dir/ottery.c.o
+[  5%] Building C object contrib/libottery/CMakeFiles/ottery.dir/chacha_merged.c.o
+2 warnings generated.
+[  5%] Linking C static library libottery.a
+[  5%] Built target ottery
+[  5%] Building CXX object contrib/fmt/CMakeFiles/fmt.dir/src/os.cc.o
+[  5%] Building CXX object contrib/fmt/CMakeFiles/fmt.dir/src/format.cc.o
+/usr/pkgmk/work/rspamd/src/rspamd/contrib/fmt/src/os.cc:301:25: error: no type named 'error_code' in namespace 'std'; did you mean simply 'error_code'?
+void file::dup2(int fd, std::error_code& ec) FMT_NOEXCEPT {
+                        ^~~~~~~~~~~~~~~
+                        error_code
+/usr/local/include/fmt/os.h:126:7: note: 'error_code' declared here
+class error_code {
+      ^
+/usr/pkgmk/work/rspamd/src/rspamd/contrib/fmt/src/os.cc:304:31: error: no member named 'error_code' in namespace 'std'
+  if (result == -1) ec = std::error_code(errno, std::generic_category());
+                         ~~~~~^
+/usr/pkgmk/work/rspamd/src/rspamd/contrib/fmt/src/os.cc:304:54: error: no member named 'generic_category' in namespace 'std'
+  if (result == -1) ec = std::error_code(errno, std::generic_category());
+                                                ~~~~~^
+3 errors generated.
+/usr/pkgmk/work/rspamd/src/rspamd/contrib/fmt/src/format.cc:45:8: error: no template named 'thousands_sep_result'
+    -> thousands_sep_result<char>;
+       ^
+In file included from /usr/pkgmk/work/rspamd/src/rspamd/contrib/fmt/src/format.cc:8:
+/usr/local/include/fmt/format-inl.h:188:7: error: implicit instantiation of undefined template 'std::__1::numpunct<int>'
+      .thousands_sep();
+      ^
+/usr/pkgmk/work/rspamd/src/rspamd/contrib/fmt/src/format.cc:44:31: note: in instantiation of function template specialization 'fmt::v7::detail::thousands_sep_impl<int>' requested here
+template FMT_API auto detail::thousands_sep_impl(locale_ref)
+                              ^
+/usr/include/c++/v1/__locale:1453:52: note: template is declared here
+template <class _CharT> class _LIBCPP_TEMPLATE_VIS numpunct;
+                                                   ^
+/usr/pkgmk/work/rspamd/src/rspamd/contrib/fmt/src/format.cc:70:8: error: no template named 'thousands_sep_result'
+    -> thousands_sep_result<wchar_t>;
+       ^
+/usr/pkgmk/work/rspamd/src/rspamd/contrib/fmt/src/format.cc:69:31: error: explicit instantiation of 'thousands_sep_impl' does not refer to a function template, variable template, member function, member class, or static data member
+template FMT_API auto detail::thousands_sep_impl(locale_ref)
+                              ^
+/usr/local/include/fmt/format-inl.h:186:40: note: candidate template ignored: substitution failure [with Char = int]
+template <typename Char> FMT_FUNC Char thousands_sep_impl(locale_ref loc) {
+                                       ^
+In file included from /usr/pkgmk/work/rspamd/src/rspamd/contrib/fmt/src/format.cc:8:
+In file included from /usr/local/include/fmt/format-inl.h:21:
+In file included from /usr/include/c++/v1/locale:181:
+/usr/include/c++/v1/__locale:250:54: error: implicit instantiation of undefined template 'std::__1::numpunct<int>'
+    return static_cast<const _Facet&>(*__l.use_facet(_Facet::id));
+                                                     ^
+/usr/local/include/fmt/format-inl.h:187:15: note: in instantiation of function template specialization 'std::__1::use_facet<std::__1::numpunct<int>>' requested here
+  return std::use_facet<std::numpunct<Char>>(loc.get<std::locale>())
+              ^
+/usr/include/c++/v1/__locale:1453:52: note: template is declared here
+template <class _CharT> class _LIBCPP_TEMPLATE_VIS numpunct;
+                                                   ^
+5 errors generated.
+*** Error 1 in . (contrib/fmt/CMakeFiles/fmt.dir/build.make:76 'contrib/fmt/CMakeFiles/fmt.dir/src/format.cc.o': cd /usr/pkgmk/work/rspamd/s...)
+*** Error 1 (contrib/fmt/CMakeFiles/fmt.dir/build.make:90 'contrib/fmt/CMakeFiles/fmt.dir/src/os.cc.o': cd /usr/pkgmk/work/rspamd/src/rspamd...)
+*** Error 1 in target 'contrib/fmt/CMakeFiles/fmt.dir/src/os.cc.o'
+*** Error 2 in . (CMakeFiles/Makefile2:1375 'contrib/fmt/CMakeFiles/fmt.dir/all')
+*** Error 2 in /usr/pkgmk/work/rspamd/src/rspamd/build (Makefile:136 'all': make -s -f CMakeFiles/Makefile2 all)

@@ -1,0 +1,16 @@
+# Description: cat, like a bat
+# URL:         https://github.com/sharkdp/bat.git
+
+name=bat
+version=git
+release=1
+source=(https://github.com/sharkdp/bat.git)
+
+build()
+{
+    # For some reason $name only builds with the rustup version.
+    export PATH="$PATH:$HOME/.cargo/bin"
+    cd $name
+    cargo build --release
+    install -D target/release/$name         $PKG/usr/local/bin/$name
+}

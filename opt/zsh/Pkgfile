@@ -1,0 +1,60 @@
+# Description: Very powerfull shell
+# URL:         http://www.zsh.org/
+
+name=zsh
+version=5.9
+release=1
+source=(
+    # https://github.com/zsh-users/zsh.git
+    _pkgutils
+    _find
+    # https://sourceforge.net/projects/zsh/files/zsh-test/5.8.1.2-test/zsh-5.8.1.2-test.tar.xz
+    http://www.zsh.org/pub/$name-$version.tar.xz
+)
+
+
+build()
+{
+    cd zsh-$version
+    export CPPFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib"
+    Util/preconfig
+    ./configure \
+        --prefix=/usr/local \
+        --mandir=/usr/local/man \
+        --enable-etcdir=/etc/zsh \
+        --enable-fndir=/usr/local/share/zsh/functions \
+        --enable-function-subdirs \
+        --enable-maildir-support \
+        --enable-site-fndir=/usr/local/share/zsh/site-functions \
+        --enable-zsh-secure-free \
+        --enable-zshenv=/etc/zsh/zshenv \
+        --enable-zshlogin=/etc/zsh/zshlogin \
+        --enable-zshrc=/etc/zsh/zshrc \
+        --enable-maildir-support \
+        --enable-multibyte \
+        --enable-pcre \
+        --with-curses-terminfo \
+        --with-tcsetpgrp \
+        --disable-gdbm \
+        --disable-zsh-mem \
+
+    gmake
+    gmake DESTDIR=$PKG install
+
+    install -m 444 $SRC/_pkgutils \
+        $PKG/usr/local/share/zsh/functions/Completion/BSD
+    install -m 444 $SRC/_find \
+        $PKG/usr/local/share/zsh/functions/Completion/Unix/Command
+
+    rm -f $PKG/usr/local/bin/zsh-$version
+    # remove patch cruft
+    find $PKG -name '*.orig' | xargs -r rm
+}
+
+post-install()
+{
+    if ! grep -q '^/usr/local/bin/zsh$' /etc/shells; then
+        echo Adding zsh to /etc/shells
+        echo /usr/local/bin/zsh >> /etc/shells
+    fi
+}

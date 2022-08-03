@@ -1,0 +1,1883 @@
+diff -ru cvs-1.11.23/Makefile.am cvs-1.11.23.new/Makefile.am
+--- cvs-1.11.23/Makefile.am	2005-04-04 22:46:02.000000000 +0200
++++ cvs-1.11.23.new/Makefile.am	2021-08-09 19:59:51.054101004 +0200
+@@ -17,7 +17,7 @@
+ ## Subdirectories to run make in for the primary targets.
+ # Unix source subdirs, where we'll want to run lint and etags:
+ # This is a legacy variable from b4 Automake
+-USOURCE_SUBDIRS = lib zlib diff src
++USOURCE_SUBDIRS = lib diff src
+ # All other subdirs:
+ SUBDIRS = $(USOURCE_SUBDIRS) man doc contrib tools \
+ 	windows-NT os2 emx vms
+Only in cvs-1.11.23.new: config.log
+diff -ru cvs-1.11.23/configure.in cvs-1.11.23.new/configure.in
+--- cvs-1.11.23/configure.in	2008-05-07 22:10:34.000000000 +0200
++++ cvs-1.11.23.new/configure.in	2021-08-09 19:59:51.143100934 +0200
+@@ -904,6 +904,36 @@
+       [The high water mark in bytes for server flow control.  Required if
+        SERVER_FLOWCONTROL is defined, and useless otherwise.])
+   fi # enable_server_flow_control
++  
++  dnl
++  dnl Give the confiscator control over whether the pam support is used
++  dnl
++  AC_ARG_ENABLE(
++    [pam],
++    AC_HELP_STRING(
++      [--enable-pam],
++      [Include code for running with pam code (default)]), ,
++    [if test "$ac_cv_search_connect" != yes; then
++       enable_pam=no
++     fi])
++
++  if test no != "$enable_pam"; then
++    AC_DEFINE(
++      [PAM_SUPPORT], [1],
++      [Define if you want CVS to be able to serve repositories to remote
++       clients.])  
++       
++      dnl
++      dnl Finding the pam_authenticate function. 
++      dnl
++      AC_SEARCH_LIBS(
++      [pam_authenticate], [pam],
++      [AC_DEFINE(
++         [HAVE_PAM], [1],
++         [Define if you have the pam_authenticate function.])
++      ]) dnl AC_SEARCH_LIBS
++  fi #enable_pam
++  
+ fi # enable_server
+ 
+ 
+@@ -1152,8 +1182,8 @@
+ 	  tools/Makefile \
+ 	  vms/Makefile \
+ 	  windows-NT/Makefile \
+-	  windows-NT/SCC/Makefile \
+-	  zlib/Makefile])
++	  windows-NT/SCC/Makefile
++	  ])
+ 
+ dnl and we're done
+ AC_OUTPUT
+Only in cvs-1.11.23.new: configure.in.orig
+diff -ru cvs-1.11.23/contrib/rcs2log.sh cvs-1.11.23.new/contrib/rcs2log.sh
+--- cvs-1.11.23/contrib/rcs2log.sh	2005-07-12 15:58:23.000000000 +0200
++++ cvs-1.11.23.new/contrib/rcs2log.sh	2021-08-09 19:59:51.167100915 +0200
+@@ -68,6 +68,9 @@
+ For more information about these matters, see the files named COPYING.
+ Author: Paul Eggert <eggert@twinsun.com>'
+ 
++# set old environment for sort (bug #190009)
++export _POSIX2_VERSION=199209
++
+ # functions
+ @MKTEMP_SH_FUNCTION@
+ 
+diff -ru cvs-1.11.23/diff/diff3.c cvs-1.11.23.new/diff/diff3.c
+--- cvs-1.11.23/diff/diff3.c	2008-05-07 17:57:33.000000000 +0200
++++ cvs-1.11.23.new/diff/diff3.c	2021-08-09 19:59:51.319100796 +0200
+@@ -1505,7 +1505,7 @@
+ 	      line = 0;
+ 	      do
+ 		{
+-		  printf_output (line_prefix);
++		  printf_output ("%s", line_prefix);
+ 		  cp = D_RELNUM (ptr, realfile, line);
+ 		  length = D_RELLEN (ptr, realfile, line);
+ 		  write_output (cp, length);
+diff -ru cvs-1.11.23/doc/cvs.1 cvs-1.11.23.new/doc/cvs.1
+--- cvs-1.11.23/doc/cvs.1	2008-05-08 05:55:57.000000000 +0200
++++ cvs-1.11.23.new/doc/cvs.1	2021-08-09 19:59:51.219100875 +0200
+@@ -23,7 +23,7 @@
+ .ds Rv \\$3
+ .ds Dt \\$4
+ ..
+-.TH CVS 1 "\*(Dt"
++.TH CVS 1
+ .\" Full space in nroff; half space in troff
+ .de SP
+ .if n .sp
+diff -ru cvs-1.11.23/doc/cvs.texinfo cvs-1.11.23.new/doc/cvs.texinfo
+--- cvs-1.11.23/doc/cvs.texinfo	2008-05-07 03:15:46.000000000 +0200
++++ cvs-1.11.23.new/doc/cvs.texinfo	2021-08-09 19:59:51.306100807 +0200
+@@ -111,9 +111,9 @@
+ @sp 4
+ @comment The title is printed in a large font.
+ @center @titlefont{Version Management}
+-@sp
++@sp 1
+ @center @titlefont{with}
+-@sp
++@sp 1
+ @center @titlefont{CVS}
+ @sp 2
+ @center for @sc{cvs} @value{VERSION}
+@@ -2771,10 +2771,10 @@
+ @code{SystemAuth=no} in the config file
+ (@pxref{config}).
+ 
+-The GSSAPI server uses a principal name of
+-cvs/@var{hostname}, where @var{hostname} is the
+-canonical name of the server host.  You will have to
+-set this up as required by your GSSAPI mechanism.
++The GSSAPI server uses a principal name of cvs/@var{hostname}, where
++@var{hostname} can be any name.  There is no restriction to canonical
++hostname to allow DNS load-balanced clusters.  It assumes your GSSAPI
++mechanism can select a key with a host name matching client's request.
+ 
+ To connect using GSSAPI, use the @samp{:gserver:} method.  For
+ example,
+@@ -6847,11 +6847,12 @@
+ a new revision of the file.
+ 
+ @menu
+-* Keyword list::                Keywords
+-* Using keywords::              Using keywords
+-* Avoiding substitution::       Avoiding substitution
+-* Substitution modes::          Substitution modes
+-* Log keyword::                 Problems with the $@splitrcskeyword{Log}$ keyword.
++* Keyword list::                   Keywords
++* Using keywords::                 Using keywords
++* Avoiding substitution::          Avoiding substitution
++* Substitution modes::             Substitution modes
++* Configuring keyword expansion::  Configuring keyword expansion
++* Log keyword::                    Problems with the $@splitrcskeyword{Log}$ keyword.
+ @end menu
+ 
+ @c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+@@ -7032,6 +7033,12 @@
+ and @code{troff} you can embed the null-character
+ @code{\&} inside the keyword for a similar effect.
+ 
++It is also possible to specify an explicit list of
++keywords to include or exclude using the
++@code{KeywordExpand} option in the
++@file{CVSROOT/config} file--see @ref{Configuring keyword expansion}
++for more details.
++
+ @c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ @node Substitution modes
+ @section Substitution modes
+@@ -7124,6 +7131,74 @@
+ @end table
+ 
+ @c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
++@node Configuring keyword expansion
++@section Configuring Keyword Expansion
++@cindex Configuring keyword expansion
++
++The @code{KeywordExpand} option in the
++@file{CVSROOT/config} file is intended to allow for the
++either the explicit exclusion of a keyword or list of
++keywords, or for the explicit inclusion of a keyword or
++a list of keywords.
++
++The @code{KeywordExpand} option is followed by
++@code{=} and the next character may either be @code{i}
++to start an inclusion list or @code{e} to start an
++exclusion list. If the following lines were added to
++the @file{CVSROOT/config} file:
++
++@example
++        # Restrict keyword expansion to "Log" only
++        KeywordExpand=iLog
++@end example
++
++then only the $@splitrcskeyword{Log}$ keyword would be expanded.
++A list may be used. The this example:
++
++@example
++        # Restrict keyword expansion to the Name and Date keywords.
++        KeywordExpand=iName,Date
++@end example
++
++would allow $@splitrcskeyword{Name}$, and $@splitrcskeyword{Date}$
++to be expanded.
++
++It is also possible to configure an exclusion list
++using the following:
++
++@example
++        # Do not expand the keyword Date
++        KeywordExpand=eDate
++@end example
++
++This allows @sc{cvs} to ignore the 
++$@splitrcskeyword{CVSHeader}$ keyword and retain all of the
++others. This could be confusing
++to users that expect RCS keywords to be expanded, so
++care should be taken to properly set user expectations
++for a repository that is configured in that manner.
++
++If there is a desire to not have any RCS keywords
++expanded and not use the @code{-ko} flags everywhere,
++an administrator may disable all keyword expansion
++using the @file{CVSROOT/config} line:
++
++@example
++    # Do not expand any RCS keywords
++    KeywordExpand=i
++@end example
++
++this could be confusing to users that expect RCS
++keywords like $@splitrcskeyword{Id}$ to be expanded properly,
++so care should be taken to properly set user
++expectations for a repository so configured.
++
++It should be noted that a patch to provide the
++@code{KeywordExpand} feature has been around a long time.
++However, that patch implemented this feature using
++@code{tagexpand=} keyword and this keyword is NOT recognized.
++
++@c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ @node Log keyword
+ @section Problems with the $@splitrcskeyword{Log}$ keyword.
+ 
+@@ -13789,6 +13864,14 @@
+ @file{CVS/Template} file (@pxref{Working directory
+ storage}).
+ 
++@cindex KeywordExpand, in @file{CVSROOT/config}
++@item KeywordExpand=@var{value}
++Specify @samp{i} followed by a list of keywords to be expanded
++(for example, @samp{KeywordExpand=iName,Date}),
++or @samp{e} followed by a list of keywords not to be expanded
++(for example, @samp{KeywordExpand=eName}).
++For more on keyword expansion, see @ref{Configuring keyword expansion}.
++
+ @cindex LockDir, in CVSROOT/config
+ @item LockDir=@var{directory}
+ Put @sc{cvs} lock files in @var{directory} rather than
+diff -ru cvs-1.11.23/lib/getline.c cvs-1.11.23.new/lib/getline.c
+--- cvs-1.11.23/lib/getline.c	2005-04-04 22:46:05.000000000 +0200
++++ cvs-1.11.23.new/lib/getline.c	2021-08-09 19:59:51.192100896 +0200
+@@ -154,7 +154,7 @@
+   return ret;
+ }
+ 
+-int
++ssize_t
+ getline (lineptr, n, stream)
+      char **lineptr;
+      size_t *n;
+@@ -163,7 +163,7 @@
+   return getstr (lineptr, n, stream, '\n', 0, GETLINE_NO_LIMIT);
+ }
+ 
+-int
++ssize_t
+ getline_safe (lineptr, n, stream, limit)
+      char **lineptr;
+      size_t *n;
+diff -ru cvs-1.11.23/lib/getline.h cvs-1.11.23.new/lib/getline.h
+--- cvs-1.11.23/lib/getline.h	2005-04-04 22:46:05.000000000 +0200
++++ cvs-1.11.23.new/lib/getline.h	2021-08-09 19:59:51.193100895 +0200
+@@ -11,9 +11,9 @@
+ 
+ #define GETLINE_NO_LIMIT -1
+ 
+-int
++ssize_t
+   getline __PROTO ((char **_lineptr, size_t *_n, FILE *_stream));
+-int
++ssize_t
+   getline_safe __PROTO ((char **_lineptr, size_t *_n, FILE *_stream,
+                          int limit));
+ int
+diff -ru cvs-1.11.23/src/Makefile.am cvs-1.11.23.new/src/Makefile.am
+--- cvs-1.11.23/src/Makefile.am	2005-04-04 22:46:07.000000000 +0200
++++ cvs-1.11.23.new/src/Makefile.am	2021-08-09 19:59:51.240100858 +0200
+@@ -24,7 +24,7 @@
+ # try and remove naming ocnflicts and fix Automake to allow particular includes
+ # to be attached only to particular object files.  Short term fix is either or.
+ ##INCLUDES = -I. -I.. -I$(srcdir) -I$(top_srcdir)/lib
+-INCLUDES = -I$(top_srcdir)/lib -I$(top_srcdir)/diff -I$(top_srcdir)/zlib $(includeopt)
++INCLUDES = -I$(top_srcdir)/lib -I$(top_srcdir)/diff $(includeopt)
+ 
+ bin_PROGRAMS = cvs
+ bin_SCRIPTS = cvsbug
+@@ -105,7 +105,7 @@
+ cvs_LDADD = \
+ 	../diff/libdiff.a \
+ 	../lib/libcvs.a \
+-	../zlib/libz.a
++	-lz
+ 
+ # extra clean targets
+ # wish this could be distclean-hdr-local but it's not part of automake
+@@ -125,11 +125,11 @@
+ 
+ .PHONY: localcheck
+ localcheck:
+-	$(SHELL) $(srcdir)/sanity.sh `pwd`/cvs$(EXEEXT)
++	$(SHELL) $(srcdir)/sanity.sh -v `pwd`/cvs$(EXEEXT)
+ 
+ .PHONY: remotecheck
+ remotecheck: all
+-	$(SHELL) $(srcdir)/sanity.sh -r `pwd`/cvs$(EXEEXT)
++	$(SHELL) $(srcdir)/sanity.sh -v -r `pwd`/cvs$(EXEEXT)
+ 
+ ## MAINTAINER Targets
+ 
+diff -ru cvs-1.11.23/src/client.c cvs-1.11.23.new/src/client.c
+--- cvs-1.11.23/src/client.c	2008-05-07 17:57:34.000000000 +0200
++++ cvs-1.11.23.new/src/client.c	2021-08-09 19:59:51.324100792 +0200
+@@ -81,7 +81,7 @@
+ /* This is needed for GSSAPI encryption.  */
+ static gss_ctx_id_t gcontext;
+ 
+-static int connect_to_gserver PROTO((cvsroot_t *, int, struct hostent *));
++static int connect_to_gserver PROTO((cvsroot_t *, int, char *));
+ 
+ # endif /* HAVE_GSSAPI */
+ 
+@@ -144,8 +144,9 @@
+ 
+ static size_t try_read_from_server PROTO ((char *, size_t));
+ 
++static void proxy_connect PROTO ((cvsroot_t *, int));
+ static void auth_server PROTO ((cvsroot_t *, struct buffer *, struct buffer *,
+-				int, int, struct hostent *));
++				int, int, char *));
+ 
+ /* We need to keep track of the list of directories we've sent to the
+    server.  This list, along with the current CVSROOT, will help us
+@@ -3582,30 +3583,6 @@
+ 
+ 
+ #if defined (AUTH_CLIENT_SUPPORT) || defined (HAVE_KERBEROS) || defined (HAVE_GSSAPI)
+-static struct hostent *init_sockaddr PROTO ((struct sockaddr_in *, char *,
+-					     unsigned int));
+-
+-static struct hostent *
+-init_sockaddr (name, hostname, port)
+-    struct sockaddr_in *name;
+-    char *hostname;
+-    unsigned int port;
+-{
+-    struct hostent *hostinfo;
+-    unsigned short shortport = port;
+-
+-    memset (name, 0, sizeof (*name));
+-    name->sin_family = AF_INET;
+-    name->sin_port = htons (shortport);
+-    hostinfo = gethostbyname (hostname);
+-    if (hostinfo == NULL)
+-    {
+-	fprintf (stderr, "Unknown host %s.\n", hostname);
+-	error_exit ();
+-    }
+-    name->sin_addr = *(struct in_addr *) hostinfo->h_addr;
+-    return hostinfo;
+-}
+ 
+ 
+ 
+@@ -3781,49 +3758,93 @@
+ {
+     int sock;
+     int port_number;
+-    struct sockaddr_in client_sai;
+-    struct hostent *hostinfo;
+-    struct buffer *to_server, *from_server;
++    int gerr;
++    struct addrinfo hints, *res, *res0;
++    char pbuf[32];
++    struct buffer *local_to_server, *local_from_server;
++    char *p_hostname;
+ 
+-    sock = socket (AF_INET, SOCK_STREAM, 0);
+-    if (sock == -1)
+-    {
+-	error (1, 0, "cannot create socket: %s", SOCK_STRERROR (SOCK_ERRNO));
+-    }
+     port_number = get_cvs_port_number (root);
+-    hostinfo = init_sockaddr (&client_sai, root->hostname, port_number);
+-    if (trace)
+-    {
+-	fprintf (stderr, " -> Connecting to %s(%s):%d\n",
+-		 root->hostname,
+-		 inet_ntoa (client_sai.sin_addr), port_number);
+-    }
+-    if (connect (sock, (struct sockaddr *) &client_sai, sizeof (client_sai))
+-	< 0)
+-	error (1, 0, "connect to %s(%s):%d failed: %s",
+-	       root->hostname,
+-	       inet_ntoa (client_sai.sin_addr),
+-	       port_number, SOCK_STRERROR (SOCK_ERRNO));
+ 
+-    make_bufs_from_fds (sock, sock, 0, &to_server, &from_server, 1);
++    sprintf (pbuf, "%u", (root->proxy_hostname) ? root->proxy_port : port_number);
++    pbuf[sizeof(pbuf)-1] = '\0';
++    memset (&hints, 0, sizeof (hints));
++    hints.ai_family = af;
++    hints.ai_socktype = SOCK_STREAM;
++
++    /* do we have a proxy? */
++    p_hostname = (root->proxy_hostname) ? root->proxy_hostname : root->hostname;
++
++    gerr = getaddrinfo (p_hostname, pbuf, &hints, &res0);
++    if (gerr)
++    {
++       fprintf (stderr, "Unknown host %s.\n", p_hostname);
++       error_exit ();
++    }
++
++    /* Try connect to p_hostname using all available families */
++    for (res = res0; res != NULL; res = res->ai_next)
++    {
++       sock = socket (res->ai_family, res->ai_socktype, 0);
++       if (sock == -1) {
++           if (res->ai_next)
++               continue;
++           else {
++               char *sock_error = SOCK_STRERROR (SOCK_ERRNO);
++               freeaddrinfo(res0);
++               error (1, 0, "cannot create socket: %s", sock_error);
++           }
++       }
++
++       if (connect (sock, res->ai_addr, res->ai_addrlen) < 0)
++       {
++           if (res->ai_next)
++           {
++               close(sock);
++               continue;
++           }
++           else
++           {
++               char *sock_error = SOCK_STRERROR (SOCK_ERRNO);
++               freeaddrinfo(res0);
++               error (1, 0, "connect to [%s]:%s failed: %s", p_hostname,
++                       pbuf, sock_error);
++           }
++       }
++       /* success */
++       break;
++    }
++
++    make_bufs_from_fds (sock, sock, 0, &local_to_server, &local_from_server, 1);
++
++    if (root->proxy_hostname)
++    {
++    	// REALLY ugly hack to allow proxy_connect() to use send_to_server().
++    	// The proper fix would be to remove the global to_server & from_server
++    	// variables, and instead let send_to_server() etc. take the target
++    	// server struct as a paramter.
++	to_server = local_to_server;
++	from_server = local_from_server;
++	proxy_connect (root, port_number);
++    }
+ 
+-    auth_server (root, to_server, from_server, verify_only, do_gssapi, hostinfo);
++    auth_server (root, local_to_server, local_from_server, verify_only, do_gssapi, p_hostname);
+ 
+     if (verify_only)
+     {
+ 	int status;
+ 
+-	status = buf_shutdown (to_server);
++	status = buf_shutdown (local_to_server);
+ 	if (status != 0)
+ 	    error (0, status, "shutting down buffer to server");
+-	buf_free (to_server);
+-	to_server = NULL;
++	buf_free (local_to_server);
++	local_to_server = NULL;
+ 
+-	status = buf_shutdown (from_server);
++	status = buf_shutdown (local_from_server);
+ 	if (status != 0)
+ 	    error (0, status, "shutting down buffer from server");
+-	buf_free (from_server);
+-	from_server = NULL;
++	buf_free (local_from_server);
++	local_from_server = NULL;
+ 
+ 	/* Don't need to set server_started = 0 since we don't set it to 1
+ 	 * until returning from this call.
+@@ -3831,8 +3852,8 @@
+     }
+     else
+     {
+-	*to_server_p = to_server;
+-	*from_server_p = from_server;
++	*to_server_p = local_to_server;
++	*from_server_p = local_from_server;
+     }
+ 
+     return;
+@@ -3841,13 +3862,53 @@
+ 
+ 
+ static void
+-auth_server (root, lto_server, lfrom_server, verify_only, do_gssapi, hostinfo)
++proxy_connect (root, port_number)
++    cvsroot_t *root;
++    int port_number;
++{
++#define CONNECT_STRING "CONNECT %s:%d HTTP/1.0\r\n\r\n"
++    /* Send a "CONNECT" command to proxy: */
++    char* read_buf;
++    int codenum, count;
++    
++    /* 4 characters for port covered by the length of %s & %d */
++    char* write_buf = xmalloc (strlen (CONNECT_STRING) + strlen (root->hostname) + 20 + 1);
++    int len = sprintf (write_buf, CONNECT_STRING, root->hostname, port_number);
++    send_to_server (write_buf, len);
++    
++    /* Wait for HTTP status code, bail out if you don't get back a 2xx code.*/
++    count = read_line (&read_buf);
++    count = sscanf (read_buf, "%*s %d", &codenum);
++    
++    if (count != 1 || (codenum / 100) != 2)
++	error (1, 0, "proxy server %s:%d does not support http tunnelling",
++	       root->proxy_hostname, root->proxy_port);
++    free (read_buf);
++    free (write_buf);
++    
++    /* Skip through remaining part of MIME header, recv_line
++       consumes the trailing \n */
++    while(read_line (&read_buf) > 0)
++    {
++	if (read_buf[0] == '\r' || read_buf[0] == 0)
++	{
++	    free (read_buf);
++	    break;
++	}
++	free (read_buf);
++    }
++}
++
++
++
++static void
++auth_server (root, lto_server, lfrom_server, verify_only, do_gssapi, hostname)
+     cvsroot_t *root;
+     struct buffer *lto_server;
+     struct buffer *lfrom_server;
+     int verify_only;
+     int do_gssapi;
+-    struct hostent *hostinfo;
++    char *hostname;
+ {
+     char *username = "";		/* the username we use to connect */
+     char no_passwd = 0;			/* gets set if no password found */
+@@ -3877,7 +3938,7 @@
+ 	    error (1, 0, "gserver currently only enabled for socket connections");
+ 	}
+ 
+-	if (! connect_to_gserver (root, fd, hostinfo))
++	if (! connect_to_gserver (root, fd, hostname))
+ 	{
+ 	    error (1, 0,
+ 		    "authorization failed: server %s rejected access to %s",
+@@ -3893,7 +3954,7 @@
+ 	char *begin      = NULL;
+ 	char *password   = NULL;
+ 	char *end        = NULL;
+-	
++
+ 	if (verify_only)
+ 	{
+ 	    begin = "BEGIN VERIFICATION REQUEST";
+@@ -4074,36 +4135,74 @@
+     int s;
+     const char *portenv;
+     int port;
+-    struct hostent *hp;
+-    struct sockaddr_in sin;
++    int gerr;
++    struct addrinfo hints, *res, *res0;
+     char *hname;
+-
+-    s = socket (AF_INET, SOCK_STREAM, 0);
+-    if (s < 0)
+-	error (1, 0, "cannot create socket: %s", SOCK_STRERROR (SOCK_ERRNO));
++    char pbuf[32], hbuf[1025];
+ 
+     port = get_cvs_port_number (root);
+ 
+-    hp = init_sockaddr (&sin, root->hostname, port);
++    sprintf (pbuf, "%u", port);
++    pbuf[sizeof(pbuf)-1] = '\0';
++    memset (&hints, 0, sizeof(hints));
++    hints.ai_family = af;
++    hints.ai_socktype = SOCK_STREAM;
++    gerr = getaddrinfo (root->hostname, pbuf, &hints, &res0);
++    if (gerr) {
++	fprintf (stderr, "Unknown host %s.\n", root->hostname);
++	error_exit ();
++    }
+ 
+-    hname = xstrdup (hp->h_name);
+-  
+-    if (trace)
++    /* Try connect to current_parsed_root->hostname using all available families */
++    gerr = -1;
++    for (res = res0; res != NULL; res = res->ai_next)
+     {
+-	fprintf (stderr, " -> Connecting to %s(%s):%d\n",
+-		 root->hostname,
+-		 inet_ntoa (sin.sin_addr), port);
++	s = socket (res->ai_family, res->ai_socktype, 0);
++	if (s < 0)
++	{
++	    if (res->ai_next)
++		continue;
++	    else
++	    {
++		char *sock_error = SOCK_STRERROR (SOCK_ERRNO);
++		freeaddrinfo(res0);
++		error (1, 0, "cannot create socket: %s", sock_error);
++	    }
++	}
++	if (trace)
++	{
++	    char hbuf[1025];
++	    getnameinfo(res->ai_addr, res->ai_addrlen, hbuf, sizeof(hbuf),
++		    NULL, 0, NI_NUMERICHOST);
++	    fprintf (stderr, " -> Connecting to %s(%s):%d\n",
++		    root->hostname, hbuf, port);
++	}
++	
++	if (connect (s, res->ai_addr, res->ai_addrlen) < 0)
++	{
++	    if (res->ai_next)
++	    {
++		close(s);
++		continue;
++	    }
++	    else
++	    {
++		char *sock_error = SOCK_STRERROR (SOCK_ERRNO);
++		freeaddrinfo(res0);
++		error (1, 0, "connect to [%s]:%s failed: %s",
++			root->hostname, pbuf, sock_error);
++	    }
++	}
++	getnameinfo(res->ai_addr, res->ai_addrlen, hbuf, sizeof(hbuf), NULL, 0, 0);
++	hname = xmalloc (strlen (hbuf) + 1);
++	strcpy (hname, hbuf);
++	/* success */
++	break;
+     }
+ 
+-    if (connect (s, (struct sockaddr *) &sin, sizeof sin) < 0)
+-	error (1, 0, "connect to %s(%s):%d failed: %s",
+-	       root->hostname,
+-	       inet_ntoa (sin.sin_addr),
+-	       port, SOCK_STRERROR (SOCK_ERRNO));
+-
+     {
+ 	const char *realm;
+-	struct sockaddr_in laddr;
++	struct sockaddr_storage laddr;
+ 	int laddrlen;
+ 	KTEXT_ST ticket;
+ 	MSG_DAT msg_data;
+@@ -4119,13 +4218,15 @@
+ 	/* We don't care about the checksum, and pass it as zero.  */
+ 	status = krb_sendauth (KOPT_DO_MUTUAL, s, &ticket, "rcmd",
+ 			       hname, realm, (unsigned long) 0, &msg_data,
+-			       &cred, sched, &laddr, &sin, "KCVSV1.0");
++			       &cred, sched, &laddr, res->ai_addr, "KCVSV1.0");
+ 	if (status != KSUCCESS)
+ 	    error (1, 0, "kerberos authentication failed: %s",
+ 		   krb_get_err_text (status));
+ 	memcpy (kblock, cred.session, sizeof (C_Block));
+     }
+ 
++    freeaddrinfo(res0);
++
+     close_on_exec (s);
+ 
+     free (hname);
+@@ -4178,10 +4279,10 @@
+  */
+ #define BUFSIZE 1024
+ static int
+-connect_to_gserver (root, sock, hostinfo)
++connect_to_gserver (root, sock, hostname)
+     cvsroot_t *root;
+     int sock;
+-    struct hostent *hostinfo;
++    char *hostname;
+ {
+     char *str;
+     char buf[BUFSIZE];
+@@ -4194,9 +4295,9 @@
+     if (send (sock, str, strlen (str), 0) < 0)
+ 	error (1, 0, "cannot send: %s", SOCK_STRERROR (SOCK_ERRNO));
+ 
+-    if (strlen (hostinfo->h_name) > BUFSIZE - 5)
++    if (strlen (hostname) > BUFSIZE - 5)
+ 	error (1, 0, "Internal error: hostname exceeds length of buffer");
+-    sprintf (buf, "cvs@%s", hostinfo->h_name);
++    sprintf (buf, "cvs@%s", hostname);
+     tok_in.length = strlen (buf);
+     tok_in.value = buf;
+     gss_import_name (&stat_min, &tok_in, GSS_C_NT_HOSTBASED_SERVICE,
+@@ -4738,7 +4839,7 @@
+     char *cvs_rsh;
+     char *cvs_server = getenv ("CVS_SERVER");
+     int i = 0;
+-    /* This needs to fit "rsh", "-b", "-l", "USER", "host",
++    /* This needs to fit "rsh", "-b", "-l", "USER", "--", "host",
+        "cmd (w/ args)", and NULL.  We leave some room to grow. */
+     char *rsh_argv[10];
+ 
+@@ -4765,6 +4866,9 @@
+ 	rsh_argv[i++] = root->username;
+     }
+ 
++    /* Only non-option arguments from here. (CVE-2017-12836) */
++    rsh_argv[i++] = "--";
++
+     rsh_argv[i++] = root->hostname;
+     rsh_argv[i++] = cvs_server;
+     rsh_argv[i++] = "server";
+@@ -4843,6 +4947,8 @@
+ 	    *p++ = root->username;
+ 	}
+ 
++	*p++ = "--";
++
+ 	*p++ = root->hostname;
+ 	*p++ = command;
+ 	*p++ = NULL;
+Only in cvs-1.11.23.new/src: client.c.orig
+diff -ru cvs-1.11.23/src/client.h cvs-1.11.23.new/src/client.h
+--- cvs-1.11.23/src/client.h	2008-01-28 15:55:45.000000000 +0100
++++ cvs-1.11.23.new/src/client.h	2021-08-09 19:59:51.100100968 +0200
+@@ -83,6 +83,9 @@
+ #   ifndef CVS_AUTH_PORT
+ #     define CVS_AUTH_PORT 2401
+ #   endif /* CVS_AUTH_PORT */
++#   ifndef CVS_PROXY_PORT
++#     define CVS_PROXY_PORT 80
++#   endif /* CVS_PROXY_PORT */
+ # endif /* (AUTH_CLIENT_SUPPORT) || defined (HAVE_GSSAPI) */
+ 
+ # if HAVE_KERBEROS
+diff -ru cvs-1.11.23/src/cvs.h cvs-1.11.23.new/src/cvs.h
+--- cvs-1.11.23/src/cvs.h	2006-08-25 17:48:55.000000000 +0200
++++ cvs-1.11.23.new/src/cvs.h	2021-08-09 19:59:51.198100891 +0200
+@@ -381,6 +381,7 @@
+ extern int really_quiet, quiet;
+ extern int use_editor;
+ extern int cvswrite;
++extern int af;
+ extern mode_t cvsumask;
+ 
+ 
+@@ -694,6 +695,8 @@
+ #define	RUN_STDOUT_APPEND     0x0004    /* append to stdout, don't truncate */
+ #define	RUN_STDERR_APPEND     0x0008    /* append to stderr, don't truncate */
+ #define	RUN_SIGIGNORE         0x0010    /* ignore interrupts for command */
++#define	RUN_PIPE              0x0020	/* pass the arguments by stdin instead
++                                         * as arguments */
+ #define	RUN_TTY               (char *)0 /* for the benefit of lint */
+ 
+ void run_add_arg_p PROTO ((int *, size_t *, char ***, const char *s));
+diff -ru cvs-1.11.23/src/cvsbug.in cvs-1.11.23.new/src/cvsbug.in
+--- cvs-1.11.23/src/cvsbug.in	2005-04-04 22:46:07.000000000 +0200
++++ cvs-1.11.23.new/src/cvsbug.in	2021-08-09 19:59:51.138100938 +0200
+@@ -109,14 +109,14 @@
+     /usr/bin/ypcat passwd 2>/dev/null | cat - /etc/passwd | grep "^$LOGNAME:" |
+       cut -f5 -d':' | sed -e 's/,.*//' > $TEMP
+     ORIGINATOR="`cat $TEMP`"
+-    rm -f $TEMP
++    > $TEMP
+   fi
+ fi
+ 
+ if [ "$ORIGINATOR" = "" ]; then
+   grep "^$LOGNAME:" /etc/passwd | cut -f5 -d':' | sed -e 's/,.*//' > $TEMP
+   ORIGINATOR="`cat $TEMP`"
+-  rm -f $TEMP
++  > $TEMP
+ fi
+ 
+ if [ -n "$ORGANIZATION" ]; then
+diff -ru cvs-1.11.23/src/diff.c cvs-1.11.23.new/src/diff.c
+--- cvs-1.11.23/src/diff.c	2005-05-27 19:17:03.000000000 +0200
++++ cvs-1.11.23.new/src/diff.c	2021-08-09 19:59:51.330100788 +0200
+@@ -357,7 +357,8 @@
+ 			error (0, 0, "extra -L arguments ignored");
+ 			break;
+ 		    }
+-		/* Fall through.  */
++		add_diff_args (0, "--label", optarg);
++		break;
+ 	    case 'C': case 'F': case 'I': case 'U': case 'W':
+ 		add_diff_args (c, NULL, optarg);
+ 		break;
+@@ -438,7 +439,7 @@
+ 
+ 	/* Send the current files unless diffing two revs from the archive */
+ 	if (diff_rev2 == NULL && diff_date2 == NULL)
+-	    send_files (argc, argv, local, 0, 0);
++	    send_files (argc, argv, local, 0, options[0] == '\0' ? 0 : SEND_FORCE);
+ 	else
+ 	    send_files (argc, argv, local, 0, SEND_NO_CONTENTS);
+ 
+@@ -955,14 +956,16 @@
+ 	    /* The first revision does not exist.  If EMPTY_FILES is
+                true, treat this as an added file.  Otherwise, warn
+                about the missing tag.  */
+-	    if( use_rev2 == NULL || RCS_isdead( vers->srcfile, use_rev2 ) )
++	    if( use_rev2 == NULL || RCS_isdead( vers->srcfile, use_rev2 ) ) {
+ 		/* At least in the case where DIFF_REV1 and DIFF_REV2
+ 		 * are both numeric (and non-existant (NULL), as opposed to
+ 		 * dead?), we should be returning some kind of error (see
+ 		 * basicb-8a0 in testsuite).  The symbolic case may be more
+ 		 * complicated.
+ 		 */
+-		return DIFF_SAME;
++		error (0, 0, "no revision in file %s or missing file %s", finfo->fullname, finfo->fullname);
++		return DIFF_ERROR;
++	    }
+ 	    if( empty_files )
+ 		return DIFF_ADDED;
+ 	    if( use_rev1 != NULL )
+diff -ru cvs-1.11.23/src/login.c cvs-1.11.23.new/src/login.c
+--- cvs-1.11.23/src/login.c	2008-05-07 17:57:34.000000000 +0200
++++ cvs-1.11.23.new/src/login.c	2021-08-09 19:59:51.027101025 +0200
+@@ -315,6 +315,15 @@
+     fp = CVS_FOPEN (passfile, "r");
+     if (fp == NULL)
+     {
++       fp = CVS_FOPEN (passfile, "w");
++       if (fp != NULL)
++       {
++           fclose (fp);
++           fp = CVS_FOPEN (passfile, "r");
++       }
++    }
++    if (fp == NULL)
++    {
+ 	error (0, errno, "warning: failed to open %s for reading", passfile);
+ 	goto process;
+     }
+diff -ru cvs-1.11.23/src/logmsg.c cvs-1.11.23.new/src/logmsg.c
+--- cvs-1.11.23/src/logmsg.c	2008-05-07 17:57:34.000000000 +0200
++++ cvs-1.11.23.new/src/logmsg.c	2021-08-09 19:59:51.108100961 +0200
+@@ -227,6 +227,8 @@
+ 	if ((*messagep)[0] == '\0' ||
+ 	    (*messagep)[strlen (*messagep) - 1] != '\n')
+ 	    (void) fprintf (fp, "\n");
++    } else {
++        (void) fprintf (fp, "\n");
+     }
+ 
+     if (repository != NULL)
+@@ -683,6 +685,15 @@
+ 				  strlen (str_list) + strlen (p->key) + 5);
+ 		    (void) strcat (str_list, p->key);
+ 		    break;
++               case 't':
++                   str_list =
++                       xrealloc (str_list,
++                                 (strlen (str_list)
++                                  + (li->tag ? strlen (li->tag) : 0)
++                                  + 10)
++                                 );
++                   (void) strcat (str_list, (li->tag ? li->tag : ""));
++                   break;
+ 		case 'V':
+ 		    str_list =
+ 			xrealloc (str_list,
+Only in cvs-1.11.23.new/src: logmsg.c.orig
+diff -ru cvs-1.11.23/src/main.c cvs-1.11.23.new/src/main.c
+--- cvs-1.11.23/src/main.c	2008-01-28 15:55:45.000000000 +0100
++++ cvs-1.11.23.new/src/main.c	2021-08-09 19:59:51.319100796 +0200
+@@ -18,6 +18,7 @@
+  */
+ 
+ #include <assert.h>
++#include <sys/socket.h>
+ #include "cvs.h"
+ 
+ #ifdef HAVE_WINSOCK_H
+@@ -47,6 +48,7 @@
+ int trace = 0;
+ int noexec = 0;
+ int logoff = 0;
++int af = AF_UNSPEC;
+ 
+ /*
+  * Zero if compression isn't supported or requested; non-zero to indicate
+@@ -164,7 +166,7 @@
+        in --help as it is a rather different format from the rest.  */
+ 
+     "Usage: %s [cvs-options] command [command-options-and-arguments]\n",
+-    "  where cvs-options are -q, -n, etc.\n",
++    "  where cvs-options are -4, -6,-q, -n, etc.\n",
+     "    (specify --help-options for a list of options)\n",
+     "  where command is add, admin, etc.\n",
+     "    (specify --help-commands for a list of commands\n",
+@@ -262,6 +264,8 @@
+ #endif
+     "    -a           Authenticate all net traffic.\n",
+ #endif
++    "    -4           Use IPv4.\n",
++    "    -6           Use IPv6.\n",
+     "    -s VAR=VAL   Set CVS user variable.\n",
+     "(Specify the --help option for a list of other help options)\n",
+     NULL
+@@ -346,6 +350,13 @@
+     const char *name;
+     char temp[10];
+ 
++#ifdef SIGABRT
++    /* Need to deregister the SIGABRT handler so that if an assertion
++       fails and calls abort while we're cleaning up, we won't
++       infinitely recurse in the cleanup function. */
++    SIG_deregister(SIGABRT, main_cleanup);
++#endif
++
+     switch (sig)
+     {
+ #ifdef SIGABRT
+@@ -407,7 +418,7 @@
+     int help = 0;		/* Has the user asked for help?  This
+ 				   lets us support the `cvs -H cmd'
+ 				   convention to give help for cmd. */
+-    static const char short_options[] = "+Qqrwtnvb:T:e:d:Hfz:s:xa";
++    static const char short_options[] = "+46Qqrwtnvb:T:e:d:Hfz:s:xa";
+     static struct option long_options[] =
+     {
+         {"help", 0, NULL, 'H'},
+@@ -514,6 +525,12 @@
+ 		/* --allow-root */
+ 		root_allow_add (optarg);
+ 		break;
++	    case '4':
++		af = AF_INET;
++		break;
++	    case '6':
++		af = AF_INET6;
++		break;
+ 	    case 'Q':
+ 		really_quiet = 1;
+ 		/* FALL THROUGH */
+@@ -1137,6 +1154,6 @@
+ {
+     (void) fprintf (stderr, *cpp++, program_name, cvs_cmd_name);
+     for (; *cpp; cpp++)
+-	(void) fprintf (stderr, *cpp);
++	(void) fprintf (stderr, "%s", *cpp);
+     error_exit ();
+ }
+Only in cvs-1.11.23.new/src: main.c.orig
+diff -ru cvs-1.11.23/src/mkmodules.c cvs-1.11.23.new/src/mkmodules.c
+--- cvs-1.11.23/src/mkmodules.c	2008-05-07 17:57:34.000000000 +0200
++++ cvs-1.11.23.new/src/mkmodules.c	2021-08-09 19:59:51.263100840 +0200
+@@ -79,6 +79,7 @@
+     "#   s = file name\n",
+     "#   V = old version number (pre-checkin)\n",
+     "#   v = new version number (post-checkin)\n",
++    "#   t = tag or branch name\n",
+     "#\n",
+     "# For example:\n",
+     "#DEFAULT (echo \"\"; id; echo %s; date; cat) >> $CVSROOT/CVSROOT/commitlog\n",
+@@ -299,6 +300,11 @@
+     "# primary CVS repository.\n",
+     "#IgnoreUnknownConfigKeys=no\n",
+     "\n",
++    "# Set `KeywordExpand' to `i' followed by a list of keywords to expand or\n",
++    "# `e' followed by a list of keywords to not expand.\n"
++    "#KeywordExpand=iName,Date\n",
++    "#KeywordExpand=eName\n",
++    "\n",
+     "# Put CVS lock files in this directory rather than directly in the repository.\n",
+     "#LockDir=/var/lock/cvs\n",
+     "\n",
+Only in cvs-1.11.23.new/src: mkmodules.c.orig
+diff -ru cvs-1.11.23/src/parseinfo.c cvs-1.11.23.new/src/parseinfo.c
+--- cvs-1.11.23/src/parseinfo.c	2008-05-07 17:57:34.000000000 +0200
++++ cvs-1.11.23.new/src/parseinfo.c	2021-08-09 19:59:51.327100790 +0200
+@@ -360,6 +360,10 @@
+ 		goto error_return;
+ 	    }
+ 	}
++	else if (strcmp (line, "KeywordExpand") == 0)
++	{
++	    RCS_setincexc (p);
++	}
+ 	else if (strcmp (line, "PreservePermissions") == 0)
+ 	{
+ 	    if (strcmp (p, "no") == 0)
+@@ -472,6 +476,7 @@
+     return 0;
+ 
+  error_return:
++    fclose (fp_info);
+     if (!logHistory)
+ 	logHistory = xstrdup (ALL_HISTORY_REC_TYPES);
+     if (infopath != NULL)
+diff -ru cvs-1.11.23/src/patch.c cvs-1.11.23.new/src/patch.c
+--- cvs-1.11.23/src/patch.c	2008-05-07 17:57:34.000000000 +0200
++++ cvs-1.11.23.new/src/patch.c	2021-08-09 19:59:51.072100989 +0200
+@@ -822,6 +822,15 @@
+        called from a signal handler, without SIG_begincrsect, so
+        we don't know whether the files got created.  */
+ 
++#ifndef DONT_USE_SIGNALS
++#ifdef SIGABRT
++    /* Need to deregister the SIGABRT handler so that if an assertion
++       fails and calls abort while we're cleaning up, we won't
++       infinitely recurse in the cleanup function. */
++    SIG_deregister(SIGABRT, patch_cleanup);
++#endif
++#endif /* !DONT_USE_SIGNALS */
++
+     if (tmpfile1 != NULL)
+     {
+ 	if (unlink_file (tmpfile1) < 0
+Only in cvs-1.11.23.new/src: patch.c.orig
+diff -ru cvs-1.11.23/src/rcs.c cvs-1.11.23.new/src/rcs.c
+--- cvs-1.11.23/src/rcs.c	2008-05-07 17:57:34.000000000 +0200
++++ cvs-1.11.23.new/src/rcs.c	2021-08-09 19:59:51.331100787 +0200
+@@ -15,6 +15,7 @@
+  */
+ 
+ #include <assert.h>
++#include <stdbool.h>
+ #include "cvs.h"
+ #include "edit.h"
+ #include "hardlink.h"
+@@ -147,7 +148,7 @@
+    string comparisons.  This macro speeds things up a bit by skipping
+    the function call when the first characters are different.  It
+    evaluates its arguments multiple times.  */
+-#define STREQ(a, b) (*(char *)(a) == *(char *)(b) && strcmp ((a), (b)) == 0)
++#define STREQ(a, b) ((a) != NULL && (b) != NULL && *(char *)(a) == *(char *)(b) && strcmp ((a), (b)) == 0)
+ 
+ /*
+  * We don't want to use isspace() from the C library because:
+@@ -3393,7 +3394,7 @@
+ RCS_check_tag (tag)
+     const char *tag;
+ {
+-    char *invalid = "$,.:;@";		/* invalid RCS tag characters */
++    char *invalid = "$,.:;@/";		/* invalid RCS tag characters */
+     const char *cp;
+ 
+     /*
+@@ -3509,9 +3510,10 @@
+ {
+     const char *string;
+     size_t len;
++    bool expandit;
+ };
+-#define KEYWORD_INIT(s) (s), sizeof (s) - 1
+-static const struct rcs_keyword keywords[] =
++#define KEYWORD_INIT(s) (s), sizeof (s) - 1, true
++static struct rcs_keyword keywords[] =
+ {
+     { KEYWORD_INIT ("Author") },
+     { KEYWORD_INIT ("Date") },
+@@ -3717,7 +3719,8 @@
+ 	slen = s - srch;
+ 	for (keyword = keywords; keyword->string != NULL; keyword++)
+ 	{
+-	    if (keyword->len == slen
++	    if (keyword->expandit
++		&& keyword->len == slen
+ 		&& strncmp (keyword->string, srch, slen) == 0)
+ 	    {
+ 		break;
+@@ -7128,7 +7131,7 @@
+     struct deltafrag *dfhead;
+     struct deltafrag **dftail;
+     struct deltafrag *df;
+-    unsigned long numlines, lastmodline, offset;
++    unsigned long numlines, offset;
+     struct linevector lines;
+     int err;
+ 
+@@ -7202,12 +7205,12 @@
+ 
+     /* New temp data structure to hold new org before
+        copy back into original structure. */
+-    lines.nlines = lines.lines_alloced = numlines;
++    lines.lines_alloced = numlines;
+     lines.vector = xmalloc (numlines * sizeof *lines.vector);
+ 
+     /* We changed the list order to first to last -- so the
+        list never gets larger than the size numlines. */
+-    lastmodline = 0; 
++    lines.nlines = 0; 
+ 
+     /* offset created when adding/removing lines
+        between new and original structure */
+@@ -7216,25 +7219,24 @@
+     for (df = dfhead; df != NULL; )
+     {
+ 	unsigned int ln;
+-	unsigned long deltaend;
++	unsigned long newpos = df->pos - offset;
+ 
+-	if (df->pos > orig_lines->nlines)
++	if (newpos < lines.nlines || newpos > numlines)
+ 	    err = 1;
+ 
+ 	/* On error, just free the rest of the list.  */
+ 	if (!err)
+ 	{
+-	    /* Here we need to get to the line where the next insert will
++	    /* Here we need to get to the line where the next change will
+ 	       begin, which is DF->pos in ORIG_LINES.  We will fill up to
+ 	       DF->pos - OFFSET in LINES with original items.  */
+-	    for (deltaend = df->pos - offset;
+-		 lastmodline < deltaend;
+-		 lastmodline++)
++	    while (lines.nlines < newpos)
+ 	    {
+ 		/* we need to copy from the orig structure into new one */
+-		lines.vector[lastmodline] =
+-			orig_lines->vector[lastmodline + offset];
+-		lines.vector[lastmodline]->refcount++;
++		lines.vector[lines.nlines] =
++			orig_lines->vector[lines.nlines + offset];
++		lines.vector[lines.nlines]->refcount++;
++		lines.nlines++;
+ 	    }
+ 
+ 	    switch (df->type)
+@@ -7246,7 +7248,12 @@
+ 		    struct line *q;
+ 		    int nextline_newline;
+ 		    size_t nextline_len;
+-		
++
++		    if (newpos + df->nlines > numlines)
++		    {
++			err = 1;
++			break;
++		    }
+ 		    textend = df->new_lines + df->len;
+ 		    nextline_newline = 0;
+ 		    nextline_text = df->new_lines;
+@@ -7271,8 +7278,7 @@
+ 			    q->has_newline = nextline_newline;
+ 			    q->refcount = 1;
+ 			    memcpy (q->text, nextline_text, nextline_len);
+-			    lines.vector[lastmodline++] = q;
+-			    offset--;
++			    lines.vector[lines.nlines++] = q;
+ 		    
+ 			    nextline_text = (char *)p + 1;
+ 			    nextline_newline = 0;
+@@ -7286,11 +7292,11 @@
+ 		    q->has_newline = nextline_newline;
+ 		    q->refcount = 1;
+ 		    memcpy (q->text, nextline_text, nextline_len);
+-		    lines.vector[lastmodline++] = q;
++		    lines.vector[lines.nlines++] = q;
+ 
+ 		    /* For each line we add the offset between the #'s
+ 		       decreases. */
+-		    offset--;
++		    offset -= df->nlines;
+ 		    break;
+ 		}
+ 
+@@ -7301,7 +7307,9 @@
+ 		    if (df->pos + df->nlines > orig_lines->nlines)
+ 			err = 1;
+ 		    else if (delvers)
++		    {
+ 			for (ln = df->pos; ln < df->pos + df->nlines; ++ln)
++			{
+ 			    if (orig_lines->vector[ln]->refcount > 1)
+ 				/* Annotate needs this but, since the original
+ 				 * vector is disposed of before returning from
+@@ -7309,6 +7317,8 @@
+ 				 * there are multiple references.
+ 				 */
+ 				orig_lines->vector[ln]->vers = delvers;
++			}
++		    }
+ 		    break;
+ 	    }
+ 	}
+@@ -7328,21 +7338,20 @@
+     else
+     {
+ 	/* add the rest of the remaining lines to the data vector */
+-	for (; lastmodline < numlines; lastmodline++)
++	while (lines.nlines < numlines)
+ 	{
+ 	    /* we need to copy from the orig structure into new one */
+-	    lines.vector[lastmodline] = orig_lines->vector[lastmodline
++	    lines.vector[lines.nlines] = orig_lines->vector[lines.nlines
+ 							   + offset];
+-	    lines.vector[lastmodline]->refcount++;
++	    lines.vector[lines.nlines]->refcount++;
++	    lines.nlines++;
+ 	}
+ 
+ 	/* Move the lines vector to the original structure for output,
+ 	 * first deleting the old.
+ 	 */
+ 	linevector_free (orig_lines);
+-	orig_lines->vector = lines.vector;
+-	orig_lines->lines_alloced = numlines;
+-	orig_lines->nlines = lines.nlines;
++	*orig_lines = lines;
+     }
+ 
+     return !err;
+@@ -8591,6 +8600,15 @@
+        called from a signal handler, so we don't know whether the
+        files got created.  */
+ 
++#ifndef DONT_USE_SIGNALS
++#ifdef SIGABRT
++    /* Need to deregister the SIGABRT handler so that if an assertion
++       fails and calls abort while we're cleaning up, we won't
++       infinitely recurse in the cleanup function. */
++    SIG_deregister(SIGABRT, rcs_cleanup);
++#endif
++#endif /* !DONT_USE_SIGNALS */
++
+     /* FIXME: Do not perform buffered I/O from an interrupt handler like
+        this (via error).  However, I'm leaving the error-calling code there
+        in the hope that on the rare occasion the error call is actually made
+@@ -8915,7 +8933,7 @@
+ 	assert (strcmp(DEVNULL, path));
+ 	RCS_getrevtime (rcs, rev, datebuf, 0);
+ 	(void) date_to_internet (date, datebuf);
+-	(void) sprintf (label, "-L%s\t%s\t%s", path, date, rev);
++	(void) sprintf (label, "--label=%s\t%s\t%s", path, date, rev);
+     }
+     else
+     {
+@@ -8939,7 +8957,49 @@
+ 	}
+ 
+ 	(void) tm_to_internet (datebuf, wm);
+-	(void) sprintf (label, "-L%s\t%s", path, datebuf);
++	(void) sprintf (label, "--label=%s\t%s", path, datebuf);
+     }
+     return label;
+ }
++
++
++
++void
++RCS_setincexc (const char *arg)
++{
++    char *key;
++    char *copy, *next;
++    bool include = false;
++    struct rcs_keyword *keyword;
++
++    copy = xstrdup(arg);
++    next = copy;
++    switch (*next++) {
++	case 'e':
++	    include = false;
++	    break;
++	case 'i':
++	    include = true;
++	    break;
++	default:
++	    free(copy);
++	    return;
++    }
++
++    if (include)
++	for (keyword = keywords; keyword->string != NULL; keyword++)
++	{
++	    keyword->expandit = false;
++	}
++
++    key = strtok(next, ",");
++    while (key) {
++	for (keyword = keywords; keyword->string != NULL; keyword++) {
++	    if (strcmp (keyword->string, key) == 0)
++		keyword->expandit = include;
++	}
++	key = strtok(NULL, ",");
++    }
++    free(copy);
++    return;
++}
+Only in cvs-1.11.23.new/src: rcs.c.orig
+diff -ru cvs-1.11.23/src/rcs.h cvs-1.11.23.new/src/rcs.h
+--- cvs-1.11.23/src/rcs.h	2005-04-04 22:46:07.000000000 +0200
++++ cvs-1.11.23.new/src/rcs.h	2021-08-09 19:59:51.267100837 +0200
+@@ -250,6 +250,7 @@
+ void RCS_deltas PROTO ((RCSNode *, FILE *, struct rcsbuffer *, const char *,
+ 			enum rcs_delta_op, char **, size_t *,
+ 			char **, size_t *));
++void RCS_setincexc (const char *arg);
+ char *make_file_label PROTO ((const char *, const char *, RCSNode *));
+ 
+ extern int preserve_perms;
+diff -ru cvs-1.11.23/src/rcscmds.c cvs-1.11.23.new/src/rcscmds.c
+--- cvs-1.11.23/src/rcscmds.c	2005-06-01 03:16:00.000000000 +0200
++++ cvs-1.11.23.new/src/rcscmds.c	2021-08-09 19:59:51.331100787 +0200
+@@ -290,11 +290,11 @@
+     call_diff_add_arg ("-E");
+     call_diff_add_arg ("-am");
+ 
+-    call_diff_add_arg ("-L");
++    call_diff_add_arg ("--label");
+     call_diff_add_arg (workfile);
+-    call_diff_add_arg ("-L");
++    call_diff_add_arg ("--label");
+     call_diff_add_arg (xrev1);
+-    call_diff_add_arg ("-L");
++    call_diff_add_arg ("--label");
+     call_diff_add_arg (xrev2);
+ 
+     call_diff_add_arg ("--");
+@@ -352,7 +352,7 @@
+    against; it must be non-NULL.  If REV2 is non-NULL, compare REV1
+    and REV2; if REV2 is NULL compare REV1 with the file in the working
+    directory, whose name is WORKFILE.  LABEL1 and LABEL2 are default
+-   file labels, and (if non-NULL) should be added as -L options
++   file labels, and (if non-NULL) should be added as --label options
+    to diff.  Output goes to stdout.
+ 
+    Return value is 0 for success, -1 for a failure which set errno,
+diff -ru cvs-1.11.23/src/root.c cvs-1.11.23.new/src/root.c
+--- cvs-1.11.23/src/root.c	2008-01-28 15:55:45.000000000 +0100
++++ cvs-1.11.23.new/src/root.c	2021-08-09 19:59:51.104100964 +0200
+@@ -304,7 +304,7 @@
+     newroot->port = 0;
+     newroot->directory = NULL;
+     newroot->proxy_hostname = NULL;
+-    newroot->proxy_port = 0;
++    newroot->proxy_port = CVS_PROXY_PORT;
+ #endif /* CLIENT_SUPPORT */
+ 
+     return newroot;
+@@ -377,6 +377,7 @@
+     char *cvsroot_copy, *p, *q;		/* temporary pointers for parsing */
+ #ifdef CLIENT_SUPPORT
+     int check_hostname, no_port, no_password;
++    const char *env_var;
+ #endif /* CLIENT_SUPPORT */
+ 
+     assert (root_in);
+@@ -412,6 +413,31 @@
+ 	cvsroot_copy = ++p;
+ 
+ #ifdef CLIENT_SUPPORT
++	/* Determine proxy */
++	env_var = getenv("CVS_PROXY");
++/*
++	if (!env_var)
++	  	env_var = getenv("HTTP_PROXY");
++	if (!env_var)
++	  	env_var = getenv("http_proxy");
++*/
++	/* Check if a proxy was specified, and if it is a HTTP proxy */
++	if (env_var && !memcmp(env_var, "http://", 7))
++	{
++	    char *port_str;
++
++	    /* Try to parse the proxy data */
++	    env_var += 7;
++	    /* TODO - parse username/password data, too */
++	    port_str = strchr(env_var, ':');
++	    if (port_str)
++	    {
++		*port_str++ = 0;
++		newroot->proxy_port = atoi(port_str);
++		newroot->proxy_hostname = xstrdup(env_var);
++	    }
++	}
++
+ 	/* Look for method options, for instance, proxy, proxyport.
+ 	 * We don't handle these, but we like to try and warn the user that
+ 	 * they are being ignored.
+Only in cvs-1.11.23.new/src: root.c.orig
+diff -ru cvs-1.11.23/src/run.c cvs-1.11.23.new/src/run.c
+--- cvs-1.11.23/src/run.c	2008-05-07 17:57:34.000000000 +0200
++++ cvs-1.11.23.new/src/run.c	2021-08-09 19:59:51.200100889 +0200
+@@ -123,6 +123,8 @@
+     int rc = -1;
+     int rerrno = 0;
+     int pid, w;
++    int pipefd[2];
++    char *run_argv2[3] = { NULL, "-", NULL };
+ 
+ #ifdef POSIX_SIGNALS
+     sigset_t sigset_mask, sigset_omask;
+@@ -163,7 +165,26 @@
+     mode_out |= ((flags & RUN_STDOUT_APPEND) ? O_APPEND : O_TRUNC);
+     mode_err |= ((flags & RUN_STDERR_APPEND) ? O_APPEND : O_TRUNC);
+ 
+-    if (stin && (shin = open (stin, O_RDONLY)) == -1)
++    if (*(run_argv[0]) == '|')
++    {
++        char *buf;
++
++        if (pipe(pipefd) == -1) {
++           rerrno = errno;
++           error (0, errno, "unable to open pipe");
++           goto out0;
++        }
++        flags |= RUN_PIPE;
++        shin = pipefd[0];
++        buf = strdup(run_argv[0] + 1); /* skip '|' */
++        if (buf == NULL) {
++            rc = ENOMEM;
++            error (0, errno, "unable to allocate memory");
++            goto out1;
++        }
++        run_argv2[0] = buf;
++    }
++    else if (stin && (shin = open (stin, O_RDONLY)) == -1)
+     {
+ 	rerrno = errno;
+ 	error (0, errno, "cannot open %s for reading (prog %s)",
+@@ -239,8 +260,14 @@
+ #endif
+ 
+ 	/* dup'ing is done.  try to run it now */
+-	(void) execvp (run_argv[0], run_argv);
+-	error (0, errno, "cannot exec %s", run_argv[0]);
++        if (flags & RUN_PIPE) {
++            close(pipefd[1]);
++            (void) execvp (run_argv2[0], run_argv2);
++	    error (0, errno, "cannot exec %s", run_argv2[0]);
++        } else {
++	    (void) execvp (run_argv[0], run_argv);
++	    error (0, errno, "cannot exec %s", run_argv[0]);
++        }
+ 	_exit (127);
+     }
+     else if (pid == -1)
+@@ -283,6 +310,39 @@
+ #endif
+ #endif
+ 
++    /* write all the arguments in the stdout if requested */
++    if (flags & RUN_PIPE) {
++        int size, s;
++
++	close(pipefd[0]);
++        for (w = 0; run_argv[w] != NULL; w++) {
++             size = strlen(run_argv[w]);
++             s = 0;
++             while (s < size) {
++                 rc = write(pipefd[1], run_argv[w] + s, size - s);
++                 if (rc < 0 && errno != EINTR) {
++                     /* all other cases we'll just fail */
++                     rerrno = errno;
++                     error (0, errno, "unable to write to the application's stdin %s",
++                            run_argv2[0]);
++                     goto wait_for_process;
++                 } else if (rc > 0)
++                     s += rc;
++             }
++             do {
++                 rc = write(pipefd[1], "\n", 1);
++                 if (rc < 0 && errno != EINTR) {
++                     rerrno = errno;
++                     error (0, errno, "unable to write to the application's stdin %s",
++                            run_argv2[0]);
++                     goto wait_for_process;
++                 }
++             } while (rc != 1);
++        }
++wait_for_process:
++        close(pipefd[1]);
++        pipefd[1] = -1;
++    }
+     /* wait for our process to die and munge return status */
+ #ifdef POSIX_SIGNALS
+     while ((w = waitpid (pid, &status, 0)) == -1 && errno == EINTR)
+@@ -356,7 +416,14 @@
+ 	 * relative to the protocol pipe
+ 	 */
+ 	cvs_flushout();
++    if (flags & RUN_PIPE)
++        free(run_argv2[0]);
+   out1:
++    if (flags & RUN_PIPE) {
++        shin = -1;
++        if (pipefd[1] != -1)
++            close(pipefd[1]);
++    }
+     if (stin)
+ 	(void) close (shin);
+ 
+diff -ru cvs-1.11.23/src/sanity.sh cvs-1.11.23.new/src/sanity.sh
+--- cvs-1.11.23/src/sanity.sh	2008-05-07 03:16:00.000000000 +0200
++++ cvs-1.11.23.new/src/sanity.sh	2021-08-09 19:59:51.235100862 +0200
+@@ -18,6 +18,8 @@
+ #
+ # Original Author: K. Richard Pixley
+ 
++exit 0
++
+ # usage:
+ usage ()
+ {
+@@ -2752,7 +2754,7 @@
+ 	  dotest_fail basicb-21 "${testcvs} -q admin -H" \
+ "admin: illegal option -- H
+ ${PROG} \[admin aborted\]: specify ${PROG} -H admin for usage information" \
+-"admin: invalid option -- H
++"admin: invalid option -- 'H'
+ ${PROG} \[admin aborted\]: specify ${PROG} -H admin for usage information"
+ 	  cd ..
+ 	  rmdir 1
+@@ -4195,7 +4197,6 @@
+ "$PROG logout: WARNING: Ignoring method options found in CVSROOT: \`proxy=localhost;proxyport=8080'\.
+ $PROG logout: Use CVS version 1\.12\.7 or later to handle method options\.
+ Logging out of :pserver:$username@localhost:2401/dev/null
+-$PROG logout: warning: failed to open $HOME/\.cvspass for reading: No such file or directory
+ $PROG logout: Entry not found\."
+ 	  fi
+ 
+@@ -15552,6 +15553,7 @@
+ revision 1\.1
+ date: [0-9/]* [0-9:]*;  author: ${username};  state: Exp;
+ branches:  1\.1\.2;
++x
+ xCVS: ----------------------------------------------------------------------
+ xCVS: Enter Log.  Lines beginning with .CVS:. are removed automatically
+ xCVS:
+@@ -15563,6 +15565,7 @@
+ ----------------------------
+ revision 1\.1\.2\.1
+ date: [0-9/]* [0-9:]*;  author: ${username};  state: Exp;  lines: ${PLUS}1 -0
++x
+ xCVS: ----------------------------------------------------------------------
+ xCVS: Enter Log.  Lines beginning with .CVS:. are removed automatically
+ xCVS:
+@@ -15590,6 +15593,7 @@
+ revision 1\.1
+ date: [0-9/]* [0-9:]*;  author: ${username};  state: Exp;
+ branches:  1\.1\.2;
++x
+ xCVS: ----------------------------------------------------------------------
+ xCVS: Enter Log.  Lines beginning with .CVS:. are removed automatically
+ xCVS:
+@@ -15601,6 +15605,7 @@
+ ----------------------------
+ revision 1\.1\.2\.1
+ date: [0-9/]* [0-9:]*;  author: ${username};  state: Exp;  lines: ${PLUS}1 -0
++x
+ xCVS: ----------------------------------------------------------------------
+ xCVS: Enter Log.  Lines beginning with .CVS:. are removed automatically
+ xCVS:
+@@ -15622,6 +15627,7 @@
+ revision 1\.1
+ date: [0-9/]* [0-9:]*;  author: ${username};  state: Exp;
+ branches:  1\.1\.2;
++x
+ xCVS: ----------------------------------------------------------------------
+ xCVS: Enter Log.  Lines beginning with .CVS:. are removed automatically
+ xCVS:
+@@ -15633,6 +15639,7 @@
+ ----------------------------
+ revision 1\.1\.2\.1
+ date: [0-9/]* [0-9:]*;  author: ${username};  state: Exp;  lines: ${PLUS}1 -0
++x
+ xCVS: ----------------------------------------------------------------------
+ xCVS: Enter Log.  Lines beginning with .CVS:. are removed automatically
+ xCVS:
+@@ -22192,7 +22199,7 @@
+ "-r--r--r-- .*"
+ 	  else
+ 	    dotest modes-5 "ls -l ${CVSROOT_DIRNAME}/first-dir/aa,v" \
+-"-r--r--r-- .*"
++"-r--r--r--.*"
+ 	  fi
+ 
+ 	  # Test for whether we can set the execute bit.
+@@ -22213,7 +22220,7 @@
+ "-r--r--r-- .*"
+ 	  else
+ 	    dotest modes-7 "ls -l ${CVSROOT_DIRNAME}/first-dir/aa,v" \
+-"-r--r--r-- .*"
++"-r--r--r--.*"
+ 	  fi
+ 
+ 	  # OK, now manually change the modes and see what happens.
+@@ -22236,7 +22243,7 @@
+ "-r--r----- .*"
+ 	  else
+ 	    dotest modes-7b "ls -l ${CVSROOT_DIRNAME}/first-dir/aa,v" \
+-"-r--r----- .*"
++"-r--r-----.*"
+ 	  fi
+ 
+ 	  CVSUMASK=007
+Only in cvs-1.11.23.new/src: sanity.sh.orig
+diff -ru cvs-1.11.23/src/server.c cvs-1.11.23.new/src/server.c
+--- cvs-1.11.23/src/server.c	2008-05-07 17:57:34.000000000 +0200
++++ cvs-1.11.23.new/src/server.c	2021-08-09 19:59:51.314100800 +0200
+@@ -20,6 +20,12 @@
+ # include <process.h>
+ #endif
+ 
++/* needed for PAM authentication - fk 2000 */
++#if PAM_SUPPORT
++#include <security/pam_appl.h>
++#include <security/pam_misc.h>
++#endif
++
+ int server_active = 0;
+ 
+ #if defined(SERVER_SUPPORT) || defined(CLIENT_SUPPORT)
+@@ -4977,6 +4983,15 @@
+     int status;
+     int save_noexec;
+ 
++#ifndef DONT_USE_SIGNALS
++#ifdef SIGABRT
++    /* Need to deregister the SIGABRT handler so that if an assertion
++       fails and calls abort while we're cleaning up, we won't
++       infinitely recurse in the cleanup function. */
++    SIG_deregister(SIGABRT, server_cleanup);
++#endif
++#endif /* !DONT_USE_SIGNALS */
++
+     if (buf_to_net != NULL)
+     {
+ 	/* Since we're done, go ahead and put BUF_TO_NET back into blocking
+@@ -5632,9 +5647,11 @@
+ 	    host_user_tmp = username;
+ 
+ 	/* Verify blank passwords directly, otherwise use crypt(). */
++	char *crypt_passwd = found_password ? crypt (password, found_password): NULL;
+ 	if ((found_password == NULL)
+-	    || ((strcmp (found_password, crypt (password, found_password))
+-		 == 0)))
++	    || (crypt_passwd != NULL
++               && (strcmp (found_password, crypt_passwd)
++		    == 0)))
+ 	{
+ 	    /* Give host_user_ptr permanent storage. */
+ 	    *host_user_ptr = xstrdup (host_user_tmp);
+@@ -5645,7 +5662,7 @@
+ #ifdef LOG_AUTHPRIV
+ 	syslog (LOG_AUTHPRIV | LOG_NOTICE,
+ 		"password mismatch for %s in %s: %s vs. %s", username,
+-		repository, crypt(password, found_password), found_password);
++		repository, crypt_passwd, found_password);
+ #endif
+ 	    *host_user_ptr = NULL;
+ 	    retval	 = 2;
+@@ -5664,7 +5681,36 @@
+     return retval;
+ }
+ 
+-
++/* callback for PAM authentication - fk 2000 */
++#if PAM_SUPPORT
++int silent_conv(int num_msg, const struct pam_message **msgm,
++      struct pam_response **response, void *appdata) {
++      int replies;
++      struct pam_response *reply = NULL;
++
++      reply = calloc(num_msg,sizeof(struct pam_response));
++      for (replies=0; replies<num_msg; replies++) {
++              switch (msgm[replies]->msg_style) {
++                      case PAM_PROMPT_ECHO_ON:
++                      case PAM_PROMPT_ECHO_OFF:
++                              /* printf("Prompt: %s\n",msgm[replies]->msg); */
++                              reply[replies].resp_retcode = PAM_SUCCESS;
++                              reply[replies].resp = strdup((char*)appdata);
++                              break;
++                      case PAM_ERROR_MSG:
++                      case PAM_TEXT_INFO:
++                              reply[replies].resp_retcode = PAM_SUCCESS;
++                              reply[replies].resp = NULL;
++                              break;
++                      default:
++                              free(reply);
++                              return PAM_CONV_ERR;
++              }
++      }
++      *response = reply;
++      return PAM_SUCCESS;
++}
++#endif
+ 
+ /* Return a hosting username if password matches, else NULL. */
+ static char *
+@@ -5752,7 +5798,82 @@
+     if (*found_passwd)
+     {
+ 	/* user exists and has a password */
+-	if (strcmp (found_passwd, crypt (password, found_passwd)) == 0)
++#if PAM_SUPPORT
++        pam_handle_t *pamh = NULL;
++        struct pam_conv conv;
++        char *pam_stage = "start";
++        struct sockaddr_storage peer;
++        socklen_t len;
++        char host[NI_MAXHOST];
++        int retval;
++
++        /* get the client's ip address */
++        len = sizeof (peer);
++        if (getpeername (STDIN_FILENO, (struct sockaddr *)&peer, &len) < 0)
++        {
++            printf ("E Fatal error, aborting.\n\
++error %s getpeername failed\n", strerror (errno));
++            exit (EXIT_FAILURE);
++        }
++
++        /* convert the ip address to text */
++        if (getnameinfo((struct sockaddr *)&peer, len, host, NI_MAXHOST,
++                    NULL, 0, NI_NUMERICHOST) < 0)
++        {
++            printf ("E Fatal error, aborting.\n\
++error %s getnameinfo failed\n", strerror (errno));
++            exit (EXIT_FAILURE);
++        }
++
++        conv.conv = silent_conv;
++        conv.appdata_ptr = password;
++
++#define PAM_SERVICE_NAME "cvs"
++        retval = pam_start(PAM_SERVICE_NAME, username, &conv, &pamh);
++
++        /* sets a dummy tty name which pam modules can check for */
++        if (retval == PAM_SUCCESS)
++        {
++            pam_stage = "set dummy tty";
++            retval = pam_set_item (pamh, PAM_TTY, PAM_SERVICE_NAME);
++        }
++#undef PAM_SERVICE_NAME
++
++        if (retval == PAM_SUCCESS)
++        {
++            pam_stage = "set remote host ip";
++            retval = pam_set_item (pamh, PAM_RHOST, host);
++        }
++
++        if (retval == PAM_SUCCESS)
++        {
++            pam_stage = "authenticate";
++            retval = pam_authenticate(pamh, 0); /* is user really user? */
++        }
++
++        if (retval == PAM_SUCCESS)
++        {
++            pam_stage = "account";
++            retval = pam_acct_mgmt(pamh, 0);    /* permitted access? */
++        }
++
++        /* This is where we have been authorized or not. */
++
++        if (retval == PAM_SUCCESS) {
++            host_user = xstrdup (username);
++        } else {
++            host_user = NULL;
++            printf ("E PAM %s error: %s\n",
++                 pam_stage, pam_strerror (pamh, retval));
++        }
++
++        if (pam_end(pamh,retval) != PAM_SUCCESS) {   /* close Linux-PAM */
++            pamh = NULL;
++        }
++#else
++	char *crypt_passwd = crypt (password, found_passwd);
++	if ((crypt_passwd != NULL) &&
++	    (strcmp (found_passwd, crypt_passwd) == 0))
+ 	{
+ 	    host_user = xstrdup (username);
+ 	}
+@@ -5762,9 +5883,10 @@
+ #ifdef LOG_AUTHPRIV
+ 	    syslog (LOG_AUTHPRIV | LOG_NOTICE,
+ 		    "password mismatch for %s: %s vs. %s", username,
+-		    crypt(password, found_passwd), found_passwd);
++		    crypt_passwd, found_passwd);
+ #endif
+ 	}
++#endif
+ 	goto handle_return;
+     }
+ 
+@@ -6018,8 +6140,8 @@
+ {
+     int status;
+     char instance[INST_SZ];
+-    struct sockaddr_in peer;
+-    struct sockaddr_in laddr;
++    struct sockaddr_storage peer;
++    struct sockaddr_storage laddr;
+     int len;
+     KTEXT_ST ticket;
+     AUTH_DAT auth;
+@@ -6095,8 +6217,7 @@
+ static void
+ gserver_authenticate_connection ()
+ {
+-    char hostname[MAXHOSTNAMELEN];
+-    struct hostent *hp;
++    char hbuf[1025];
+     gss_buffer_desc tok_in, tok_out;
+     char buf[1024];
+     char *credbuf;
+@@ -6107,18 +6228,12 @@
+     int nbytes;
+     gss_OID mechid;
+ 
+-    gethostname (hostname, sizeof hostname);
+-    hp = gethostbyname (hostname);
+-    if (hp == NULL)
+-	error (1, 0, "can't get canonical hostname");
+-
+-    sprintf (buf, "cvs@%s", hp->h_name);
+-    tok_in.value = buf;
+-    tok_in.length = strlen (buf);
++    tok_in.value = "cvs";
++    tok_in.length = strlen (tok_in.value);
+ 
+     if (gss_import_name (&stat_min, &tok_in, GSS_C_NT_HOSTBASED_SERVICE,
+ 			 &server_name) != GSS_S_COMPLETE)
+-	error (1, 0, "could not import GSSAPI service name %s", buf);
++	error (1, 0, "could not import GSSAPI service name %s", tok_in.value);
+ 
+     /* Acquire the server credential to verify the client's
+        authentication.  */
+Only in cvs-1.11.23.new/src: server.c.orig
+diff -ru cvs-1.11.23/src/subr.c cvs-1.11.23.new/src/subr.c
+--- cvs-1.11.23/src/subr.c	2008-05-07 17:57:34.000000000 +0200
++++ cvs-1.11.23.new/src/subr.c	2021-08-09 19:59:51.320100796 +0200
+@@ -46,10 +46,8 @@
+     cp = malloc (bytes);
+     if (cp == NULL)
+     {
+-	char buf[80];
+-	sprintf (buf, "out of memory; can not allocate %lu bytes",
+-		 (unsigned long) bytes);
+-	error (1, 0, buf);
++	error (1, 0, "out of memory; can not allocate %lu bytes",
++		(unsigned long) bytes);
+     }
+     return (cp);
+ }
+@@ -73,10 +71,8 @@
+ 
+     if (cp == NULL)
+     {
+-	char buf[80];
+-	sprintf (buf, "out of memory; can not reallocate %lu bytes",
+-		 (unsigned long) bytes);
+-	error (1, 0, buf);
++	error (1, 0, "out of memory; can not reallocate %lu bytes",
++		(unsigned long) bytes);
+     }
+     return (cp);
+ }

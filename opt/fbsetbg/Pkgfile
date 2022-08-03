@@ -1,0 +1,16 @@
+# Description: improvising wallpaper setter
+# URL:         https://github.com/hboetes/fbsetbg.git
+
+name=fbsetbg
+version=git
+release=1.0
+branch=master
+source=(https://github.com/hboetes/fbsetbg.git)
+
+build()
+{
+    cd $name
+    ./configure
+    make
+    make install DESTDIR=$PKG mandir=/usr/local/share/man
+}

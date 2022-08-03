@@ -1,0 +1,16 @@
+# Description: i3 for wayland
+# URL:         https://github.com/swaywm/sway.git
+
+name=sway
+version=git
+release=1
+branch=master
+source=(https://github.com/swaywm/sway.git)
+
+build()
+{
+    cd $name
+    meson build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}

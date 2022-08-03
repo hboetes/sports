@@ -1,0 +1,13 @@
+# Description: go compiler etc
+# URL:         https://go.dev/
+
+name=golang
+version=1.18.3
+release=1
+source=(https://go.dev/dl/go$version.linux-armv6l.tar.gz)
+
+build()
+{
+    install -d $PKG/usr/local
+    mv go $PKG/usr/local
+}

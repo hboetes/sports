@@ -1,0 +1,13 @@
+# Description: script that installs the latest (unstable) ubuntu kernel
+
+
+name=ubuntu-mainline-kernel
+version=git
+release=1
+source=(https://github.com/pimlie/ubuntu-mainline-kernel.sh.git)
+
+build()
+{
+    cd $name
+    install -D ubuntu-mainline-kernel.sh $PKG/usr/local/sbin/$name
+}

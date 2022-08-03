@@ -1,0 +1,25 @@
+# Description: clipboard manager
+# libappindicator-gtk3-devel meson vala cmake libpeas-devel zeitgeist-devel xorg-x11-server-Xvfb
+
+name=diodon
+version=git
+release=master
+branch=master
+source=(https://github.com/diodon-dev/diodon.git)
+
+build()
+{
+    cd $name
+    # On redhat family this library is called somewhat different.
+    [ -e /etc/redhat-release ] && sed -i 's|ayatana-appindicator3|appindicator3|' meson.build
+    meson builddir
+    cd builddir
+    ninja
+    ninja test
+    DESTDIR=$PKG ninja install
+}
+
+post-install()
+{
+    glib-compile-schemas /usr/local/share/glib-2.0/schemas/
+}

@@ -1,0 +1,18 @@
+# Description: GPU-accelerated terminal emulator
+# URL:         https://github.com/jwilm/alacritty
+
+name=alacritty
+version=git
+release=1
+source=(https://github.com/jwilm/alacritty.git)
+
+build()
+{
+    # For some reason $name only builds with the rustup version.
+    export PATH="$PATH:$HOME/.cargo/bin"
+    cd $name
+    cargo build --release
+    install -D target/release/alacritty     $PKG/usr/bin/$name
+    install -D extra/alacritty.man          $PKG/usr/share/man/man1/alacritty.1
+    install -D extra/completions/_alacritty $PKG/usr/share/zsh/vendor-completions/_alacritty
+}

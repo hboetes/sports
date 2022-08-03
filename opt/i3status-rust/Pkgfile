@@ -1,0 +1,18 @@
+# Description: statusbar for i3
+
+name=i3status-rust
+version=git
+release=1
+source=(https://github.com/greshake/i3status-rust.git)
+
+build()
+{
+    export PATH=$PATH:/home/han/.cargo/bin
+    cd $name
+    install -d $PKG/usr/share/$name/
+    rsync -avP files/* $PKG/usr/share/$name/
+    install -d $PKG/usr/share/doc/$name/
+    rsync -avP doc/* $PKG/usr/share/doc/$name/
+    cargo build --features pulseaudio --release
+    install -D target/release/i3status-rs   $PKG/usr/local/bin/$name
+}

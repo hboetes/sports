@@ -1,0 +1,17 @@
+# Description: clone of the classic Eliza program
+# URL:         http://search.cpan.org/~jnolan/Chatbot-Eliza-1.04/Chatbot/Eliza.pm
+# Depends on:
+
+name=p5-lyrics-fetcher
+version=0.5.2
+release=1
+source=($PERL_MIRROR/Lyrics/Lyrics-Fetcher-0.5.2.tar.gz)
+
+build()
+{
+    cd Lyrics-Fetcher-$version
+    perl Makefile.PL
+    make
+    make install DESTDIR=$PKG
+    remove_perlcrap
+}

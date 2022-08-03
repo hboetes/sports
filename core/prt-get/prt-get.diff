@@ -1,0 +1,13 @@
+Make prt-get read the both places where that variable is set, in the right order.
+
+--- src/installtransaction.cpp.orig	Fri Feb  3 19:23:53 2006
++++ src/installtransaction.cpp	Fri Feb  3 19:33:10 2006
+@@ -313,7 +313,7 @@
+                 args += parser->pkgaddArgs() + " ";
+             }
+             args +=
+-                package->name()    + "#" +
++                package->name()    + "_" +
+                 package->version() + "-" +
+                 package->release() + ".pkg.tar.gz";
+ 

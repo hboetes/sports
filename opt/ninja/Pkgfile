@@ -1,0 +1,14 @@
+# Description: build system
+# URL:         https://github.com/ninja-build/ninja.git
+
+name=meson
+version=git
+release=1
+branch=master
+source=(https://github.com/ninja-build/ninja.git)
+
+build()
+{
+    cd $name
+    python3 setup.py install --root $PKG
+}

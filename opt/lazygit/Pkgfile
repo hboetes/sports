@@ -1,0 +1,15 @@
+# Description: git frontend
+# URL:         https://github.com/jesseduffield/lazygit.git
+
+name=lazygit
+version=git
+release=1
+source=(https://github.com/jesseduffield/lazygit.git)
+
+build()
+{
+    cd $name
+    unset CC
+    export PATH=$PATH:/usr/local/go/bin
+    GOOS=linux GOARCH=arm GOARM=6 GOBIN=$PKG/usr/local/bin go install
+}

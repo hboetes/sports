@@ -1,0 +1,22 @@
+# Description: bluetooth ldac library
+# URL:         https://github.com/EHfive/ldacBT.git
+
+name=libldacbt
+version=git
+release=1
+source=(https://github.com/EHfive/ldacBT.git)
+
+build()
+{
+    cd $name
+    git submodule update --init
+    mkdir build
+    cd build
+    cmake \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DINSTALL_LIBDIR=/usr/lib \
+        -DLDAC_SOFT_FLOAT=OFF \
+        ../
+    make
+    make install DESTDIR=$PKG
+}

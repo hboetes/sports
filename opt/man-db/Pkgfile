@@ -1,0 +1,27 @@
+# Description: the original man browser
+# URL:         https://gitlab.com/cjwatson/man-db.git
+
+name=man-db
+version=2.10.2
+release=1
+branch=master
+source=(https://savannah.nongnu.org/download/man-db/$name-$version.tar.xz)
+
+build()
+{
+    cd $name-$version
+    ./configure \
+        --prefix=/usr \
+        --sbindir=/usr/bin \
+        --sysconfdir=/etc \
+        --libexecdir=/usr/lib \
+        --with-systemdsystemunitdir=/usr/lib/systemd/system \
+        --with-db=gdbm \
+        --disable-setuid \
+        --enable-cache-owner=root \
+        --enable-mandirs=GNU \
+        --with-sections="1 1p n l 8 3 3p 0 0p 2 5 4 9 6 7"
+    make
+    DESTDIR=$PKG make install
+    rm -f $PKG/usr/bin/zsoelim
+}

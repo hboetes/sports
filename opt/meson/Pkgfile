@@ -1,0 +1,14 @@
+# Description: build system
+# URL:         https://github.com/mesonbuild/meson.git
+
+name=meson
+version=git
+release=1
+branch=master
+source=(https://github.com/mesonbuild/meson.git)
+
+build()
+{
+    cd $name
+    python3 setup.py install --root $PKG
+}

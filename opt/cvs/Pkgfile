@@ -1,0 +1,21 @@
+# Description: ancient versioning system
+# For reference, use https://src.fedoraproject.org/rpms/cvs/blob/f34/f/cvs.spec
+name=cvs
+version=1.11.23
+release=1
+source=(
+    https://ftp.gnu.org/non-gnu/cvs/source/stable/$version/cvs-$version.tar.gz
+    cvs.patch
+)
+
+build()
+{
+    cd $name-$version
+
+    patch -p1 -i $SRC/$name.patch
+    ./configure \
+     --with-editor=/usr/bin/i3-sensible-editor \
+     --prefix=/usr/local
+    make
+    make install DESTDIR=$PKG
+}

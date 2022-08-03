@@ -1,0 +1,16 @@
+# Description: gimp development branch
+# URL:         gimp.org
+
+name=gimp
+version=git
+release=1
+source=(https://gitlab.gnome.org/GNOME/gimp.git)
+
+build()
+{
+    cd $name
+    ./autogen.sh --disable-gtk-doc
+    ./configure
+    make
+    make install DESTDIR=$PKG
+}

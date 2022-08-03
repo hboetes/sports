@@ -1,0 +1,15 @@
+# Description: i3 for wayland
+# URL:         https://github.com/swaywm/sway.git
+
+name=waypipe
+version=git
+release=1
+branch=master
+source=(https://gitlab.freedesktop.org/mstoeckl/waypipe.git)
+
+build()
+{
+    mkdir build-waypipe
+    meson --buildtype debugoptimized waypipe build-waypipe
+    DESTDIR=$PKG ninja -C build-waypipe install
+}

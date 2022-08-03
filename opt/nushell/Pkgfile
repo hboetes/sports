@@ -1,0 +1,13 @@
+# Description: nushell
+
+name=nushell
+version=git
+release=1
+source=(https://github.com/nushell/nushell.git)
+
+build()
+{
+    cd $name
+    cargo build --release --workspace --features=extra
+    install -D target/release/$name         $PKG/usr/local/bin/$name
+}

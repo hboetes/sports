@@ -1,0 +1,14 @@
+# Description: rather self explanatory
+
+name=filter-subs
+version=git
+release=1.3.1
+branch=master
+source=(https://github.com/mattlyon93/filter-subs.git)
+
+build()
+{
+    cd $name
+    python3 setup.py install --root $PKG
+    mv $PKG/usr/local/bin/filter-subtitles{.py,}
+}

@@ -1,0 +1,96 @@
+diff --git a/dr14tmeter/query.py b/dr14tmeter/query.py
+index d1841a3..3b8e984 100644
+--- a/dr14tmeter/query.py
++++ b/dr14tmeter/query.py
+@@ -52,7 +52,7 @@ class query:
+ 
+     def get_query(self):
+         NotImplementedError(
+-            "%s : is virutal and must be overridden." % sys._getframe().f_code.co_name)
++            "%s : is virtual and must be overridden." % sys._getframe().f_code.co_name)
+ 
+     def exec_query(self):
+         db = dr_database_singletone().get()
+diff --git a/dr14tmeter/table.py b/dr14tmeter/table.py
+index fc7637e..93116c5 100644
+--- a/dr14tmeter/table.py
++++ b/dr14tmeter/table.py
+@@ -60,7 +60,7 @@ class Table:
+         self.__txt = txt
+ 
+     def _append_txt(self, txt):
+-        self.__txt += txt
++        self.__txt += str(txt)
+ 
+     def init_txt(self, txt=""):
+         self.__ini_txt = txt
+@@ -70,11 +70,11 @@ class Table:
+ 
+     def new_table(self):
+         NotImplementedError(
+-            " %s : is virutal and must be overridden." % sys._getframe().f_code.co_name)
++            " %s : is virtual and must be overridden." % sys._getframe().f_code.co_name)
+ 
+     def end_table(self):
+         NotImplementedError(
+-            " %s : is virutal and must be overridden." % sys._getframe().f_code.co_name)
++            " %s : is virtual and must be overridden." % sys._getframe().f_code.co_name)
+ 
+     def write_table(self):
+         return self.__ini_txt + self._get_txt()
+@@ -128,7 +128,7 @@ class Table:
+ 
+     def add_title(self, title):
+         NotImplementedError(
+-            " %s : is virutal and must be overridden." % sys._getframe().f_code.co_name)
++            " %s : is virtual and must be overridden." % sys._getframe().f_code.co_name)
+ 
+     def add_value(self, val):
+         self._append_txt(self.format_element(val))
+@@ -153,19 +153,19 @@ class Table:
+ 
+     def new_row(self):
+         NotImplementedError(
+-            " %s : is virutal and must be overridden." % sys._getframe().f_code.co_name)
++            " %s : is virtual and must be overridden." % sys._getframe().f_code.co_name)
+ 
+     def end_row(self):
+         NotImplementedError(
+-            " %s : is virutal and must be overridden." % sys._getframe().f_code.co_name)
++            " %s : is virtual and must be overridden." % sys._getframe().f_code.co_name)
+ 
+     def new_cell(self):
+         NotImplementedError(
+-            " %s : is virutal and must be overridden." % sys._getframe().f_code.co_name)
++            " %s : is virtual and must be overridden." % sys._getframe().f_code.co_name)
+ 
+     def end_cell(self):
+         NotImplementedError(
+-            " %s : is virutal and must be overridden." % sys._getframe().f_code.co_name)
++            " %s : is virtual and must be overridden." % sys._getframe().f_code.co_name)
+ 
+     def new_hcell(self):
+         return self.new_cell()
+@@ -175,11 +175,11 @@ class Table:
+ 
+     def new_bold(self):
+         NotImplementedError(
+-            " %s : is virutal and must be overridden." % sys._getframe().f_code.co_name)
++            " %s : is virtual and must be overridden." % sys._getframe().f_code.co_name)
+ 
+     def end_bold(self):
+         NotImplementedError(
+-            " %s : is virutal and must be overridden." % sys._getframe().f_code.co_name)
++            " %s : is virtual and must be overridden." % sys._getframe().f_code.co_name)
+ 
+ 
+ class TextTable (Table):
+@@ -196,7 +196,7 @@ class TextTable (Table):
+         self.append_row([""])
+ 
+     def add_title(self, title):
+-        self._append_txt(title + self.nl())
++        self._append_txt(title + str(self.nl()) + "\n")
+ 
+     def new_table(self):
+         self._set_txt("")

@@ -1,0 +1,35 @@
+# Description: Text-based email client that sucks less
+# URL:         http://www.mutt.org
+# Depends on:
+
+name=mutt
+version=git
+release=1
+branch=stable
+source=(
+    https://github.com/muttmua/mutt.git
+    mutt.diff
+)
+
+build () {
+    cd $name
+    patch -i $SRC/mutt.diff
+    autoreconf --install --force
+    ./configure \
+        --prefix=/usr/local \
+        --mandir=/usr/local/man \
+        --enable-pop \
+        --enable-imap \
+        --with-ssl \
+        --disable-nls \
+        --without-wc-funcs \
+        --enable-locales-fix \
+        --sysconfdir=/etc/mutt \
+        --enable-external-dotlock
+    # I really don't want to have to chmod 644 each file I save.
+    # Not that this helps...
+    # sed-i 's|umask|// umask|' main.c
+    make
+    make install DESTDIR=$PKG
+    rm -r $PKG/usr/local/share/doc
+}

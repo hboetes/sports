@@ -1,0 +1,22 @@
+# Description: plugins for diodon
+# URL:         https://i3wm.org/
+# Depends on:
+
+name=diodon-plugins
+version=git
+release=git
+source=(
+        https://github.com/RedHatter/diodon-plugins.git
+        diodon.diff
+)
+build()
+{
+
+    cd $name
+    patch -i $SRC/diodon.diff
+    ./waf configure --libdir /usr/lib/x86_64-linux-gnu/ --prefix=/usr
+    ./waf build
+    ./waf install --destdir=$PKG
+    # /usr/lib/x86_64-linux-gnu/diodon/plugins/indicator/indicator.plugin
+    #sudo update-icon-caches /usr/share/icons/hicolor/
+}

@@ -1,0 +1,48 @@
+diff -upw sgrotum-2.0.0/sgrotum.c sgrotum-2.0.1/sgrotum.c
+--- sgrotum-2.0.0/sgrotum.c	Tue Jul 27 07:44:02 2004
++++ sgrotum-2.0.1/sgrotum.c	Tue Aug 28 22:07:33 2012
+@@ -212,7 +212,7 @@ my_fopen (const gchar *fname, gchar t)
+ 	FILE *f;
+ 	gchar typestr[2];
+ 
+-	sprintf (typestr, "%c", t);
++	snprintf (typestr, sizeof(typestr), "%c", t);
+ 	f = fopen (fname, typestr);
+ 	if (f == NULL) {
+ 		switch (t) {
+@@ -469,7 +469,7 @@ read_prefs (Sgr *s, const gchar *fname)
+ {
+ 	FILE      *f;
+ 	gint      len;
+-	guint     bufsize = 0;
++	size_t     bufsize = 0;
+ 	gchar     **buf, *workdir;
+ 	PrefState state = PREFS_NONE;
+ 
+@@ -587,7 +587,7 @@ insert_text (Box *b, GString *gstr, const gchar *str, 
+ {
+ 	/* Copy a maximum of b->x2 chars from str into gstr */
+ 
+-	gint x, x_space, x_max, backoff, count, offset;
++	gint x, x_space = 0, x_max, backoff, count, offset = 0;
+ 
+ 	if (b->strip) while (isspace (*str)) str++;
+ 	if (*str == '\0') return str;
+@@ -764,7 +764,7 @@ read_quotes (Sgr *s, Box *b)
+ 
+ 	FILE    *f;
+ 	gint    len;
+-	guint   bufsize = 0;
++	size_t  bufsize = 0;
+ 	gchar   **buf;
+ 
+ 
+@@ -1052,7 +1052,7 @@ read_template (Sgr *s)
+ 
+ 	FILE    *f;
+ 	gint    len;
+-	guint   bufsize = 0;
++	size_t  bufsize = 0;
+ 	gchar   **buf;
+ 
+ 

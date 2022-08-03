@@ -1,0 +1,16 @@
+# Description: python compiler
+# URL:         https://github.com/Nuitka/Nuitka.git
+
+name=nuitka
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/Nuitka/Nuitka.git
+)
+
+build()
+{
+    cd $name
+    python3 setup.py install --root $PKG
+}

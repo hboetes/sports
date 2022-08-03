@@ -1,0 +1,15 @@
+# Description: fast and secure userland network file system
+# URL:         https://github.com/DEShawResearch/fs123.git
+
+name=fs123
+version=git
+release=1
+source=(https://github.com/DEShawResearch/fs123.git)
+
+build()
+{
+    # export CXX=clang-8
+    cd $name
+    make
+    make install DESTDIR=$PKG
+}

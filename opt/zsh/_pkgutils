@@ -1,0 +1,80 @@
+#compdef pkgadd pkgmk pkgrm pkginfo
+
+(( $+functions[_pkgutils_pkgfiles] )) ||
+_pkgutils_pkgfiles() {
+    local ret=1 pkgsdir
+    _files "$@" -g '*.tar.gz' && ret=0
+    return ret
+}
+
+(( $+functions[_pkgutils_pkgs] )) ||
+_pkgutils_pkgs() {
+    compadd "$@" - $(find /var/package/ -name '*-footprint'|sed -e 's|/var/package/\(.*\)-footprint|\1|')
+}
+
+(( $+functions[_pkgutils_pkgs_and_files] )) ||
+_pkgutils_pkgs_and_files() {
+    local ret=1
+    _pkgutils_pkgfiles "$@"
+    _pkgutils_pkgs "$@" && ret=0
+    return ret
+}
+
+_pkgutils() {
+    local flags
+
+    case "$service" in
+        pkgadd)
+            _arguments -s \
+                '(--upgrade -u)'{--upgrade,-u}'[upgrade package with the same name]:packagefile:_pkgutils_pkgfiles' \
+                '(--force -f)'{--force,-f}'[force install, overwrite conflicting files]:packagefile:_pkgutils_pkgfiles' \
+                '(--root -r)'{--root,-r}'[specify alternative installation root]:alternative root:_files -g */' \
+                '(--version -v)'{--version,-v}'[print version and exit]:no arguments or options' \
+                '(--help -h)'{--help,-v}'[print help and exit]:no arguments or options' \
+                ':package to install:_pkgutils_pkgfiles'
+            ;;
+
+        pkgmk)
+            _arguments -s \
+                '(--install -i)'{--install,-i}'[build and install package]' \
+                '(--upgrade -u)'{--upgrade,-u}'[build and upgrade package]' \
+                '(--recursive -r)'{--recursive,-r}'[search for and build packages recursively]' \
+                '(--download -d)'{--download,-d}'[download missing source file(s)]' \
+                '(--download-only -do)'{--download-only,-do}'[do not build, only download missing source file(s)]:no arguments or options' \
+                '(--up-to-date -utd)'{--up-to-date,-utd}'[do not build, only check if package is up to date]:no arguments or options' \
+                '(--update-footprint -uf)'{--update-footprint,-uf}'[update footprint using result from last build]' \
+                '(--ignore-footprint -if)'{--ignore-footprint,-if}'[build package without checking footprint]' \
+                '(--update-md5sum -um)'{--update-md5sum,-um}'[update md5sum]' \
+                '(--ignore-md5sum -im)'{--ignore-md5sum,-im}'[build package without checking md5sum]' \
+                '(--no-strip -ns)'{--no-strip,-ns}'[do not strip executable binaries or libraries]' \
+                '(--force -f)'{--force,-f}'[build package even if it appears to be up to date]' \
+                '(--clean -c)'{--clean,-c}'[remove package and downloaded files]' \
+                '(--keep-work -kw)'{--keep-work,-kw}'[keep temporary working directory]' \
+                '(--config-file -cf)'{--config-file,-cf}'[use alternative configuration file]:config-file:_files' \
+                '(--version -v)'{--version,-v}'[print version and exit]:no arguments or options' \
+                '(--help -h)'{--help,-v}'[print help and exit]:no arguments or options' \
+                '*:'
+            ;;
+
+        pkgrm)
+            _arguments \
+                '(--root -r)'{--root,-r}'[specify alternative installation root]:alternative root:_files -g */' \
+                '(--version -v)'{--version,-v}'[print version and exit]:no arguments or options' \
+                '(--help -h)'{--help,-v}'[print help and exit]:no arguments or options' \
+                ':package name:_pkgutils_pkgs'
+            ;;
+
+        pkginfo)
+            _arguments -s \
+                '(--list -l)'{--list,-l}'[list files in <package> or <file>]:package or packagefile:_pkgutils_pkgs_and_files' \
+                '(--footprint -f)'{--footprint,-f}'[print footprint for <file>]:packagefile:_pkgutils_pkgfiles' \
+                '(--owner -o)'{--owner,-o}'[list owners of <file>]:file:_files' \
+                '(--installed -i)'{--installed,-i}'[list installed packages]:package or void:_pkgutils_pkgs' \
+                '(--root -r)'{--root,-r}'[specify alternative installation root]:alternative root:_files -g *g' \
+                '(--version -v)'{--version,-v}'[print version and exit]:no arguments or options' \
+                '(--help -h)'{--help,-v}'[print help and exit]:no arguments or options' \
+                ':no arguments or options:'
+            ;;
+    esac
+}
+_pkgutils "$@"

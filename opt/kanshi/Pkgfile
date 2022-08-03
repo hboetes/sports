@@ -1,0 +1,15 @@
+# Description: set display for wayland
+# URL:         https://git.sr.ht/~emersion/kanshi
+
+name=kanshi
+version=git
+release=git
+source=(https://git.sr.ht/~emersion/kanshi.git)
+
+build()
+{
+    cd $name
+    meson build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}

@@ -1,0 +1,21 @@
+# Description: irssi - Console IRC client.
+# URL:         http://www.irssi.org/
+# Depends on:  glib2
+
+name=irssi
+version=git
+release=1
+source=(
+    https://github.com/irssi/irssi.git
+    irssi-path.patch
+)
+
+build ()
+{
+    cd $name
+    meson Build
+    ninja -C Build
+    DESTDIR=$PKG  ninja -C Build install
+    remove_perlcrap
+    rm -rf $PKG/usr/local/share/doc/
+}

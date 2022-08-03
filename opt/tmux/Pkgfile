@@ -1,0 +1,18 @@
+# Description: terminal multiplexer
+# URL:         https://github.com/tmux/
+
+name=tmux
+version=git
+branch=master
+release=timestamp
+source=(https://github.com/tmux/tmux.git)
+
+build()
+{
+    export CC=clang-8
+    cd $name
+    ./autogen.sh
+    ./configure
+    make
+    make install DESTDIR=$PKG
+}

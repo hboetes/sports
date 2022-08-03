@@ -1,0 +1,20 @@
+# Description: chess database
+# URL:         http://scidvspc.sourceforge.net/
+
+name=scidvspc
+version=4.23
+release=1
+source=(
+    http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-$version.tgz
+    scidvspc.desktop
+)
+
+build()
+{
+    cd scid_vs_pc-$version
+    install -D -m 644 images/logo.png $PKG/usr/local/share/icons/hicolor/128x128/apps/scid.png
+    install -D -m 644 $SRC/scidvspc.desktop $PKG/usr/local/share/applications/scidvspc.desktop
+    ./configure
+    make
+    make install DESTDIR=$PKG
+}

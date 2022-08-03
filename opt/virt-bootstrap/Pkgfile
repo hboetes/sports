@@ -1,0 +1,12 @@
+# Description: No description, website, or topics provided.
+# URL:         https://github.com/virt-manager/virt-bootstrap
+name=virt-bootstrap
+version=git
+release=1.1.1
+source=(https://github.com/virt-manager/virt-bootstrap.git)
+
+build()
+{
+    cd $name
+    python setup.py install --prefix $PKG/usr
+}

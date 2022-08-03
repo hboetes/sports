@@ -1,0 +1,87 @@
+#!/bin/sh -e
+
+pkversion=$(awk -F'=' '/pkversion/ {print $2}' pkgutils.shared)
+
+if [ $(id -u) -eq 0 ]; then
+    echo "I'll ask you when I think I need root permissions, Ok?" >&2
+    exit 1
+fi
+
+if ! command -v zsh > /dev/null 2>&1; then
+    echo "Please install zsh." >&2
+    exit 1
+fi
+
+case $(uname) in
+    Linux)
+        rtgrp=root
+        ;;
+    OpenBSD)
+        rtgrp=wheel
+        if ! command -v gtar > /dev/null 2>&1; then
+            echo "Please install gtar, like this:" >&2
+            echo "  pkg_add gtar" >&2
+            exit 1
+        fi
+        ;;
+esac
+
+# Add support for doas
+if ! command -v sudo > /dev/null 2>&1; then
+    if command -v doas > /dev/null 2>&1; then
+        alias sudo=doas
+    else
+        echo "Please install sudo." >&2
+        exit 1
+    fi
+fi
+
+echo "Setting the right permissions for the portsdir."
+sudo chown -R ${USER}:$rtgrp /usr/cruxports
+
+echo installing pkgutils
+sudo install -m 755 -d                    /usr/local/lib
+sudo install -m 644 pkgutils.shared       /usr/local/lib
+sudo install -m 755 -d                    /usr/local/bin
+sudo install -m 755 pkgadd                /usr/local/bin
+sudo install -m 755 pkgrm                 /usr/local/bin
+sudo install -m 755 pkginfo               /usr/local/bin
+sudo install -m 755 pkgmk                 /usr/local/bin
+
+
+echo "Creating work directories."
+sudo install -d -g $rtgrp -o $USER /usr/pkgmk/source /usr/pkgmk/package /usr/pkgmk/work
+
+echo "Creating database directory."
+sudo install -d /var/package/rejects
+
+# Don't overwrite existing config files.
+[ -e /etc/pkgadd.conf ] || sudo install -m 644 pkgadd.conf           /etc/pkgadd.conf
+[ -e /etc/pkgmk.conf ]  || sudo install -m 644 pkgmk.conf            /etc/pkgmk.conf
+
+echo 'building the first port! pkgutils!'
+pkgmk -f
+
+if pkginfo -i pkgutils; then
+    echo 'Updating pkgutils'
+    sudo pkgadd -u /usr/pkgmk/package/pkgutils_$pkversion-1.pkg.tar.gz
+else
+    echo 'Installing pkgutils for the first time.'
+    sudo pkgadd -i /usr/pkgmk/package/pkgutils_$pkversion-1.pkg.tar.gz
+fi
+
+echo "Setting the right permissions on the builddir."
+sudo chown    ${USER}:$rtgrp /usr/pkgmk/*
+
+if [ ! -d /usr/cruxports/core/pkgutils/.git ]; then
+    echo 'Installing the source code repo at the proper location.'
+    mkdir -p /usr/cruxports/core
+    git clone git@github.com:hboetes/c4O.git -C /usr/cruxports/core/pkgutils
+fi
+
+cat << EOF
+Congratulations, you have got cruxports installed. And you didn't even have to reboot. ;-)
+For the next update of cruxports you can run:
+  % cd /usr/cruxports/core/pkgutils
+  % pkgmk -u
+EOF

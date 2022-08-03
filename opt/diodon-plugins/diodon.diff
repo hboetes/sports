@@ -1,0 +1,11 @@
+--- src/diodon-plugins/wscript.orig	2019-04-14 11:33:09.002921726 +0200
++++ src/diodon-plugins/wscript	2019-04-14 11:38:46.890332122 +0200
+@@ -35,8 +35,6 @@
+     bld.add_subdirs('plugins/paste-all')
+     bld.add_subdirs('plugins/edit')
+     bld.add_subdirs('plugins/features')
+-    bld.add_subdirs('plugins/actions')
+     bld.add_subdirs('plugins/numbers')
+-    bld.add_subdirs('plugins/alternative')
+     bld.add_subdirs('plugins/pop')
+     bld.add_subdirs('plugins/dbus-controller')

@@ -1,0 +1,110 @@
+--- src/sgrotum.c.orig	2004-07-04 15:53:56.978296000 +0200
++++ src/sgrotum.c	2004-07-04 18:50:46.418296000 +0200
+@@ -140,11 +140,12 @@
+ 
+ 
+ static struct option long_options[] = {
+-        { "fast",     no_argument, NULL, 'f' },
+-        { "help",     no_argument, NULL, 'h' },
+-        { "no-write", no_argument, NULL, 'n' },
+-        { "show",     no_argument, NULL, 's' },
+-        { "version",  no_argument, NULL, 'v' },
++        { "fast",      no_argument       , NULL, 'f' },
++        { "help",      no_argument       , NULL, 'h' },
++        { "no-write",  no_argument       , NULL, 'n' },
++        { "show",      no_argument       , NULL, 's' },
++        { "version",   no_argument       , NULL, 'v' },
++        { "signature", required_argument , NULL, 'S' },
+         { 0, 0, 0, 0 }
+ };
+ 
+@@ -1327,7 +1328,7 @@
+ 
+ 
+ static gboolean
+-pick_template (Sgr *s)
++pick_template (Sgr *s, gint specific)
+ {
+         /*
+          * Return FALSE if the template list is empty.
+@@ -1342,8 +1343,14 @@
+                 PROG_WARN ("%s: no signature template files\n", s->fname_prefs);
+                 return FALSE;
+         }
+-
+-        if (s->rotmode == ROTMODE_RANDOM) {
++        if (specific != 0) {
++            if (specific >= n_sigs) {
++                PROG_WARN ("%i: No such signature\n", specific);
++                exit(0);
++            }
++            s->current = specific;
++        }
++        else if (s->rotmode == ROTMODE_RANDOM) {
+                 s->current = RANDOM_INT (n_sigs);
+         }
+         else {
+@@ -1359,7 +1366,7 @@
+ 
+ 
+ static gboolean
+-sgrotum (Sgr *s)
++sgrotum (Sgr *s, gint specific)
+ {
+         /*
+          * Pick a signature template at random from s->template_list.
+@@ -1375,7 +1382,7 @@
+         gboolean err;
+ 
+ 
+-        if (!pick_template (s)) return FALSE;
++        if (!pick_template (s, specific)) return FALSE;
+         if (!read_template (s)) return FALSE;
+ 
+         if (s->lines != NULL) gstr_layout = (GString*)s->lines->data;
+@@ -1446,6 +1453,7 @@
+                  "  -h, --help      Show this usage message then exit\n"
+                  "  -n, --no-write  Don't create or modify the target signature file\n"
+                  "  -s, --show      Send the resulting signature to stdout\n"
++                 "  -S, --signature Show specific signature by number.\n"
+                  "  -v, --version   Show this program's version number then exit\n\n"
+                  "For details: `man " PACKAGE "'\n\n");
+ }
+@@ -1466,13 +1474,13 @@
+ {
+         const gchar *fname = NULL;
+         Sgr *s;
+-        gint ch, option_index;
++        gint ch, option_index, specific = 0;
+ 
+ 
+         while (1) {
+                 option_index = 0;
+ 
+-                ch = getopt_long (argc, argv, "fhnsv", long_options, &option_index);
++                ch = getopt_long (argc, argv, "fhnsvS:", long_options, &option_index);
+                 if (ch == -1) break;
+ 
+                 switch (ch) {
+@@ -1494,6 +1502,12 @@
+                         g_print (VERSION "\n");
+ #endif
+                         exit (0);
++                case 'S':
++                    if ( (sscanf(optarg, "%i", &specific)) == 0) {
++                        PROG_WARN ("Illegal argument: %s, integer expected.\n", optarg);
++                        exit(1);
++                    }
++                        break;
+                 default:
+                         invokation_error ();
+                 }
+@@ -1521,7 +1535,7 @@
+         }
+ 
+ 
+-        if (!sgrotum (s)) {
++        if (!sgrotum (s, specific)) {
+                 cleanup (s, 1);
+         }
+ 

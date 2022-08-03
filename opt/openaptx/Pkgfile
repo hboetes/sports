@@ -1,0 +1,23 @@
+# Description: bluetooth aptx driver
+# URL:         https://github.com/Arkq/openaptx.git
+
+name=openaptx
+version=git
+release=1
+source=(
+        https://github.com/Arkq/openaptx.git
+)
+
+build()
+{
+    cd $name
+    aclocal
+    libtoolize
+    autoconf
+    autoheader
+    automake --add-missing
+    ./configure
+
+    make
+    make install DESTDIR=$PKG
+}

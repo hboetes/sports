@@ -1,0 +1,16 @@
+# Description: gtk-theme setter for sway
+# URL:         https://github.com/nwg-piotr/nwg-look.git
+
+name=nwg-look
+version=git
+release=1
+source=(https://github.com/nwg-piotr/nwg-look.git)
+
+build()
+{
+    cd $name
+    install -D stuff/main.glade $PKG/usr/share/nwg-look/main.glade
+    unset CC
+    export PATH=$PATH:/usr/local/go/bin
+    GOBIN=$PKG/usr/local/bin go install
+}

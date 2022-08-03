@@ -1,0 +1,14 @@
+# Description: Download subtitles for a movie
+# URL:         https://github.com/emericg/OpenSubtitlesDownload.git
+
+name=subtitledownload
+version=git
+release=1
+source=(https://github.com/emericg/OpenSubtitlesDownload.git)
+
+build()
+{
+    cd $name
+    install -d $PKG/usr/local/bin
+    install OpenSubtitlesDownload.py $PKG/usr/local/bin/$name
+}

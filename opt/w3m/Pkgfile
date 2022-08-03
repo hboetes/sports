@@ -1,0 +1,19 @@
+# Description: pager that can browse... or the other way around.
+# URL:         https://github.com/tats/w3m.git
+
+name=w3m
+version=git
+release=1
+source=(
+    https://github.com/tats/w3m.git
+    238.diff
+)
+
+build()
+{
+    cd $name
+    patch -p1 -i $SRC/238.diff
+    ./configure --without-x
+    make
+    make install DESTDIR=$PKG
+}

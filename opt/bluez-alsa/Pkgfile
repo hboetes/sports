@@ -1,0 +1,34 @@
+# Description: bluetooth backend for alsa.
+# URL:         https://github.com/Arkq/bluez-alsa
+
+name=bluez-alsa
+version=git
+release=1
+source=(
+        https://github.com/Arkq/bluez-alsa.git
+        bluealsa.conf
+        bluealsa.service
+)
+
+build()
+{
+    cd $name
+    autoreconf --install
+    ./configure \
+        --enable-aac \
+        --enable-debug \
+        --enable-hcitop \
+        --enable-ofono \
+        --enable-aptx  \
+        --enable-ldac
+    make
+    make install DESTDIR=$PKG
+    install -m 0644 $SRC/bluealsa.service -D $PKG/etc/systemd/system/bluealsa.service
+    install -m 0644 $SRC/bluealsa.conf    -D $PKG/etc/dbus-1/system.d/bluealsa.conf
+}
+
+post-install()
+{
+    getent group  bluealsa > /dev/null 2>&1 || groupadd bluealsa
+    getent passwd bluealsa > /dev/null 2>&1 || useradd  -g bluealsa -s $(which nologin) -d /nonexistant bluealsa
+}

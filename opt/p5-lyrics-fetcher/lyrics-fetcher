@@ -1,0 +1,14 @@
+#!/usr/bin/perl
+use Lyrics::Fetcher;
+
+# # using a specific fetcher:
+# print Lyrics::Fetcher->fetch('Pink Floyd','Echoes','LyricWiki');
+
+# if you omit the fetcher, automatically tries all available fetchers:
+# print Lyrics::Fetcher->fetch('Adamo', 'inch allah');
+
+# or you can pass an arrayref of fetchers you want used:
+print Lyrics::Fetcher->fetch('Oasis', 'Whatever', [qw(LyricWiki Google)]);
+
+# To find out which fetchers are available:
+# my @fetchers = Lyrics::Fetcher->available_fetchers;

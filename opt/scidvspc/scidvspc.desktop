@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=scidvspc
+GenericName=chess database
+Comment=chess database
+MimeType=text/pgn;
+Exec=scid %F
+Icon=scid
+Type=Application
+Terminal=false
+Categories=Games;Chess;
+StartupWMClass=scid
+Keywords=Chess;

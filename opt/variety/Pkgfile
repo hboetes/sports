@@ -1,0 +1,14 @@
+# Description: wallpaper setter
+# URL:
+
+name=variety
+version=git
+branch=master
+release=$(date '+%Y%m%d')
+source=(https://github.com/varietywalls/variety.git)
+
+build()
+{
+    cd $name
+    python3 setup.py install --root $PKG
+}

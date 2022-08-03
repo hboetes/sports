@@ -1,0 +1,17 @@
+# Description: effects engine for pipewire
+# URL:         https://github.com/wwmm/easyeffects.git
+# sudo dnf builddep easyeffects
+
+name=easyeffects
+version=git
+release=1
+branch=master
+source=(https://github.com/wwmm/easyeffects.git)
+
+build()
+{
+    cd $name
+    meson build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}

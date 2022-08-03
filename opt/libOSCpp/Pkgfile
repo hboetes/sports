@@ -1,0 +1,16 @@
+# Description: audio control library
+# URL:         https://github.com/voidseg/libOSCpp.git
+
+name=libOSCpp
+version=git
+branch=develop
+release=1
+source=(https://github.com/voidseg/libOSCpp.git)
+
+build()
+{
+    cd $name
+    ./configure
+    make
+    make install DESTDIR=$PKG
+}

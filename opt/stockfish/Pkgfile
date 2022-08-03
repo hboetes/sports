@@ -1,0 +1,14 @@
+# Description: chess engine
+# URL:         https://stockfishchess.org/
+
+name=stockfish
+version=git
+release=11
+source=(https://github.com/official-stockfish/Stockfish.git)
+
+build()
+{
+    cd $name/src
+    make build ARCH=x86-64
+    make install PREFIX=$PKG/usr/local
+}

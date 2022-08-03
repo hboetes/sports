@@ -1,0 +1,32 @@
+# Description: A utility to simplify ports searching/installing
+# URL:         http://www.hta-bi.bfh.ch/~winkj/software_prt-get.html
+
+name=prt-get
+version=5.12
+release=1
+source=(
+    https://github.com/winkj/prt-get.git
+    prt-get.diff
+    prt-get.conf
+    prt-get-$version-pkgdir.diff
+    ask_prepost
+)
+
+build()
+{
+    cd $name
+    patch -p1 -i $SRC/prt-get-5.12-pkgdir.diff
+    sed -i 's|var/lib/pkg|var/package|' src/*
+    sed -i 's|/usr/bin|/usr/local/bin|' src/installtransaction.cpp
+    patch -p0 -i $SRC/prt-get.diff
+    aclocal
+    autoconf
+    autoheader
+    automake --add-missing
+    ./configure --prefix=/usr/local
+    make
+    make install DESTDIR=$PKG
+    install -d $PKG/etc
+    install -m 644 $SRC/prt-get.conf $PKG/etc
+    install -m 755 $SRC/ask_prepost $PKG/usr/local/bin
+}

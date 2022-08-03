@@ -1,0 +1,23 @@
+# Description: SiGnature ROTUMbulator
+# URL:         http://homepages.ihug.co.nz/~trmusson/programs.html#sgrotum
+# Depends on:  glib2
+
+name=sgrotum
+version=2.0.0
+release=1
+source=(
+    https://trmusson.dreamhosters.com/stuff/sgrotum-2.0.0.tar.gz
+    sgrotum.diff
+)
+
+build()
+{
+    cd sgrotum-$version
+    patch -i $SRC/sgrotum.diff
+    export CFLAGS="$CFLAGS -D__USE_GNU"
+    ./configure \
+        --prefix=/usr/local
+    make
+    make install DESTDIR=$PKG
+    cd $PKG && find . -empty -delete
+}

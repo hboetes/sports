@@ -1,0 +1,21 @@
+# Description: nice image editor
+# URL:         https://gitlab.gnome.org/GNOME/gthumb.git
+# meson libjpeg-turbo-devel gsettings-desktop-schemas-devel istool
+
+name=gthumb
+version=git
+release=git
+source=(https://gitlab.gnome.org/GNOME/gthumb.git)
+
+build()
+{
+    cd $name
+    meson build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
+
+post-install()
+{
+    glib-compile-schemas /usr/local/share/glib-2.0/schemas/
+}

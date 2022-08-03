@@ -1,0 +1,17 @@
+# Description: wayland wallpaper manager
+# URL:         https://github.com/vilhalmer/oguri.git
+
+name=oguri
+version=git
+release=1.12
+branch=master
+source=(https://github.com/vilhalmer/oguri.git)
+
+build()
+{
+    # export CC=clang-8
+    cd $name
+    meson build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}

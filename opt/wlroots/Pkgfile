@@ -1,0 +1,16 @@
+# Description: modular Wayland compositor library
+# URL:
+
+name=wlroots
+version=git
+release=1
+branch=master
+source=(https://gitlab.freedesktop.org/wlroots/wlroots.git)
+
+build()
+{
+    cd $name
+    meson build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}

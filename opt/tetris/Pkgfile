@@ -1,0 +1,15 @@
+# Description: tetris
+# URL: https://github.com/samtay/tetris.git
+
+name=tetris
+version=git
+release=1
+source=(
+   https://github.com/samtay/tetris.git
+)
+
+build()
+{
+    cd $name
+    stack install tetris
+}

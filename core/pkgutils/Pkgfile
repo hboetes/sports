@@ -1,0 +1,50 @@
+# Maintainer:  Han Boetes <hboetes@gmail.com>
+# Description: utilities to manage cruxports
+# URL:         https://github.com/hboetes/c4O
+
+name=pkgutils
+# Make sure this is in sync with the setting in pkgtutils.shared
+version=0.2
+release=1
+source=(
+    pkgadd
+    pkgadd.8.in
+    pkgadd.conf
+    pkginfo
+    pkginfo.8.in
+    pkgmk
+    pkgmk.8.in
+    pkgmk.conf
+    pkgrm
+    pkgrm.8.in
+    rejmerge
+    rejmerge.8.in
+    rejmerge.conf
+    pkgutils.shared
+)
+
+build()
+{
+    # binaries
+    install -d $PKG/usr/local/bin $PKG/usr/local/lib
+    install -m 755 $SRC/pkgmk              $PKG/usr/local/bin
+    install -m 755 $SRC/rejmerge           $PKG/usr/local/bin
+    install -m 755 $SRC/pkgadd             $PKG/usr/local/bin
+    install -m 755 $SRC/pkgrm              $PKG/usr/local/bin
+    install -m 755 $SRC/pkginfo            $PKG/usr/local/bin
+    install -m 644 $SRC/pkgutils.shared    $PKG/usr/local/lib
+    # manpages
+    install -d $PKG/usr/local/share/man/man8
+    for i in *.8.in; do
+        sed -e "s|#VERSION#|$version|" $i > $PKG/usr/local/share/man/man8/${i%.in}
+    done
+    # configs
+    install -d $PKG/etc
+    install -m 644 $SRC/pkgadd.conf    $PKG/etc
+    install -m 644 $SRC/pkgmk.conf     $PKG/etc
+    install -m 644 $SRC/rejmerge.conf  $PKG/etc
+    # workdir
+    install -d $PKG/usr/pkgmk/{source,package,work}
+    # dbase dir
+    install -d $PKG/var/package/rejects
+}

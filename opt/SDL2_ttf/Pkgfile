@@ -1,0 +1,16 @@
+# Description: top replacement
+# URL:         https://hisham.hm/htop/
+
+name=SDL2_ttf
+version=git
+release=1
+source=(https://github.com/libsdl-org/SDL_ttf.git)
+
+build()
+{
+    cd $name
+    ./autogen.sh
+    ./configure --prefix=/usr
+    make
+    make install DESTDIR=$PKG
+}

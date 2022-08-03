@@ -1,0 +1,13 @@
+# Description: magnificient terminal emulator
+# URL:         https://github.com/gnome-terminator/terminator.git
+
+name=terminator
+version=git
+release=1
+source=(https://github.com/gnome-terminator/terminator.git)
+
+build()
+{
+    cd $name
+    python3 setup.py install --root=$PKG
+}

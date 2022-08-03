@@ -1,0 +1,16 @@
+# Description: ancient modern window manager
+# URL:         https://github.com/fvwmorg/fvwm3.git
+
+name=fvwm3
+version=git
+release=1
+source=(https://github.com/fvwmorg/fvwm3.git)
+
+build()
+{
+    cd $name
+    ./autogen.sh
+    ./configure
+    make
+    make install DESTDIR=$PKG
+}

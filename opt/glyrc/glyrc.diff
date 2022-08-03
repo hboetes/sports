@@ -1,0 +1,65 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f9bf068..c1e0d35 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -94,29 +94,6 @@ PKG_CHECK_MODULES(SQLITE3 sqlite3 REQUIRED)
+ INCLUDE_DIRECTORIES(${GLIBPKG_INCLUDE_DIRS})
+ 
+ 
+-# --------------------------
+-# Check for backtrace
+-# --------------------------
+-
+-INCLUDE(CheckIncludeFile)
+-CHECK_INCLUDE_FILE("execinfo.h" HAVE_EXECINFO)
+-IF(NOT HAVE_EXECINFO)
+-  MESSAGE(FATAL_ERROR "execinfo.h could not be found on the system")
+-ENDIF(NOT HAVE_EXECINFO)
+-
+-INCLUDE(CheckSymbolExists)
+-CHECK_SYMBOL_EXISTS("backtrace" "execinfo.h" HAVE_BACKTRACE)
+-IF(NOT HAVE_BACKTRACE)
+-  SET(CMAKE_REQUIRED_FLAGS "-lexecinfo")
+-  CHECK_SYMBOL_EXISTS("backtrace" "execinfo.h" HAVE_LIBEXECINFO)
+-  IF(HAVE_LIBEXECINFO)
+-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lexecinfo")
+-  ELSE(HAVE_LIBEXECINFO)
+-    MESSAGE(FATAL_ERROR "Could not link to libexecinfo")
+-  ENDIF(HAVE_LIBEXECINFO)
+-ENDIF(NOT HAVE_BACKTRACE)
+-
+-
+ # --------------------------
+ # set directories
+ # --------------------------
+diff --git a/lib/config.h b/lib/config.h
+index 3bfa703..f24b8b8 100644
+--- a/lib/config.h
++++ b/lib/config.h
+@@ -12,11 +12,11 @@
+ 
+ #define GLYR_VERSION_MAJOR "1"
+ #define GLYR_VERSION_MINOR "0"
+-#define GLYR_VERSION_MICRO "8"
++#define GLYR_VERSION_MICRO "9"
+ 
+ #define GLYR_VERSION_MAJOR_INT 1
+ #define GLYR_VERSION_MINOR_INT 0
+-#define GLYR_VERSION_MICRO_INT 8
++#define GLYR_VERSION_MICRO_INT 9
+ 
+ /**
+  * GLYR_CHECK_VERSION:
+diff --git a/lib/glyr.h b/lib/glyr.h
+index 7416c38..2d06309 100644
+--- a/lib/glyr.h
++++ b/lib/glyr.h
+@@ -18,7 +18,7 @@
+ * along with glyr. If not, see <http://www.gnu.org/licenses/>.
+ **************************************************************/
+ #ifndef GLYR_H
+-#define GLYR_GLYR_H
++#define GLYR_H
+ 
+ /**
+  * SECTION:glyr

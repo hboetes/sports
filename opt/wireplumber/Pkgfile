@@ -1,0 +1,15 @@
+# Description: Latest sounddaemon for linux
+# URL:         https://gitlab.freedesktop.org/pipewire/
+
+name=wireplumber
+version=git
+release=1
+source=(https://gitlab.freedesktop.org/pipewire/wireplumber.git)
+
+build()
+{
+    cd $name
+    meson build . --prefix=/usr
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}

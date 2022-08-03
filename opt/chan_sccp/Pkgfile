@@ -1,0 +1,22 @@
+# Description: SCCP channel driver in Asterisk
+# URL:         https://github.com/chan-sccp/chan-sccp
+
+name=chan_sccp
+version=git-$(date '+%Y%m%d')
+branch=develop
+release=1
+source=(https://github.com/chan-sccp/chan-sccp.git)
+
+build()
+{
+    cd $name
+    ./configure --enable-conference --enable-advanced-functions --enable-distributed-devicestate
+    make
+    make install DESTDIR=$PKG
+}
+
+post-install()
+{
+    # This will completely restart the PBX!!!
+    /usr/sbin/fwconsole stop && /usr/sbin/fwconsole start
+}

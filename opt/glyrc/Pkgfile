@@ -1,0 +1,20 @@
+# Description:
+# URL:
+
+name=glyrc
+version=git
+release=1.0
+branch=master
+source=(
+        https://github.com/sahib/glyr.git
+        glyrc.diff
+)
+
+build()
+{
+    cd $name
+    # patch -i $SRC/$name.diff
+    cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
+    make
+    make install DESTDIR=$PKG
+}

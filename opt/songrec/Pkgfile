@@ -1,0 +1,15 @@
+# Description: shazam client for linux
+# Dependencies: libasound2-dev libgtk-3-dev libssl-dev
+
+name=songrec
+version=git
+release=1
+source=(https://github.com/marin-m/SongRec.git)
+
+build()
+{
+    export PATH=$PATH:/home/han/.cargo/bin
+    cd $name
+    cargo build --release
+    install -D target/release/$name   $PKG/usr/local/bin/$name
+}

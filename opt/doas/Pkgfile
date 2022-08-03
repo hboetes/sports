@@ -1,0 +1,22 @@
+# Description: the editor
+# URL:         https://www.gnu.org/software/emacs/
+
+name=doas
+version=git
+release=6.8.1
+source=(https://github.com/Duncaen/OpenDoas.git)
+
+build()
+{
+    export CC=clang
+    cd $name
+    ./configure --with-timestamp
+    sed -i '/chown/d;/chmod/d' GNUmakefile
+    make
+    make install DESTDIR=$PKG
+}
+
+post-install()
+{
+    /bin/chmod 4755 /usr/local/bin/doas
+}

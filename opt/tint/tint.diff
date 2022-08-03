@@ -1,0 +1,33 @@
+diff --git a/io.c b/io.c
+index 447d57b..b7338a3 100644
+--- a/io.c
++++ b/io.c
+@@ -142,7 +142,7 @@ void out_printf (char *format, ...)
+ {
+    va_list ap;
+    va_start (ap,format);
+-   vwprintw (stdscr,format,ap);
++   vw_printw (stdscr,format,ap);
+    va_end (ap);
+ }
+ 
+diff --git a/tint.c b/tint.c
+index 83fe608..1a99b03 100644
+--- a/tint.c
++++ b/tint.c
+@@ -598,6 +598,7 @@ int main (int argc,char *argv[])
+ 				  break;
+ 				case 'k':
+ 				case '\n':
++				case KEY_DOWN:
+ 				  engine_move (&engine,ACTION_ROTATE);
+ 				  break;
+ 				case 'l':
+@@ -605,7 +606,6 @@ int main (int argc,char *argv[])
+ 				  engine_move (&engine,ACTION_RIGHT);
+ 				  break;
+ 				case ' ':
+-				case KEY_DOWN:
+ 				  engine_move (&engine,ACTION_DROP);
+ 				  break;
+ 				  /* show next piece */

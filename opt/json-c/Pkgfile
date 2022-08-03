@@ -1,0 +1,17 @@
+# Description: JSON implementation in C
+# URL:         https://github.com/json-c
+
+name=json-c
+version=git
+release=0.13
+branch=json-c-$release
+source=(https://github.com/$name/$name.git)
+
+build()
+{
+    cd $name
+    ./autogen.sh
+    ./configure
+    make
+    make install DESTDIR=$PKG
+}

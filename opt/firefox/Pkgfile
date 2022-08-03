@@ -1,0 +1,73 @@
+# Description: The Mozilla Firefox browser with Alsa support
+# URL: https://www.mozilla.com/firefox/
+# Maintainer: Danny Rawlins, crux at romster dot me
+# Depends on: alsa-lib autoconf-2.13 cbindgen clang dbus-glib gtk libidl libnotify libxkbcommon lld nodejs nss unzip xorg-libxt yasm zip python
+# Optional: sccache
+
+name=firefox
+version=80.0b8
+release=1
+source=(
+    https://ftp.mozilla.org/pub/firefox/releases/$version/source/firefox-$version.source.tar.xz
+)
+
+build() {
+    export CV=10
+    cd firefox-${version%b*}
+
+    export PYTHONIOENCODING=utf-8
+
+    mkdir -p "$PKGMK_SOURCE_DIR/rust"
+    export CARGO_HOME="$PKGMK_SOURCE_DIR/rust"
+
+    cat <<- EOF > .mozconfig
+        mk_add_options AUTOCLOBBER=1
+        mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/firefox-shared
+        unset MOZ_TELEMETRY_REPORTING
+        ac_add_options --prefix=/usr/local
+        ac_add_options --enable-default-toolkit=cairo-gtk3
+        ac_add_options --enable-application=browser
+        ac_add_options --with-system-jpeg
+        ac_add_options --with-system-zlib
+        ac_add_options --with-system-png
+        ac_add_options --enable-av1
+        ac_add_options --enable-system-ffi
+        ac_add_options --enable-system-pixman
+        ac_add_options --enable-alsa
+        ac_add_options --enable-jack
+        ac_add_options --enable-optimize
+        ac_add_options --enable-release
+        ac_add_options --enable-rust-simd
+        ac_add_options --disable-debug-symbols
+        ac_add_options --disable-pulseaudio
+        ac_add_options --enable-official-branding
+        ac_add_options --enable-extensions=default,-gnomevfs
+        ac_add_options --enable-linker=lld-$CV
+        ac_add_options --disable-tests
+        ac_add_options --disable-debug
+        ac_add_options --disable-updater
+        ac_add_options --disable-crashreporter
+        ac_add_options --disable-necko-wifi
+        ac_add_options --disable-elf-hack
+        ac_add_options --enable-ccache
+        ac_add_options --with-ccache=/usr/bin/ccache
+        ac_add_options --enable-linker=lld-$CV
+EOF
+
+    [[ -e '/usr/bin/ccache' ]] && echo 'ac_add_options --enable-ccache' >> .mozconfig
+
+    export CC=clang-$CV CXX=clang++-$CV AR=llvm-ar-$CV NM=llvm-nm-$CV RANLIB=llvm-ranlib-$CV
+    export MOZ_MAKE_FLAGS="-j ${JOBS-1}"
+    export MOZBUILD_STATE_PATH="$PKGMK_SOURCE_DIR/.mozbuild"
+    export MOZ_NOSPAM=1
+
+    ./mach bootstrap --no-system-changes
+    ./mach build
+    DESTDIR=$PKG ./mach install
+
+    install -d $PKG/usr/share/pixmaps
+    ln -s /usr/lib/firefox/browser/chrome/icons/default/default48.png $PKG/usr/share/pixmaps/firefox_default48.png
+    # Remove crap
+    rm -r $PKG/usr/lib/firefox/browser/features
+    rm $PKG/usr/lib/firefox/removed-files
+}

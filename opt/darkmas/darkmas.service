@@ -1,0 +1,11 @@
+[Unit]
+Description=Load custom modules
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/darkmas
+RemainAfterExit=true
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target

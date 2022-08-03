@@ -1,0 +1,20 @@
+# Description: tiling wm
+# URL:         https://i3wm.org/
+# Depends on:
+
+name=i3
+version=git
+release=next
+branch=next
+source=(https://github.com/i3/i3.git)
+
+build()
+{
+    cd $SRC/$name
+    autoreconf -fi
+    mkdir -p build && cd build
+    ../configure --disable-docs --disable-sanitizers
+    make
+    make install DESTDIR=$PKG
+    # rm -rf $PKG/usr/local/share/doc
+}

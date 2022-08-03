@@ -1,0 +1,15 @@
+# Description: ncurses music player
+
+name=siren
+version=git
+release=1
+source=(https://www.kariliq.nl/git/siren.git)
+
+build()
+{
+    export CC=clang
+    cd $name
+    ./configure
+    make
+    make install DESTDIR=$PKG
+}

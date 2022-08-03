@@ -1,0 +1,15 @@
+# Description: complete set of compose keybinds
+# URL:         https://github.com/kragen/xcompose.git
+
+name=xcompose
+version=git
+release=1
+source=(https://github.com/kragen/xcompose.git)
+
+build()
+{
+    cd $name
+    make
+    install -d $PKG/usr/local/share/$name/
+    install -D *ompose $PKG/usr/local/share/$name/
+}

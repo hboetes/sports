@@ -1,0 +1,27 @@
+#!/bin/sh -x
+for DKMSCNF in /usr/src/*/dkms.conf; do
+    MAKE='make clean all install clean'
+    KV=$(uname -r)
+    if [ -e "${DKMSCNF%dkms.conf}darkmas.conf" ]; then
+        # Some of those dkms config files are plain stupid.
+        source "${DKMSCNF%dkms.conf}darkmas.conf"
+    else
+        source $DKMSCNF
+    fi
+    if [ ! -e /lib/modules/$KV/$DEST_MODULE_LOCATION/${BUILT_MODULE_NAME}.ko ]; then
+        cd ${DKMSCNF%/*}
+        $MAKE
+        # XXX Fix this mess.
+        if [ -n ${BUILT_MODULE_NAME} ]; then
+            modprobe ${BUILT_MODULE_NAME}
+        else
+            modprobe ${PACKAGE_NAME}
+            BUILT_MODULE_NAME=$PACKAGE_NAME
+        fi
+        # The trailing space is on purpose.
+        if ! lsmod | grep -q "^$LOADED_MODULE_NAME "; then
+            echo Building $PACKAGE_NAME failed. >&2
+            exit 1
+        fi
+    fi
+done

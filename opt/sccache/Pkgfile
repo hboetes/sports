@@ -1,0 +1,14 @@
+# Description: statusbar for i3
+
+name=sccache
+version=git
+release=1
+source=(https://github.com/mozilla/sccache.git)
+
+build()
+{
+    export PATH=$PATH:/home/han/.cargo/bin
+    cd $name
+    cargo build --release
+    install -D target/release/$name   $PKG/usr/local/bin/$name
+}

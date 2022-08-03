@@ -1,0 +1,14 @@
+# Description: micro gnu-emacs
+# URL:         https://github.com/hboetes/mg
+
+name=mg
+version=git
+release=1
+source=(https://github.com/hboetes/mg.git)
+
+build()
+{
+    cd $name
+    make
+    make install DESTDIR=$PKG
+}

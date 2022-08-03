@@ -1,0 +1,18 @@
+# Description: tiling wm
+# URL:         https://i3wm.org/
+# Depends on:
+
+name=i3-gaps
+version=git
+release=git
+source=(https://github.com/Airblader/i3.git)
+build()
+{
+    cd $SRC/$name
+    export PREFIX=/usr/local
+    make
+    make -C man
+    make install DESTDIR=$PKG
+    mkdir -p $PKG$PREFIX/share/man/man1
+    cp man/*.1 $PKG/$PREFIX/share/man/man1
+}

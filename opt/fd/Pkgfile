@@ -1,0 +1,16 @@
+# Description: find replacement
+# URL:         https://github.com/sharkdp/fd.git
+
+name=fd
+version=git
+release=1
+source=(https://github.com/sharkdp/fd.git)
+
+build()
+{
+    cd $name
+    cargo build --release
+    install -m 555 -D target/release/fd $PKG/usr/bin/fd
+    install -m 444 -D contrib/completion/_fd $PKG/usr/share/zsh/$ZSH_VERSION/functions/_fd
+    install -m 444 -D doc/fd.1 $PKG/usr/share/man/man1/fd.1
+}

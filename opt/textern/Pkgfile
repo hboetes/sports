@@ -1,0 +1,20 @@
+# Description: helper program for firefox extension to edit text with editor
+# URL:
+
+name=textern
+version=git
+release=master
+source=""
+
+build()
+{
+    cd $PKGMK_SOURCE_DIR
+    if ! cd $name; then
+        git clone --recurse-submodules https://github.com/jlebon/$name
+    else
+        git pull
+    fi
+    cp -r $PKGMK_SOURCE_DIR/$name $SRC
+    cd $SRC/$name
+    make native-install DESTDIR=$PKG
+}

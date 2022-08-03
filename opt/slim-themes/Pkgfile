@@ -1,0 +1,30 @@
+# Description: themes for slim login manager
+# URL:         https://github.com/adi1090x/slim_themes.git
+
+name=slim-themes
+version=git
+release=1
+source=(https://github.com/adi1090x/slim_themes.git)
+
+build()
+{
+    cd $name
+    installdir=$PKG/usr/share/slim/themes
+    install -d $installdir
+    cp -r themes/* $installdir
+}
+
+post-install()
+{
+    echo -n "sed -i 's|^current_theme|current_theme  "
+    local first=true
+    for i in $(find /usr/share/slim/themes -type d); do
+        if [[ $first == true ]]; then
+            first=false
+        else
+            echo -n ','
+        fi
+        echo -n "${i##*/}"
+    done
+    echo "|'"
+}

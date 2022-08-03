@@ -1,0 +1,14 @@
+#!/bin/sh
+# wrapper for pre/post script execution.
+
+echo "prt-get wants to execute these commands with root permissions:"
+printf '\e[31m'
+cat "$1"
+printf '\e[0m\n'
+printf "run ${1}? [y/N] "
+read answer
+if [ "$answer" = y -o "$answer" = Y ]; then
+   source "$1"
+else
+   exit 1
+fi

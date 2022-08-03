@@ -1,0 +1,95 @@
+diff -up -rupw prt-get-5.12/src/pkgdb.cpp prt-get-5.12patched/src/pkgdb.cpp
+--- prt-get-5.12/src/pkgdb.cpp	Sat Apr  8 11:39:28 2006
++++ prt-get-5.12patched/src/pkgdb.cpp	Sun Apr 16 02:59:23 2006
+@@ -19,6 +19,8 @@ using namespace std;
+ #include <cstdio>
+ 
+ #include <fnmatch.h>
++#include <sys/types.h>
++#include <dirent.h>
+ 
+ #include "pkgdb.h"
+ #include "datafileparser.h"
+@@ -28,7 +30,10 @@ using namespace std;
+ 
+ const string PkgDB::PKGDB = "/var/lib/pkg/db";
+ const string PkgDB::ALIAS_STORE = LOCALSTATEDIR"/lib/pkg/prt-get.aliases";
++const string PkgDB::PKGDIR = LOCALSTATEDIR"/package";
+ 
++#define USE_PKGDIR
++
+ /*!
+   Create a PkgDB object
+ */
+@@ -141,6 +146,47 @@ bool PkgDB::load() const
+     bool nameRead = false;
+     string name;
+ 
++
++#ifdef USE_PKGDIR
++    string pkgdir = "";
++    if (m_installRoot != "") {
++        pkgdir = m_installRoot;
++    }
++    pkgdir += PKGDIR;
++
++    DIR* dir = opendir(pkgdir.c_str());
++    string version = "";
++    if (dir) {
++        struct dirent *dent;
++        while ((dent = readdir(dir))) {
++            if (fnmatch("*-metadata", dent->d_name, 0) == 0) {
++                FILE* fp = fopen((pkgdir + "/" + dent->d_name).c_str(), "r" );
++                if (fp) {
++                    fgets( line, length, fp );
++                    line[strlen(line)-1] = '\0';
++                    name = strchr(line, '=')+1;
++                    fgets( line, length, fp );
++                    line[strlen(line)-1] = '\0';
++                    version = strchr(line, '=')+1;
++                    fgets( line, length, fp );
++                    line[strlen(line)-1] = '\0';
++                    version += '-';
++                    version += strchr(line, '=')+1;
++                    fclose(fp);
++
++                    m_packages[name] = version;
++                    if (aliases.find(name) != aliases.end()) {
++                        m_aliases[name] = aliases[name];
++                    }
++
++                }
++            }
++        }
++    } else {
++        return false;
++    }
++
++#else
+     string pkgdb = "";
+     if (m_installRoot != "") {
+         pkgdb = m_installRoot;
+@@ -172,9 +218,10 @@ bool PkgDB::load() const
+         return false;
+     }
+ 
+-    m_isLoaded = true;
+-
+     fclose( fp );
++
++#endif
++    m_isLoaded = true;
+ 
+     return true;
+ }
+diff -up -rupw prt-get-5.12/src/pkgdb.h prt-get-5.12patched/src/pkgdb.h
+--- prt-get-5.12/src/pkgdb.h	Tue Apr  4 17:58:30 2006
++++ prt-get-5.12patched/src/pkgdb.h	Sun Apr 16 02:53:12 2006
+@@ -55,6 +55,7 @@ private:
+     std::string m_installRoot;
+ 
+     static const std::string PKGDB;
++    static const std::string PKGDIR;
+ };
+ 
+ #endif /* _PKGDB_H_ */

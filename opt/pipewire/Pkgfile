@@ -1,0 +1,15 @@
+# Description: Latest sounddaemon for linux
+# URL:         https://gitlab.freedesktop.org/pipewire/
+
+name=pipewire
+version=git
+release=1
+source=(https://gitlab.freedesktop.org/pipewire/pipewire.git)
+
+build()
+{
+    cd $name
+    ./autogen.sh --prefix=/usr
+    make
+    make install DESTDIR=$PKG
+}

@@ -1,0 +1,15 @@
+# Description: uic chess engine
+# URL:         https://chessprogramming.wikispaces.com/Ethereal
+
+name=ethereal
+version=git
+release=1
+source=(https://github.com/AndyGrant/Ethereal.git)
+
+build()
+{
+    cd $name/src
+    gcc -O2 *.c fathom/tbprobe.c -lpthread -lm -o $name
+    install -d       $PKG/usr/games/
+    install -s $name $PKG/usr/games/$name
+}

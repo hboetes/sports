@@ -1,0 +1,14 @@
+# Description: grep, but faster
+name=the_silver_searcher
+version=git
+release=1
+source=(https://github.com/ggreer/the_silver_searcher.git)
+
+build()
+{
+    cd $name
+    ./autogen.sh
+    ./configure
+    make
+    make install DESTDIR=$PKG
+}

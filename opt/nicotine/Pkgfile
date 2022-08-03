@@ -1,0 +1,20 @@
+# Description: p2p for music
+# URL:         https://github.com/Nicotine-Plus/nicotine-plus
+
+name=nicotine
+version=git
+release=2.3.2
+branch=master
+source=(
+    https://github.com/Nicotine-Plus/nicotine-plus.git
+    # https://github.com/Nicotine-Plus/nicotine-plus/pull/836.diff
+    # https://github.com/Nicotine-Plus/nicotine-plus/pull/821.diff
+)
+
+build()
+{
+    cd $name
+    # patch -i $SRC/836.diff
+    # patch -i $SRC/821.diff
+    python3 setup.py install --root $PKG
+}

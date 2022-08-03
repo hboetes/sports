@@ -1,0 +1,22 @@
+# Description: my code
+# URL:
+# Depends on:
+
+name=darkmas
+version=0.1
+release=1
+source=(
+    darkmas.sbinsh
+    darkmas.service
+)
+
+build()
+{
+    install -d $PKG/usr/local/{,s}bin $PKG/etc/systemd/system
+    for i in *.sbinsh; do
+        install $i $PKG/usr/local/sbin/${i%.sbinsh}
+    done
+    for i in *.service; do
+        install $i $PKG/etc/systemd/system/${i}
+    done
+}

@@ -1,0 +1,14 @@
+# Description: top replacement
+# URL:         https://github.com/aristocratos/btop.git
+
+name=btop
+version=git
+release=1
+source=(https://github.com/aristocratos/btop.git)
+
+build()
+{
+    cd $name
+    make
+    make install DESTDIR=$PKG
+}
