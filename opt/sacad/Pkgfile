@@ -1,0 +1,17 @@
+# Description: Smart Automatic Cover Art Downloader
+# URL:         https://github.com/desbma/sacad.git
+# apt-get install python3-aiohttp python3-lxml optipng jpegoptim python3-cssselect python3-appdirs python3-bitarray python3-unidecode
+
+name=sacad
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/desbma/sacad.git
+)
+
+build()
+{
+    cd $name
+    python3 setup.py install --root $PKG
+}

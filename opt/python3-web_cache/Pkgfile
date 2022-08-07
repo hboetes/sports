@@ -1,0 +1,16 @@
+# Description: Simple persistent cache storage, with different cache eviction strategies, and optional compression
+# URL:         https://pypi.org/project/web_cache
+
+name=web_cache
+version=1.1.0
+release=1
+branch=master
+source=(
+    https://files.pythonhosted.org/packages/1b/67/9970fa9705c2e4234923a1ae0ca96bd5f29571d21b70c5457528347f1eaf/web_cache-1.1.0.tar.gz
+)
+
+build()
+{
+    cd $name*
+    python3 setup.py install --root $PKG
+}

@@ -1,0 +1,16 @@
+# Description: Up to date simple useragent faker with real world database
+# URL:         https://pypi.org/project/fake-useragent
+
+name=fake-useragent
+version=0.1.11
+release=1
+branch=master
+source=(
+    https://files.pythonhosted.org/packages/d1/79/af647635d6968e2deb57a208d309f6069d31cb138066d7e821e575112a80/fake-useragent-0.1.11.tar.gz
+)
+
+build()
+{
+    cd $name*
+    python3 setup.py install --root $PKG
+}
