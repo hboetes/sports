@@ -73,12 +73,6 @@ fi
 echo "Setting the right permissions on the builddir."
 sudo chown    ${USER}:$rtgrp /usr/pkgmk/*
 
-if [ ! -d /usr/sports/core/pkgutils/.git ]; then
-    echo 'Installing the source code repo at the proper location.'
-    mkdir -p /usr/sports/core
-    git clone git@github.com:hboetes/c4O.git -C /usr/sports/core/pkgutils
-fi
-
 cat << EOF
 Congratulations, you have got sports installed. And you didn't even have to reboot. ;-)
 For the next update of sports you can run:
