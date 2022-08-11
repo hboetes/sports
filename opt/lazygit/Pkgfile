@@ -11,5 +11,5 @@ build()
     cd $name
     unset CC
     export PATH=$PATH:/usr/local/go/bin
-    GOOS=linux GOARCH=arm GOARM=6 GOBIN=$PKG/usr/local/bin go install
+    GOOS=linux GOARCH=arm64 GOARM=7 GOBIN=$PKG/usr/local/bin go install
 }
