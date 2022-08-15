@@ -1,0 +1,16 @@
+# Description: python bindings for ffmpeg
+# URL:         https://github.com/jonghwanhyeon/python-ffmpeg.git
+
+name=python3-ffmpeg
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/jonghwanhyeon/python-ffmpeg.git
+)
+
+build()
+{
+    cd $name
+    python3 setup.py install --root $PKG
+}
