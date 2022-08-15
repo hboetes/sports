@@ -5,16 +5,14 @@ version=git
 release=1
 source=(
     https://github.com/rspamd/rspamd.git
-    $name.patch
-    $name.rc
+    $name.service
 )
 
 build()
 {
-    # install -D -m 755 $SRC/$name.rc $PKG/etc/rc.d/$name
+    install -D $SRC/$name.service $PKG/usr/lib/systemd/system/$name.service
     cd $name
     git submodule update --recursive --remote
-    # patch -p0 -i $SRC/$name.patch
     mkdir build
     cd build
     cmake .. \
@@ -24,7 +22,7 @@ build()
           -DLOGDIR="/var/log/rspamd" \
           -DMANDIR="/usr/local/man" \
           -DRUNDIR="/var/run/rspamd" \
-          -DRSPAMD_USER="_rspamd" \
+          -DRSPAMD_USER="rspamd" \
           -DENABLE_LTO=OFF \
           -DENABLE_LUAJIT=OFF
     make
