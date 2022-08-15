@@ -11,9 +11,9 @@ build()
 {
     cd $name*
     # export CC='sccache gcc'
-    ./autogen.sh
+    # ./autogen.sh
     # ./configure --with-x --with-x-toolkit=gtk --without-makeinfo --with-native-compilation
-    ./configure --without-all --without-makeinfo --without-x --with-gnutls=no
+    ./configure --without-all --without-makeinfo --without-x --with-gnutls=yes # --with-native-compilation
     make
     make install DESTDIR=$PKG
 }
