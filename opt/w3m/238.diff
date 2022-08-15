@@ -1,12 +1,12 @@
 diff --git a/scripts/w3mman/w3mman2html.cgi.in b/scripts/w3mman/w3mman2html.cgi.in
-index 2d326a96..33427180 100644
+index 2d326a96..ee83e163 100644
 --- a/scripts/w3mman/w3mman2html.cgi.in
 +++ b/scripts/w3mman/w3mman2html.cgi.in
 @@ -162,6 +162,15 @@ EOF
      next;
    }
  
-+  my $printchar='[\wÁÉÍÓÚáéíóú /\'.:;,&()\\"~=%*\$\?|!#\`\@\{\}\<\>_-]';
++  my $printchar='[\w^ÁÉÍÓÚáéíóú /\'.:;,&()\\"~=%*\$\?|!#\`\@\{\}\<\>_-]';
 +  s@\[1m($printchar+)\[0m@<b>$1</b>@g;
 +  s@\[4m($printchar+)\[24m@<u>$1</u>@g;
 +  s@\[1m($printchar+)\[0m@<b>$1</b>@g;
@@ -14,7 +14,7 @@ index 2d326a96..33427180 100644
 +  s@\[1m($printchar+)\[4m@<b>$1</b>@g;
 +  s@\[22m($printchar+)\[0m@<u>$1</u>@g;
 +  s@\[22m($printchar+)\[24m@<u>$1</u>@g;
-+  s@\[4m([\wÁÉÍÓÚáéíóú /'.:;,&()\\"~=%*\$\?|!#\`\@\{\}\<\>_-]+)\[0m@<u>$1</u>@g;
++  s@\[4m($printchar+)\[0m@<u>$1</u>@g;
    s@(http|ftp)://[\w.\-/~]+[\w/]@<a href="$&">$&</a>@g;
    s@\b(mailto:|)(\w[\w.\-]*\@\w[\w.\-]*\.[\w.\-]*\w)@<a href="mailto:$2">$1$2</a>@g;
    s@(\W)(\~?/[\w.][\w.\-/~]*)@$1 . &file_ref($2)@ge;
