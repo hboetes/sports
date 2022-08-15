@@ -1,0 +1,16 @@
+# Description: pyee supplies a EventEmitter object that is similar to the EventEmitter class from No…
+# URL:         https://github.com/jfhbrook/pyee.git
+
+name=python3-pyee
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/jfhbrook/pyee.git
+)
+
+build()
+{
+    cd $name
+    python3 setup.py install --root $PKG
+}
