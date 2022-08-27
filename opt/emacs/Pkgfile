@@ -11,15 +11,9 @@ build()
 {
     cd $name*
     # export CC='sccache gcc'
-<<<<<<< Updated upstream
     # ./autogen.sh
     # ./configure --with-x --with-x-toolkit=gtk --without-makeinfo --with-native-compilation
     ./configure --without-all --without-makeinfo --without-x --with-gnutls=yes # --with-native-compilation
-=======
-    ./autogen.sh
-    ./configure --with-x --with-x-toolkit=gtk --without-makeinfo --with-native-compilation
-    # ./configure --without-all --without-makeinfo --without-x --with-gnutls=no
->>>>>>> Stashed changes
     make
     make install DESTDIR=$PKG
 }

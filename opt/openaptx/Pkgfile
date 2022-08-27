@@ -11,13 +11,15 @@ source=(
 build()
 {
     cd $name
-    aclocal
-    libtoolize
-    autoconf
-    autoheader
-    automake --add-missing
-    ./configure
+    # aclocal
+    # libtoolize
+    # autoconf
+    # autoheader
+    # automake --add-missing
+    # ./configure
 
+    mkdir build && cd build
+    cmake -DENABLE_DOC=ON -DWITH_FFMPEG=ON -DWITH_SNDFILE=ON ..
     make
     make install DESTDIR=$PKG
 }
