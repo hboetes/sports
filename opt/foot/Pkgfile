@@ -1,0 +1,18 @@
+# Description: GPU-accelerated terminal emulator
+# URL:         https://github.com/jwilm/alacritty
+
+name=foot
+version=git
+release=1
+source=(https://codeberg.org/dnkl/foot.git)
+
+build()
+{
+    # https://codeberg.org/dnkl/foot/src/branch/releases/1.13/INSTALL.md
+    cd $name
+    mkdir -p build && cd build
+    meson --buildtype=release --prefix=/usr/local -Db_lto=true -Dterminfo=enabled ../
+    ninja
+    ninja test
+    DESTDIR=$PKG ninja install
+}
