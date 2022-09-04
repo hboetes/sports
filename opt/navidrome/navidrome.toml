@@ -1,0 +1,10 @@
+Address = 'localhost'
+Port = '4533'
+EnableFavourites = 'false'
+EnableStarRating = 'false'
+LogLevel = 'DEBUG'
+ScanSchedule = '@every 1h'
+IgnoredArticles = 'The El La Los Las Le Les Os As O A De Der Die Das Dem Den'
+# ImageCacheSize = 0
+EnableDownloads = 'true'
+MusicFolder = "/bigstorage/music"

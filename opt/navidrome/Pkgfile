@@ -1,20 +1,25 @@
-# Description: web music player
-# URL:         https://github.com/navidrome/navidrome.git
+# Description:  web music player
+# URL:          https://github.com/navidrome/navidrome.git
+# Dependencies: taglib-devel go nodejs ffmpeg
 
 name=navidrome
-version=git
+version=0.47.5
 release=1
-source=(https://github.com/navidrome/navidrome.git)
+source=(
+    https://github.com/navidrome/navidrome.git
+    navidrome.service
+    navidrome.toml
+    nginx_navidrome.conf
+)
 
 build()
 {
-    cd $name
-    # git checkout v0.47.5
-    export GOBIN=$PKG/usr/local/bin
+    install -m 644 -D $name.service $PKG/etc/systemd/system/navidrome.service
+    install -m 644 -D $name.toml    $PKG/var/lib/navidrome/navidrome.toml
+    install -m 644 -D nginx_$name.conf $PKG/usr/local/share/doc/navidrome/nginx_$name.conf
+    cd navidrome-$version
     export PATH=$PATH:/usr/local/go/bin
-    # go install
-    #npm i --package-lock-only
-    #npm audit fix --force
-    gmake setup
-    gmake buildall
+    make setup
+    make buildall
+    install -m 755 -D $name $PKG/usr/local/bin/navidrome
 }
