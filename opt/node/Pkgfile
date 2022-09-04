@@ -2,14 +2,13 @@
 # URL:         https://nodejs.org/
 
 name=node
-version=18.3.0
+version=16.17.0
 release=1
-machine=$(uname -m)
-source=(https://nodejs.org/dist/v$version/node-v$version-linux-$machine.tar.xz)
+source=(https://nodejs.org/dist/v$version/node-v$version-linux-arm64.tar.xz)
 
 build()
 {
-    cd node-v$version-linux-$machine
+    cd node-v$version-linux-*
     install -d $PKG/usr/local
     mv bin include lib share $PKG/usr/local
 }
