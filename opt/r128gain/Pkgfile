@@ -1,5 +1,6 @@
 # Description: p2p for music
 # URL:         https://github.com/Nicotine-Plus/nicotine-plus
+# python3-future python3-crcmod
 
 name=r128gain
 version=git
