@@ -1,7 +1,7 @@
 # Description: Smart Automatic Cover Art Downloader
 # URL:         https://github.com/desbma/sacad.git
 # dnf install python3-aiohttp python3-lxml optipng jpegoptim python3-cssselect python3-appdirs python3-bitarray python3-unidecode python3-pillow python3-mutagen python3-tqdm
-# prt-get install python3-web_cache python3-fake-useragent
+# prt-get install python3-web_cache python3-fake-useragent ffmpeg-python
 
 name=sacad
 version=git
