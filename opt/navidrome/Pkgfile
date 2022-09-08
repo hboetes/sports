@@ -3,7 +3,7 @@
 # Dependencies: taglib-devel go nodejs ffmpeg
 
 name=navidrome
-version=0.47.5
+version=0.47.6
 release=1
 source=(
     https://github.com/navidrome/navidrome.git
@@ -17,7 +17,7 @@ build()
     install -m 644 -D $name.service $PKG/etc/systemd/system/navidrome.service
     install -m 644 -D $name.toml    $PKG/var/lib/navidrome/navidrome.toml
     install -m 644 -D nginx_$name.conf $PKG/usr/local/share/doc/navidrome/nginx_$name.conf
-    cd navidrome-$version
+    cd navidrome # -$version
     export PATH=$PATH:/usr/local/go/bin
     make setup
     make buildall
