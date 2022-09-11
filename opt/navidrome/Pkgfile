@@ -23,3 +23,9 @@ build()
     make buildall
     install -m 755 -D $name $PKG/usr/local/bin/navidrome
 }
+
+post-install()
+{
+    systemctl daemon-reload
+    systemctl restart rspamd.service
+}
