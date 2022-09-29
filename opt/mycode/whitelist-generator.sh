@@ -21,7 +21,7 @@ recurse()
                 else
                     # Even professional sysadmins make mistakes. And
                     # postfix will complain about that.
-                    ip4=$($ipc ${i#ip4:})
+                    ip4=$(ipc ${i#ip4:})
                     echo ${ip4} permit
                 fi
                 ;;
@@ -59,32 +59,13 @@ recurse()
     done
 }
 
-ipc_pyr()
-{
-    ipcalc $1 | awk '/network/ {print $3$4}'
+ipc(){
+    ipcalc --no-decorate $1| head -n1
 }
-
-ipc_jodies()
-{
-    ipcalc -nb $1 | awk '/Network/ {print $2}'
-}
-
-if ipcalc -nb 10/8 > /dev/null 2>&1; then
-    ipc=ipc_jodies
-else
-    ipc=ipc_pyr
-fi
 
 # Groups of hosts to be queried (edit to your liking)
-#webmail_hosts="aol.com google.com microsoft.com outlook.com hotmail.com gmx.com icloud.com mail.com inbox.com zoho.com"
-#social_hosts="facebook.com twitter.com pinterest.com instagram.com tumblr.com reddit.com linkedin.com"
-#commerce_hosts="craigslist.org amazon.com ebay.com paypal.com"
-#bulk_hosts="sendgrid.com sendgrid.net mailchimp.com exacttarget.com cust-spf.exacttarget.com constantcontact.com icontact.com mailgun.com fishbowl.com fbmta.com mailjet.com"
-#misc_hosts="zendesk.com github.com"
-# gmx?
-
 for domain in google.com hotmail.com github.com paypal.com gmx.com linkedin.com amazon.com telenet.be boetes.org axis-simulation.com; do
-    # for domain in amazon.com; do
+    # for domain in google.com; do
     echo "# $domain"
     recurse $domain
 done
