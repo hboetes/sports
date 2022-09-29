@@ -2,7 +2,7 @@
 # URL:         https://go.dev/
 
 name=golang
-version=1.18.5
+version=1.19.1
 release=1
 source=(https://go.dev/dl/go$version.linux-arm64.tar.gz)
 
