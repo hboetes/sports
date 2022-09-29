@@ -7,6 +7,7 @@ version=0.47.6
 release=1
 source=(
     https://github.com/navidrome/navidrome.git
+    # https://github.com/navidrome/navidrome/releases/download/v$version/navidrome_${version}_Linux_arm64.tar.gz
     navidrome.service
     navidrome.toml
     nginx_navidrome.conf
@@ -19,13 +20,21 @@ build()
     install -m 644 -D nginx_$name.conf $PKG/usr/local/share/doc/navidrome/nginx_$name.conf
     cd navidrome # -$version
     export PATH=$PATH:/usr/local/go/bin
+    # Nice, but it doesn't work.
+    # sed -i 's@npm ci@npm ci \&\& npm audit fix --force ||:@' Makefile
+    sed -i 's@npm ci@npm ci \&\& npm audit fix ||:@' Makefile
     make setup
+    make buildjs
     make buildall
-    install -m 755 -D $name $PKG/usr/local/bin/navidrome
+    install -D -m 755 $name $PKG/usr/local/bin/navidrome
+
+    # binary install
+    # install -d $PKG/usr/local/bin
+    # mv $name $PKG/usr/local/bin/navidrome
 }
 
 post-install()
 {
     systemctl daemon-reload
-    systemctl restart rspamd.service
+    systemctl restart navidrome.service
 }
