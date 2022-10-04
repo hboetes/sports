@@ -2,7 +2,7 @@
 # URL:         https://www.gnu.org/software/emacs/
 
 name=emacs
-version=28.1
+version=28.2
 release=1
 # source=(git://git.savannah.gnu.org/emacs.git)
 source=(https://ftp.wayne.edu/gnu/emacs/emacs-$version.tar.xz)
@@ -12,8 +12,8 @@ build()
     cd $name*
     # export CC='sccache gcc'
     # ./autogen.sh
-    # ./configure --with-x --with-x-toolkit=gtk --without-makeinfo --with-native-compilation
-    ./configure --without-all --without-makeinfo --without-x --with-gnutls=yes # --with-native-compilation
+    ./configure --with-x --with-x-toolkit=gtk --without-makeinfo --with-native-compilation
+    # ./configure --without-all --without-makeinfo --without-x --with-gnutls=yes # --with-native-compilation
     make
     make install DESTDIR=$PKG
 }
