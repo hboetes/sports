@@ -1,0 +1,18 @@
+# Description:  GTK based greeter for greetd, to be run under cage or similar.
+# URL:          https://git.sr.ht/~kennylevinsen/gtkgreet
+# Dependencies: greetd json-c-devel gtk-layer-shell-devel scdoc
+
+name=gtkgreet
+version=git
+release=1
+source=(https://git.sr.ht/~kennylevinsen/gtkgreet.git)
+
+build()
+{
+    cd $name
+    mkdir -p build && cd build
+    sed -i 's|G_APPLICATION_FLAGS_NONE|G_APPLICATION_DEFAULT_FLAGS|' ../gtkgreet/gtkgreet.c
+    meson --prefix=/usr/local ../
+    ninja
+    DESTDIR=$PKG ninja install
+}
