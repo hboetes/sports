@@ -1,0 +1,16 @@
+# Description:  sync application
+# URL:          https://github.com/bcpierce00/unison/
+
+name=unison
+version=2.52.1
+release=1
+source=(
+    https://github.com/bcpierce00/unison/releases/download/v$version/unison-v$version+ocaml-4.04.2+x86_64.linux.tar.gz
+)
+
+build()
+{
+    for i in bin/*; do
+        install -m 755 -D $i $PKG/usr/local/$i
+    done
+}
