@@ -10,7 +10,7 @@ source=(
 
 build()
 {
-    install -D $SRC/$name.service $PKG/usr/lib/systemd/system/$name.service
+    install -m 644 -D $SRC/$name.service $PKG/usr/lib/systemd/system/$name.service
     cd $name
     git submodule update --recursive --remote
     mkdir build
@@ -27,4 +27,10 @@ build()
           -DENABLE_LUAJIT=OFF
     make
     make install DESTDIR=$PKG
+}
+
+post-install()
+{
+    systemctl daemon-reload
+    systemctl restart rspamd.service
 }

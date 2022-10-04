@@ -1,7 +1,7 @@
 # Description: Up to date simple useragent faker with real world database
 # URL:         https://pypi.org/project/fake-useragent
 
-name=fake-useragent
+name=python3-fake-useragent
 version=0.1.11
 release=1
 branch=master
@@ -11,6 +11,6 @@ source=(
 
 build()
 {
-    cd $name*
+    cd fake-useragent*
     python3 setup.py install --root $PKG
 }
