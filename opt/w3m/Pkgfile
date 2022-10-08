@@ -14,7 +14,7 @@ build()
     cd $name
     patch -p1 -i $SRC/238.diff
     export CFLAGS='-I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/gdk-pixbuf-2.0'
-    ./configure --without-x
+    ./configure --without-x --without-imagelib
     make
     make install DESTDIR=$PKG
 }
