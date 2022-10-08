@@ -1,0 +1,23 @@
+# Description: sender policy framework in perl
+# URL:
+# Depends on:  perl-Mail-SPF
+
+name=postfix-policyd-spf-perl
+version=2.011
+release=1
+source=(https://launchpad.net/postfix-policyd-spf-perl/trunk/$version/+download/postfix-policyd-spf-perl-$version.tar.gz)
+
+build()
+{
+    cd $name-$version
+    ./config.sh
+    install -D $name $PKG/usr/sbin/$name
+}
+
+post-install()
+{
+    if ! getent passwd policyd-spf >& /dev/null; then
+        groupadd policyd-spf
+        useradd -g policyd-spf -s /sbin/nologin -M -d /nonexistant policyd-spf
+    fi
+}
