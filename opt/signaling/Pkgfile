@@ -1,0 +1,21 @@
+# Description: signaling server for nextcloud
+# URL:         https://github.com/strukturag/nextcloud-spreed-signaling.git
+
+name=signaling
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/strukturag/nextcloud-spreed-signaling.git
+    signaling.service
+)
+
+build()
+{
+    install -D -m 644 $SRC/signaling.service $PKG/etc/systemd/system/signaling.service
+    export PATH=$PATH:/usr/local/go/bin
+    export GOBIN=$PKG/usr/local/bin
+    cd $name
+    make build
+    install -D bin/$name $PKG/usr/local/sbin/$name
+}

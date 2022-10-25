@@ -1,0 +1,18 @@
+# Description: 
+# URL:         https://github.com/cisco/libsrtp.git
+
+name=libsrtp
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/cisco/libsrtp.git
+)
+
+build()
+{
+    cd $name
+    ./configure --prefix=/usr --enable-openssl
+    make shared_library
+    make install DESTDIR=$PKG
+}
