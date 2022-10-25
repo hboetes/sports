@@ -3,8 +3,8 @@
 # Dependencies: taglib-devel go nodejs ffmpeg
 
 name=navidrome
-version=0.47.6
-release=1
+version=0.48.0
+release=git
 source=(
     https://github.com/navidrome/navidrome.git
     # https://github.com/navidrome/navidrome/releases/download/v$version/navidrome_${version}_Linux_arm64.tar.gz
