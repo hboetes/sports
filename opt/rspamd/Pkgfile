@@ -1,4 +1,5 @@
 # Description: rspamd
+# Dependencies: cmake
 
 name=rspamd
 version=git
