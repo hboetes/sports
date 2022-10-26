@@ -22,3 +22,9 @@ build()
     make
     DESTDIR=$PKG make install
 }
+
+post-install()
+{
+    systemctl daemon-reload
+    systemctl restart rspamd.service
+}

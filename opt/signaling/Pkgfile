@@ -19,3 +19,9 @@ build()
     make build
     install -D bin/$name $PKG/usr/local/sbin/$name
 }
+
+post-install()
+{
+    systemctl daemon-reload
+    systemctl restart rspamd.service
+}
