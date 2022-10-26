@@ -26,5 +26,5 @@ build()
 post-install()
 {
     systemctl daemon-reload
-    systemctl restart rspamd.service
+    systemctl restart janus.service
 }
