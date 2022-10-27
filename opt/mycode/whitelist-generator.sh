@@ -12,17 +12,18 @@ recurse()
     for i in ${=t}; do
         case $i in
             ip4:*)
-                # If it's not an ip range.
-                if [[ ${i#ip4} != */* ]]; then
-                    echo ${i#ip4:} permit
-                elif [[ ${i#ip4} = */32 ]]; then
-                    i=${i%/32}
-                    echo ${i#ip4:} permit
-                else
+                # if it's a /32
+                if [[ $i = */32 ]]; then
+                    ip4=${i%/32}
+                    echo "${ip4#ip4:} $whattodo"
+                # If it's an ip range.
+                elif [[ ${i#ip4} == */* ]]; then
                     # Even professional sysadmins make mistakes. And
                     # postfix will complain about that.
-                    ip4=$(ipc ${i#ip4:})
-                    echo ${ip4} permit
+                    ip4="$(ipc ${i#ip4:})"
+                    echo "${ip4} $whattodo"
+               else
+                    echo "${i#ip4:} $whattodo"
                 fi
                 ;;
             ip6:*)
@@ -65,7 +66,7 @@ ipc(){
 
 # Groups of hosts to be queried (edit to your liking)
 for domain in google.com hotmail.com github.com paypal.com gmx.com linkedin.com amazon.com telenet.be boetes.org axis-simulation.com; do
-    # for domain in google.com; do
+    whattodo=permit
     echo "# $domain"
     recurse $domain
 done
