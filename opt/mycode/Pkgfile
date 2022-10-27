@@ -11,6 +11,7 @@ source=(
     dropscript.sh
     empty_message.c
     slowcat.c
+    munlink.c
     find_unlinked.sh
     makeindexhtml.sh
     mirrortest.sh
