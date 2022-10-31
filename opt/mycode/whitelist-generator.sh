@@ -27,7 +27,7 @@ recurse()
                 fi
                 ;;
             ip6:*)
-                echo ${i#ip6:} permit
+                echo ${i#ip6:} $whattodo
                 :
                 ;;
             include:*)
@@ -44,16 +44,16 @@ recurse()
                     A="$(dig +short -t A $MX)"
                     if [[ $A != $IFS ]]; then
                         for i in ${=A}; do
-                            echo $i permit
+                            echo $i $whattodo
                         done
                     fi
                     AAAA="$(dig +short -t AAAA $MX)"
-                    [[ $AAAA != $IFS ]] && [[ $AAAA != '' ]] && echo $AAAA permit
+                    [[ $AAAA != $IFS ]] && [[ $AAAA != '' ]] && echo $AAAA $whattodo
                 done
                 ;;
             a:*)
                 for AA in $(dig +short -t A $1| cut -d' ' -f2); do
-                    echo $AA permit
+                    echo $AA $whattodo
                 done
                 ;;
         esac
