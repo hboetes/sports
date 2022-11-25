@@ -70,28 +70,28 @@ question()
 
 info()
 {
-    echo "=======> $1"
+    echo "=======> $@"
 }
 
 warning()
 {
-    echo "=======> WARNING: $1" >&2
+    echo "=======> WARNING: $@" >&2
 }
 
 error()
 {
-    echo "=======> ERROR: $1" >&2
+    echo "=======> ERROR: $@" >&2
 }
 
 error1()
 {
-    error "$1"
+    error "$@"
     exit 1
 }
 
 message()
 {
-    echo "$n: $@"
+    info "$n: $@"
 }
 
 version()
