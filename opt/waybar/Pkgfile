@@ -1,4 +1,4 @@
-# Description: i3 for wayland
+# Description: i3bar for wayland
 # URL:         https://github.com/swaywm/sway.git
 
 name=waybar

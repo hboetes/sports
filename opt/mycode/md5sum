@@ -9,5 +9,5 @@ b4e31f25563b283298bab78486115f26  mirrortest.sh
 cd3b3b38594eed6118d05843e99e2d49  slowcat.c
 01b12240dacb2d1cb767eb8357525293  statusbar_right.c
 d7503b61356eb8556cd7d7a8bb785896  update-git-ports.sh
-04ba91f71cccc4466e8d8eeefbc82553  wallpaper.sh
+2d555460e1cab0431c2d7c80001703e3  wallpaper.sh
 f5beb2dce2692129d1d25dd17cf9e9c5  whitelist-generator.sh
