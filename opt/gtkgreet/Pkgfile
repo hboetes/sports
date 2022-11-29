@@ -15,4 +15,5 @@ build()
     meson --prefix=/usr/local ../
     ninja
     DESTDIR=$PKG ninja install
+    rm -rf $PKG/usr/local/share/locale
 }
