@@ -1,4 +1,7 @@
-# Description: statusbar for i3
+# Description:  ccache-like compiler caching tool
+# URL:          https://github.com/mozilla/sccache
+# Dependencies: rust
+
 
 name=sccache
 version=git
