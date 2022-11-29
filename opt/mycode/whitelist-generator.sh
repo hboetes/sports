@@ -34,8 +34,8 @@ recurse()
                 recurse ${i#include:}
                 ;;
             redirect\=*)
-                i=${i#redirect\=}
-                recurse $i
+                k=${i#redirect\=}
+                recurse $k
                 ;;
             # MXes are a bit more complicated. They produce a list of
             # hostnames that can have both A and AAAA records.
@@ -43,8 +43,8 @@ recurse()
                 for MX in $(dig +short -t MX $1| cut -d' ' -f2); do
                     A="$(dig +short -t A $MX)"
                     if [[ $A != $IFS ]]; then
-                        for i in ${=A}; do
-                            echo $i $whattodo
+                        for j in ${=A}; do
+                            echo $j $whattodo
                         done
                     fi
                     AAAA="$(dig +short -t AAAA $MX)"
@@ -52,7 +52,7 @@ recurse()
                 done
                 ;;
             a:*)
-                for AA in $(dig +short -t A $1| cut -d' ' -f2); do
+                for AA in $(dig +short -t A ${i#a:}| cut -d' ' -f2); do
                     echo $AA $whattodo
                 done
                 ;;
@@ -73,4 +73,5 @@ done
 
 # Blacklisting is also possible: format
 # 172.93.224.0/24 reject optional message.
+echo '# The rejects from /etc/postfix/blacklist'
 cat /etc/postfix/blacklist
