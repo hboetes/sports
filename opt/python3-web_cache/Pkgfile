@@ -1,5 +1,6 @@
 # Description: Simple persistent cache storage, with different cache eviction strategies, and optional compression
 # URL:         https://pypi.org/project/web_cache
+# check version: curl https://pypi.org/project/web_cache/ | grep "web_cache-${version}\.tar\.gz"
 
 name=python3-web_cache
 version=1.1.0
