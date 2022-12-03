@@ -13,7 +13,7 @@ recurse()
         case $i in
             ip4:*)
                 # if it's a /32
-                if [[ $i = */32 ]]; then
+                if [[ $i == */32 ]]; then
                     ip4=${i%/32}
                     echo "${ip4#ip4:} $whattodo"
                 # If it's an ip range.
@@ -61,7 +61,8 @@ recurse()
 }
 
 ipc(){
-    ipcalc --no-decorate $1| head -n1
+
+    ipcalc $1| awk '/^Network:/ {print $2}'
 }
 
 # Groups of hosts to be queried (edit to your liking)
