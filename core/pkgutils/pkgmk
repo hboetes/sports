@@ -292,8 +292,10 @@ EOF
             cat $TMPFILE.md5sum.diff
             question 'Do you want me to update the md5sum? [y/N] '
             if [ "$answer" = y ] || [ "$answer" = Y ]; then
+                replaceyn Y
                 update_md5sum
             else
+                replaceyn N
                 keep_work
                 error1 "Building \`$TARGET' failed."
             fi

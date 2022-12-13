@@ -99,3 +99,8 @@ version()
     message "pkgutils-$pkversion"
     exit 0
 }
+
+replaceyn()
+{
+    print -n "\b\b\b\b\b\b\b$1      \b\b\b\b\b"
+}
