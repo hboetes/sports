@@ -1,0 +1,26 @@
+# Description: simple, secure and performant communications system for digital systems, services and devices
+# URL:         https://nats.io
+
+name=nats-server
+version=git
+release=1
+branch=master
+source=(
+    $name.service
+    nats-server.conf
+)
+
+build()
+{
+    install -D -m 644 $SRC/$name.service $PKG/etc/systemd/system/$name.service
+    install -D -m 640 $SRC/$name.conf    $PKG/etc/$name.conf
+    export PATH=$PATH:/usr/local/go/bin
+    export GOBIN=$PKG/usr/local/bin
+    GO111MODULE=on go install github.com/nats-io/nats-server/v2@latest
+}
+
+post-install()
+{
+    systemctl daemon-reload
+    systemctl restart signaling.service
+}

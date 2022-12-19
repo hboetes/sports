@@ -392,10 +392,12 @@ print -n '\aRun this post-install script? [y/N] '
 read -sk1 answer
 case $answer in
     y*|Y*)
+        replaceyn Y
         post-install
         exit $?
         ;;
     *)
+        replaceyn N
         exit 1
         ;;
 esac
