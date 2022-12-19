@@ -1,5 +1,6 @@
 # Description: i3 for wayland
 # URL:         https://github.com/swaywm/sway.git
+# Depends:     wlroots
 
 name=sway
 version=git
