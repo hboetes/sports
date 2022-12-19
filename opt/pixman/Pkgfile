@@ -1,0 +1,18 @@
+# Description: pixman
+# URL:         https://github.com/freedesktop/pixman.git
+
+name=pixman
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/freedesktop/pixman.git
+)
+
+build()
+{
+    cd $name
+    meson --prefix=/usr/local build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
