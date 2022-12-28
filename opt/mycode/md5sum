@@ -10,5 +10,5 @@ b5b4d5612e4a142e80567d27e1ef6f69  munlink.c
 cd3b3b38594eed6118d05843e99e2d49  slowcat.c
 01b12240dacb2d1cb767eb8357525293  statusbar_right.c
 d7503b61356eb8556cd7d7a8bb785896  update-git-ports.sh
-04ba91f71cccc4466e8d8eeefbc82553  wallpaper.sh
-a4899c14a5da1b9219dbad6f25b6fd76  whitelist-generator.sh
+2d555460e1cab0431c2d7c80001703e3  wallpaper.sh
+e84d0f65b6c7b6a2438593ec79203e1b  whitelist-generator.sh

@@ -1,0 +1,18 @@
+# Description: nice library
+# URL:         https://gitlab.freedesktop.org/libnice/libnice
+
+name=libnice
+version=git
+release=1
+branch=master
+source=(
+    https://gitlab.freedesktop.org/libnice/libnice.git
+)
+
+build()
+{
+    cd $name
+    meson --prefix=/usr build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}

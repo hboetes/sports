@@ -1,5 +1,6 @@
 # Description: the editor
 # URL:         https://git.sr.ht/~graywolf/acme-client-portable
+# Dependencies: automake autoconf gcc openssl-devel byacc
 
 name=acme-client
 version=git

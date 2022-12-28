@@ -1,0 +1,20 @@
+# Description: libwebsockets
+# URL:         https://libwebsockets.org/repo/libwebsockets
+
+name=libwebsockets
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/warmcat/libwebsockets.git
+)
+
+build()
+{
+    cd $name
+    mkdir build
+    cd build
+    cmake -DLWS_MAX_SMP=1 -DLWS_WITHOUT_EXTENSIONS=0 -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_C_FLAGS="-fpic" ..
+    make
+    DESTDIR=$PKG make install
+}

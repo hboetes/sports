@@ -1,0 +1,30 @@
+# Description: webrtc gateway daemon
+# URL:         https://github.com/meetecho/janus-gateway.git
+
+name=janus-gateway
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/meetecho/janus-gateway.git
+    janus.service
+)
+
+build()
+{
+    install -D $SRC/janus.service $PKG/etc/systemd/system/janus.service
+    # This ensures /run/janus is created at boot
+    install -d $PKG/etc/tmpfiles.d/
+    echo 'd     /run/janus        0770 janus signaling' > $PKG/etc/tmpfiles.d/janus.conf
+    cd $name
+    ./autogen.sh
+    ./configure
+    make
+    DESTDIR=$PKG make install
+}
+
+post-install()
+{
+    systemctl daemon-reload
+    systemctl restart janus.service
+}

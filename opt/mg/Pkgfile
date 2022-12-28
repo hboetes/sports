@@ -1,5 +1,6 @@
 # Description: micro gnu-emacs
 # URL:         https://github.com/hboetes/mg
+# Dependencies: libbsd-devel
 
 name=mg
 version=git

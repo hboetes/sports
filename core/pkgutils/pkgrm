@@ -180,10 +180,12 @@ typeset -f post-uninstall
 question 'Run this post-install script? [y/N]'
 case $answer in
     y*|Y*)
+        replaceyn Y
         post-uninstall
         exit $?
         ;;
     *)
+        replaceyn N
         exit 1
         ;;
 esac

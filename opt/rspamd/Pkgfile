@@ -1,4 +1,5 @@
 # Description: rspamd
+# Dependencies: cmake
 
 name=rspamd
 version=git
@@ -13,6 +14,14 @@ build()
     install -m 644 -D $SRC/$name.service $PKG/usr/lib/systemd/system/$name.service
     cd $name
     git submodule update --recursive --remote
+    # cmake requires a special treatment.
+    unset CXX CC
+    cat << EOF >> CMakeLists.txt
+find_program(CCACHE_FOUND sccache)
+if(CCACHE_FOUND)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE sccache)
+endif(CCACHE_FOUND)
+EOF
     mkdir build
     cd build
     cmake .. \
