@@ -1,0 +1,11 @@
+[Unit]
+Description=Nats server
+
+[Service]
+ExecStart=/usr/bin/nats-server -c /etc/nats-server.conf
+User=nats-server
+Group=nats-server
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

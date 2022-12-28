@@ -1,8 +1,9 @@
-# This file ususaly goes in /etc/systemd/system
+# This file usualy goes in /etc/systemd/system
 
 [Unit]
 Description=Navidrome Music Server and Streamer compatible with Subsonic/Airsonic
 After=remote-fs.target network.target
+AssertPathExists=/var/lib/navidrome
 
 [Install]
 WantedBy=multi-user.target
@@ -12,13 +13,16 @@ User=navidrome
 Group=navidrome
 Type=simple
 ExecStart=/usr/local/bin/navidrome
-StateDirectory=navidrome
 WorkingDirectory=/var/lib/navidrome
 TimeoutStopSec=20
 KillMode=process
 Restart=on-failure
 
 EnvironmentFile=-/etc/sysconfig/navidrome
+
+# You can also customize some Navidrome config options by setting
+# environment variables here. Ex:
+#Environment=ND_BASEURL="/navidrome"
 
 # See https://www.freedesktop.org/software/systemd/man/systemd.exec.html
 CapabilityBoundingSet=
@@ -38,6 +42,8 @@ RestrictNamespaces=yes
 RestrictRealtime=yes
 SystemCallFilter=@system-service
 SystemCallFilter=~@privileged @resources
+SystemCallFilter=~@clock @debug @module @mount @obsolete @reboot @setuid @swap
+ReadWritePaths=/var/lib/navidrome
 SystemCallArchitectures=native
 UMask=0066
 
@@ -48,7 +54,7 @@ UMask=0066
 # You can change the following line to `strict` instead of `full` if you don't
 # want navidrome to be able to write anything on your filesystem outside of
 # /var/lib/navidrome.
-ProtectSystem=full
+ProtectSystem=strict
 
 # You can comment the following line if you don't have any media in /home/*.
 # This will prevent navidrome from ever reading/writing anything there.

@@ -1,0 +1,19 @@
+# Description: Protocol Buffers - Google's data interchange format
+# URL:         https://github.com/protocolbuffers/protobuf.git
+# Dependencies: https://bazel.build/install/ubuntu
+
+name=protobuf
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/protocolbuffers/protobuf.git
+)
+
+build()
+{
+    cd $name
+    git submodule update --init --recursive
+    bazel build :protoc :protobuf
+    install -D -m 755 bazel-bin/protoc $PKG/usr/local/bin/protoc
+}

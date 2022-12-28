@@ -1,0 +1,19 @@
+# Description: webrtc gateway daemon
+# URL:         https://github.com/sctplab/usrsctp
+
+name=usrsctp
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/sctplab/usrsctp.git
+)
+
+build()
+{
+    cd $name
+    ./bootstrap
+    ./configure --disable-programs --disable-inet --disable-inet6
+    make
+    DESTDIR=$PKG make install
+}

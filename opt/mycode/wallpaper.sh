@@ -62,7 +62,6 @@ set_wp() {
     # Are we running i3 on X or sway on wayland
     if [[ -n $SWAYSOCK ]]; then
         set_wp_wl
-        mv_wp
     fi
     # and what if we run both?
     if [[ -n $i3proc ]]; then
