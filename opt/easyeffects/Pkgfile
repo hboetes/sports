@@ -1,6 +1,6 @@
 # Description: effects engine for pipewire
 # URL:         https://github.com/wwmm/easyeffects.git
-# sudo dnf builddep easyeffects
+# sudo dnf builddep easyeffects; sudo dnf install speex-devel gsl-devel
 
 name=easyeffects
 version=git
