@@ -1,0 +1,18 @@
+# Description: nextcloud-desktop
+
+name=nextcloud-desktop
+version=git
+release=1
+source=(
+    https://github.com/nextcloud/desktop.git
+)
+
+build()
+{
+    cd $name
+    mkdir build
+    cd build
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local
+    make -j4
+    make install DESTDIR=$PKG
+}

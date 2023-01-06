@@ -1,0 +1,18 @@
+# Description: Day/night gamma adjustments for Wayland compositors supporting wlr-gamma-control-unstable-v1 & xdg-output-unstable-v1
+# URL:         https://git.sr.ht/~kennylevinsen/wlsunset/
+
+name=wlsunset
+version=git
+release=1
+branch=master
+source=(
+    https://git.sr.ht/~kennylevinsen/wlsunset.git
+)
+
+build()
+{
+    cd $name
+    meson --prefix=/usr/local build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
