@@ -232,7 +232,7 @@ installrejects()
             tar -zxpf $path_package -C ${root:=/} $unrejected
         fi
         # Remove all empty dirs in $rejects.
-        find $rejects -mindepth 1 -type d -delete
+        find $rejects -mindepth 1 -type d -empty -delete
         # Notice all rejects created by this port.
         : > $TMP1
         if [ -d $rejects/$name ]; then
