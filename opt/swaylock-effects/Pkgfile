@@ -1,0 +1,20 @@
+# Description: swaylock fork
+# URL:         https://github.com/mortie/swaylock-effects.git
+
+name=swaylock-effects
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/jirutka/swaylock-effects.git
+)
+
+build()
+{
+    cd $name
+    meson --prefix=/usr/local build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+    # No idea what that does.
+    rm -rf $PKG/usr/local/share/fish/ $PKG/usr/share/
+}
