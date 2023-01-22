@@ -1,0 +1,2124 @@
+=======> Building `/usr/pkgmk/package/libxkbcommon_1.5.0-1.pkg.tar.gz'.
+pkgmk: rm -rf /usr/pkgmk/work/libxkbcommon
+xzcat /usr/pkgmk/source/libxkbcommon-1.5.0.tar.xz |tar -xf - -C /usr/pkgmk/work/libxkbcommon/src
+pkgmk: build
++build:2> cd libxkbcommon-1.5.0
++build:3> meson build
+The Meson build system
+Version: 0.63.3
+Source dir: /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0
+Build dir: /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build
+Build type: native build
+Project name: libxkbcommon
+Project version: 1.5.0
+C compiler for the host machine: sccache gcc (gcc 12.2.1 "gcc (GCC) 12.2.1 20221121 (Red Hat 12.2.1-4)")
+C linker for the host machine: gcc ld.bfd 2.38-25
+Host machine cpu family: x86_64
+Host machine cpu: x86_64
+Compiler for C supports arguments -fno-strict-aliasing: YES 
+Compiler for C supports arguments -Wno-unused-parameter: YES 
+Compiler for C supports arguments -Wno-missing-field-initializers: YES 
+Compiler for C supports arguments -Wpointer-arith: YES 
+Compiler for C supports arguments -Wmissing-declarations: YES 
+Compiler for C supports arguments -Wformat=2: YES 
+Compiler for C supports arguments -Wstrict-prototypes: YES 
+Compiler for C supports arguments -Wmissing-prototypes: YES 
+Compiler for C supports arguments -Wnested-externs: YES 
+Compiler for C supports arguments -Wbad-function-cast: YES 
+Compiler for C supports arguments -Wshadow: YES 
+Compiler for C supports arguments -Wlogical-op: YES 
+Compiler for C supports arguments -Wdate-time: YES 
+Compiler for C supports arguments -Wwrite-strings: YES 
+Compiler for C supports arguments -Wno-documentation-deprecated-sync: NO 
+Found pkg-config: /bin/pkg-config (1.8.0)
+Found CMake: /bin/cmake (3.25.1)
+Run-time dependency xkeyboard-config found: NO (tried pkgconfig and cmake)
+Has header "unistd.h" : YES 
+Checking if "__builtin_expect" : links: YES 
+Header "unistd.h" has symbol "eaccess" : YES 
+Header "unistd.h" has symbol "euidaccess" : YES 
+Header "sys/mman.h" has symbol "mmap" : YES 
+Header "stdlib.h" has symbol "mkostemp" : YES 
+Header "fcntl.h" has symbol "posix_fallocate" : YES 
+Header "string.h" has symbol "strndup" : YES 
+Header "stdio.h" has symbol "asprintf" : YES 
+Header "stdlib.h" has symbol "secure_getenv" : YES 
+Header "limits.h" has symbol "PATH_MAX" : YES 
+Checking if "-Wl,--version-script" : links: YES 
+Program scripts/map-to-def found: YES (/usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/scripts/map-to-def)
+Program bison found: YES (/bin/bison)
+Run-time dependency xcb found: YES 1.13.1
+Run-time dependency xcb-xkb found: YES 1.13.1
+Run-time dependency libxml-2.0 found: YES 2.10.3
+Header "getopt.h" has symbol "getopt_long" : YES 
+Has header "linux/input.h" : YES 
+Run-time dependency wayland-client found: YES 1.21.0
+Run-time dependency wayland-protocols found: YES 1.31
+Found pkg-config: /bin/pkg-config (1.8.0)
+Build-time dependency wayland-scanner found: YES 1.21.0
+Program /usr/bin/wayland-scanner found: YES (/usr/bin/wayland-scanner)
+Configuring xkeyboard-config-test using configuration
+Configuring test-config.h using configuration
+Program test/symbols-leak-test.py found: YES (/usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/test/symbols-leak-test.py)
+Program test/tool-option-parsing.py found: YES (/usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/test/tool-option-parsing.py)
+Program test/test-keysym.py found: YES (/usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/test/test-keysym.py)
+Program valgrind found: YES (/bin/valgrind)
+Program doxygen found: YES (/bin/doxygen)
+Program scripts/doxygen-wrapper found: YES (/usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/scripts/doxygen-wrapper)
+Configuring Doxyfile using configuration
+Configuring config.h using configuration
+Build targets in project: 43
+
+Found ninja-1.10.2 at /bin/ninja
++build:4> ninja -C build
+ninja: Entering directory `build'
+[1/199] Generating 'xkbcli-interactive-wayland.p/xdg-shell-protocol.c'.
+[2/199] Generating 'xkbcli-interactive-wayland.p/xdg-shell-client-protocol.h'.
+[3/199] Compiling C object libxkbregistry.so.0.0.0.p/src_util-list.c.o
+[4/199] Compiling C object xkbcli-list.p/tools_registry-list.c.o
+[5/199] Compiling C object libxkbregistry.so.0.0.0.p/src_utils.c.o
+[6/199] Compiling C object libxkbregistry.so.0.0.0.p/src_registry.c.o
+[7/199] Linking target libxkbregistry.so.0.0.0
+[8/199] Generating from 'src/xkbcomp/parser.y'..
+../src/xkbcomp/parser.y:87.1-12: warning: deprecated directive: '%pure-parser', use '%define api.pure' [-Wdeprecated]
+   87 | %pure-parser
+      | ^~~~~~~~~~~~
+      | %define api.pure
+../src/xkbcomp/parser.y: warning: fix-its can be applied.  Rerun with option '--update'. [-Wother]
+[9/199] Generating from 'src/xkbcomp/parser.y'..
+../src/xkbcomp/parser.y:87.1-12: warning: deprecated directive: '%pure-parser', use '%define api.pure' [-Wdeprecated]
+   87 | %pure-parser
+      | ^~~~~~~~~~~~
+      | %define api.pure
+../src/xkbcomp/parser.y: warning: fix-its can be applied.  Rerun with option '--update'. [-Wother]
+[10/199] Generating from 'src/xkbcomp/parser.y'..
+../src/xkbcomp/parser.y:87.1-12: warning: deprecated directive: '%pure-parser', use '%define api.pure' [-Wdeprecated]
+   87 | %pure-parser
+      | ^~~~~~~~~~~~
+      | %define api.pure
+../src/xkbcomp/parser.y: warning: fix-its can be applied.  Rerun with option '--update'. [-Wother]
+[11/199] Generating doc with a custom command
+[12/199] Compiling C object libxkbcommon.so.0.0.0.p/src_compose_table.c.o
+[13/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_ast-build.c.o
+In function 'ExprCreate',
+    inlined from 'ExprCreateString' at ../src/xkbcomp/ast-build.c:78:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateString':
+../src/xkbcomp/ast-build.c:81:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   81 |     expr->string.str = str;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateString' at ../src/xkbcomp/ast-build.c:78:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateInteger' at ../src/xkbcomp/ast-build.c:88:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateInteger':
+../src/xkbcomp/ast-build.c:91:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   91 |     expr->integer.ival = ival;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateInteger' at ../src/xkbcomp/ast-build.c:88:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateFloat' at ../src/xkbcomp/ast-build.c:98:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[24]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 24 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[24]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 24 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[24]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 24 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[24]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 24 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBoolean' at ../src/xkbcomp/ast-build.c:107:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBoolean':
+../src/xkbcomp/ast-build.c:110:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  110 |     expr->boolean.set = set;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBoolean' at ../src/xkbcomp/ast-build.c:107:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateKeyName' at ../src/xkbcomp/ast-build.c:117:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateKeyName':
+../src/xkbcomp/ast-build.c:120:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  120 |     expr->key_name.key_name = key_name;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateKeyName' at ../src/xkbcomp/ast-build.c:117:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateIdent' at ../src/xkbcomp/ast-build.c:127:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateIdent':
+../src/xkbcomp/ast-build.c:130:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  130 |     expr->ident.ident = ident;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateIdent' at ../src/xkbcomp/ast-build.c:127:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateUnary' at ../src/xkbcomp/ast-build.c:138:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateUnary':
+../src/xkbcomp/ast-build.c:141:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  141 |     expr->unary.child = child;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateUnary' at ../src/xkbcomp/ast-build.c:138:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBinary':
+../src/xkbcomp/ast-build.c:156:13: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  156 |         expr->expr.value_type = left->expr.value_type;
+      |             ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBinary':
+../src/xkbcomp/ast-build.c:153:13: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  153 |         expr->expr.value_type = right->expr.value_type;
+      |             ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBinary':
+../src/xkbcomp/ast-build.c:157:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  157 |     expr->binary.left = left;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBinary':
+../src/xkbcomp/ast-build.c:158:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  158 |     expr->binary.right = right;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateFieldRef' at ../src/xkbcomp/ast-build.c:166:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateFieldRef':
+../src/xkbcomp/ast-build.c:169:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  169 |     expr->field_ref.element = element;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateFieldRef' at ../src/xkbcomp/ast-build.c:166:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateFieldRef':
+../src/xkbcomp/ast-build.c:170:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  170 |     expr->field_ref.field = field;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateFieldRef' at ../src/xkbcomp/ast-build.c:166:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateArrayRef' at ../src/xkbcomp/ast-build.c:177:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateArrayRef':
+../src/xkbcomp/ast-build.c:180:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  180 |     expr->array_ref.element = element;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateArrayRef' at ../src/xkbcomp/ast-build.c:177:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateArrayRef':
+../src/xkbcomp/ast-build.c:181:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  181 |     expr->array_ref.field = field;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateArrayRef' at ../src/xkbcomp/ast-build.c:177:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateArrayRef':
+../src/xkbcomp/ast-build.c:182:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  182 |     expr->array_ref.entry = entry;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateArrayRef' at ../src/xkbcomp/ast-build.c:177:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateAction' at ../src/xkbcomp/ast-build.c:189:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateAction':
+../src/xkbcomp/ast-build.c:192:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  192 |     expr->action.name = name;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateAction' at ../src/xkbcomp/ast-build.c:189:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateAction':
+../src/xkbcomp/ast-build.c:193:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  193 |     expr->action.args = args;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateAction' at ../src/xkbcomp/ast-build.c:189:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateActionList' at ../src/xkbcomp/ast-build.c:200:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateActionList':
+../src/xkbcomp/ast-build.c:203:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  203 |     expr->actions.actions = actions;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateActionList' at ../src/xkbcomp/ast-build.c:200:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateIdent' at ../src/xkbcomp/ast-build.c:127:21,
+    inlined from 'BoolVarCreate' at ../src/xkbcomp/ast-build.c:330:18:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreateIdent',
+    inlined from 'BoolVarCreate' at ../src/xkbcomp/ast-build.c:330:18:
+../src/xkbcomp/ast-build.c:130:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  130 |     expr->ident.ident = ident;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateIdent' at ../src/xkbcomp/ast-build.c:127:21,
+    inlined from 'BoolVarCreate' at ../src/xkbcomp/ast-build.c:330:18:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBoolean' at ../src/xkbcomp/ast-build.c:107:21,
+    inlined from 'BoolVarCreate' at ../src/xkbcomp/ast-build.c:333:19:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreateBoolean',
+    inlined from 'BoolVarCreate' at ../src/xkbcomp/ast-build.c:333:19:
+../src/xkbcomp/ast-build.c:110:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  110 |     expr->boolean.set = set;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBoolean' at ../src/xkbcomp/ast-build.c:107:21,
+    inlined from 'BoolVarCreate' at ../src/xkbcomp/ast-build.c:333:19:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+[14/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_keycodes.c.o
+[15/199] Compiling C object libxkbcommon.so.0.0.0.p/src_compose_parser.c.o
+[16/199] Compiling C object libxkbcommon.so.0.0.0.p/src_compose_paths.c.o
+[17/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_compat.c.o
+[18/199] Compiling C object libxkbcommon.so.0.0.0.p/meson-generated_parser.c.o
+[19/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_keymap.c.o
+[20/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_include.c.o
+[21/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_expr.c.o
+[22/199] Compiling C object libxkbcommon.so.0.0.0.p/src_compose_state.c.o
+[23/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_scanner.c.o
+[24/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_keywords.c.o
+[25/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_rules.c.o
+[26/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_keymap-dump.c.o
+[27/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_action.c.o
+[28/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_symbols.c.o
+[29/199] Compiling C object libxkbcommon.so.0.0.0.p/src_context.c.o
+[30/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_types.c.o
+[31/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_vmod.c.o
+[32/199] Compiling C object libxkbcommon.so.0.0.0.p/src_atom.c.o
+[33/199] Compiling C object libxkbcommon.so.0.0.0.p/src_keysym.c.o
+[34/199] Compiling C object libxkbcommon.so.0.0.0.p/src_context-priv.c.o
+[35/199] Compiling C object libxkbcommon.so.0.0.0.p/src_utf8.c.o
+[36/199] Compiling C object libxkbcommon.so.0.0.0.p/src_keymap-priv.c.o
+[37/199] Compiling C object libxkbcommon.so.0.0.0.p/src_xkbcomp_xkbcomp.c.o
+[38/199] Compiling C object libxkbcommon.so.0.0.0.p/src_keymap.c.o
+[39/199] Compiling C object libxkbcommon.so.0.0.0.p/src_keysym-utf.c.o
+[40/199] Compiling C object libxkbcommon.so.0.0.0.p/src_state.c.o
+[41/199] Compiling C object libxkbcommon.so.0.0.0.p/src_text.c.o
+[42/199] Compiling C object libxkbcommon.so.0.0.0.p/src_utils.c.o
+[43/199] Compiling C object libxkbcommon-x11.so.0.0.0.p/src_keymap-priv.c.o
+[44/199] Compiling C object libxkbcommon-x11.so.0.0.0.p/src_context-priv.c.o
+[45/199] Compiling C object libxkbcommon-x11.so.0.0.0.p/src_atom.c.o
+[46/199] Compiling C object libxkbcommon-x11.so.0.0.0.p/src_x11_state.c.o
+[47/199] Compiling C object libxkbcommon-x11.so.0.0.0.p/src_x11_util.c.o
+[48/199] Compiling C object xkbcli-compile-keymap.p/tools_compile-keymap.c.o
+[49/199] Compiling C object compile-keymap.p/src_compose_state.c.o
+[50/199] Compiling C object libtools-internal.a.p/tools_tools-common.c.o
+[51/199] Compiling C object compile-keymap.p/tools_compile-keymap.c.o
+[52/199] Compiling C object compile-keymap.p/src_compose_parser.c.o
+[53/199] Linking static target libtools-internal.a
+[54/199] Compiling C object libxkbcommon-x11.so.0.0.0.p/src_x11_keymap.c.o
+[55/199] Compiling C object compile-keymap.p/src_compose_table.c.o
+[56/199] Compiling C object xkbcli.p/tools_xkbcli.c.o
+[57/199] Compiling C object compile-keymap.p/src_compose_paths.c.o
+[58/199] Compiling C object compile-keymap.p/src_xkbcomp_action.c.o
+[59/199] Compiling C object compile-keymap.p/meson-generated_parser.c.o
+[60/199] Linking target libxkbcommon.so.0.0.0
+[61/199] Compiling C object compile-keymap.p/src_xkbcomp_compat.c.o
+[62/199] Compiling C object compile-keymap.p/src_xkbcomp_expr.c.o
+[63/199] Compiling C object compile-keymap.p/src_xkbcomp_ast-build.c.o
+In function 'ExprCreate',
+    inlined from 'ExprCreateString' at ../src/xkbcomp/ast-build.c:78:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateString':
+../src/xkbcomp/ast-build.c:81:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   81 |     expr->string.str = str;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateString' at ../src/xkbcomp/ast-build.c:78:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateInteger' at ../src/xkbcomp/ast-build.c:88:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateInteger':
+../src/xkbcomp/ast-build.c:91:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   91 |     expr->integer.ival = ival;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateInteger' at ../src/xkbcomp/ast-build.c:88:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateFloat' at ../src/xkbcomp/ast-build.c:98:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[24]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 24 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[24]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 24 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[24]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 24 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[24]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 24 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBoolean' at ../src/xkbcomp/ast-build.c:107:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBoolean':
+../src/xkbcomp/ast-build.c:110:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  110 |     expr->boolean.set = set;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBoolean' at ../src/xkbcomp/ast-build.c:107:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateKeyName' at ../src/xkbcomp/ast-build.c:117:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateKeyName':
+../src/xkbcomp/ast-build.c:120:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  120 |     expr->key_name.key_name = key_name;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateKeyName' at ../src/xkbcomp/ast-build.c:117:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateIdent' at ../src/xkbcomp/ast-build.c:127:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateIdent':
+../src/xkbcomp/ast-build.c:130:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  130 |     expr->ident.ident = ident;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateIdent' at ../src/xkbcomp/ast-build.c:127:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateUnary' at ../src/xkbcomp/ast-build.c:138:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateUnary':
+../src/xkbcomp/ast-build.c:141:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  141 |     expr->unary.child = child;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateUnary' at ../src/xkbcomp/ast-build.c:138:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBinary':
+../src/xkbcomp/ast-build.c:156:13: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  156 |         expr->expr.value_type = left->expr.value_type;
+      |             ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBinary':
+../src/xkbcomp/ast-build.c:153:13: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  153 |         expr->expr.value_type = right->expr.value_type;
+      |             ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBinary':
+../src/xkbcomp/ast-build.c:157:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  157 |     expr->binary.left = left;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBinary':
+../src/xkbcomp/ast-build.c:158:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  158 |     expr->binary.right = right;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateFieldRef' at ../src/xkbcomp/ast-build.c:166:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateFieldRef':
+../src/xkbcomp/ast-build.c:169:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  169 |     expr->field_ref.element = element;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateFieldRef' at ../src/xkbcomp/ast-build.c:166:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateFieldRef':
+../src/xkbcomp/ast-build.c:170:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  170 |     expr->field_ref.field = field;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateFieldRef' at ../src/xkbcomp/ast-build.c:166:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateArrayRef' at ../src/xkbcomp/ast-build.c:177:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateArrayRef':
+../src/xkbcomp/ast-build.c:180:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  180 |     expr->array_ref.element = element;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateArrayRef' at ../src/xkbcomp/ast-build.c:177:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateArrayRef':
+../src/xkbcomp/ast-build.c:181:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  181 |     expr->array_ref.field = field;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateArrayRef' at ../src/xkbcomp/ast-build.c:177:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateArrayRef':
+../src/xkbcomp/ast-build.c:182:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  182 |     expr->array_ref.entry = entry;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateArrayRef' at ../src/xkbcomp/ast-build.c:177:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateAction' at ../src/xkbcomp/ast-build.c:189:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateAction':
+../src/xkbcomp/ast-build.c:192:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  192 |     expr->action.name = name;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateAction' at ../src/xkbcomp/ast-build.c:189:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateAction':
+../src/xkbcomp/ast-build.c:193:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  193 |     expr->action.args = args;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateAction' at ../src/xkbcomp/ast-build.c:189:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateActionList' at ../src/xkbcomp/ast-build.c:200:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateActionList':
+../src/xkbcomp/ast-build.c:203:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  203 |     expr->actions.actions = actions;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateActionList' at ../src/xkbcomp/ast-build.c:200:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateIdent' at ../src/xkbcomp/ast-build.c:127:21,
+    inlined from 'BoolVarCreate' at ../src/xkbcomp/ast-build.c:330:18:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreateIdent',
+    inlined from 'BoolVarCreate' at ../src/xkbcomp/ast-build.c:330:18:
+../src/xkbcomp/ast-build.c:130:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  130 |     expr->ident.ident = ident;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateIdent' at ../src/xkbcomp/ast-build.c:127:21,
+    inlined from 'BoolVarCreate' at ../src/xkbcomp/ast-build.c:330:18:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBoolean' at ../src/xkbcomp/ast-build.c:107:21,
+    inlined from 'BoolVarCreate' at ../src/xkbcomp/ast-build.c:333:19:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreateBoolean',
+    inlined from 'BoolVarCreate' at ../src/xkbcomp/ast-build.c:333:19:
+../src/xkbcomp/ast-build.c:110:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  110 |     expr->boolean.set = set;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBoolean' at ../src/xkbcomp/ast-build.c:107:21,
+    inlined from 'BoolVarCreate' at ../src/xkbcomp/ast-build.c:333:19:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+[64/199] Compiling C object compile-keymap.p/src_xkbcomp_keymap-dump.c.o
+[65/199] Compiling C object compile-keymap.p/src_xkbcomp_include.c.o
+[66/199] Compiling C object compile-keymap.p/src_xkbcomp_keycodes.c.o
+[67/199] Compiling C object compile-keymap.p/src_xkbcomp_keywords.c.o
+[68/199] Compiling C object compile-keymap.p/src_xkbcomp_symbols.c.o
+[69/199] Compiling C object compile-keymap.p/src_atom.c.o
+[70/199] Compiling C object compile-keymap.p/src_xkbcomp_keymap.c.o
+[71/199] Compiling C object compile-keymap.p/src_xkbcomp_scanner.c.o
+[72/199] Compiling C object compile-keymap.p/src_xkbcomp_types.c.o
+[73/199] Compiling C object compile-keymap.p/src_xkbcomp_vmod.c.o
+[74/199] Compiling C object compile-keymap.p/src_xkbcomp_rules.c.o
+[75/199] Compiling C object compile-keymap.p/src_xkbcomp_xkbcomp.c.o
+[76/199] Compiling C object compile-keymap.p/src_keymap-priv.c.o
+[77/199] Compiling C object compile-keymap.p/src_utf8.c.o
+[78/199] Compiling C object compile-keymap.p/src_keysym-utf.c.o
+[79/199] Compiling C object compile-keymap.p/src_context-priv.c.o
+[80/199] Compiling C object compile-keymap.p/src_keymap.c.o
+[81/199] Compiling C object compile-keymap.p/src_text.c.o
+[82/199] Compiling C object compile-keymap.p/src_keysym.c.o
+[83/199] Compiling C object compile-keymap.p/src_state.c.o
+[84/199] Compiling C object compile-keymap.p/src_context.c.o
+[85/199] Compiling C object compile-keymap.p/src_utils.c.o
+[86/199] Compiling C object xkbcli-how-to-type.p/tools_how-to-type.c.o
+[87/199] Compiling C object compose.p/tools_compose.c.o
+[88/199] Compiling C object xkbcli-interactive-evdev.p/tools_interactive-evdev.c.o
+[89/199] Compiling C object xkbcli-interactive-wayland.p/meson-generated_xdg-shell-protocol.c.o
+[90/199] Compiling C object xkbcli-interactive-x11.p/tools_interactive-x11.c.o
+[91/199] Compiling C object libxkbcommon-test-internal.a.p/bench_bench.c.o
+[92/199] Compiling C object libxkbcommon-test-internal.a.p/meson-generated_parser.c.o
+[93/199] Compiling C object libxkbcommon-test-internal.a.p/src_compose_table.c.o
+[94/199] Compiling C object libxkbcommon-test-internal.a.p/src_compose_paths.c.o
+[95/199] Compiling C object libxkbcommon-test-internal.a.p/test_common.c.o
+[96/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_action.c.o
+[97/199] Compiling C object libxkbcommon-test-internal.a.p/src_compose_state.c.o
+[98/199] Compiling C object libxkbcommon-test-internal.a.p/src_compose_parser.c.o
+[99/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_ast-build.c.o
+In function 'ExprCreate',
+    inlined from 'ExprCreateString' at ../src/xkbcomp/ast-build.c:78:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateString':
+../src/xkbcomp/ast-build.c:81:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   81 |     expr->string.str = str;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateString' at ../src/xkbcomp/ast-build.c:78:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateInteger' at ../src/xkbcomp/ast-build.c:88:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateInteger':
+../src/xkbcomp/ast-build.c:91:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   91 |     expr->integer.ival = ival;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateInteger' at ../src/xkbcomp/ast-build.c:88:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateFloat' at ../src/xkbcomp/ast-build.c:98:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[24]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 24 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[24]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 24 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[24]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 24 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[24]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 24 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBoolean' at ../src/xkbcomp/ast-build.c:107:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBoolean':
+../src/xkbcomp/ast-build.c:110:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  110 |     expr->boolean.set = set;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBoolean' at ../src/xkbcomp/ast-build.c:107:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateKeyName' at ../src/xkbcomp/ast-build.c:117:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateKeyName':
+../src/xkbcomp/ast-build.c:120:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  120 |     expr->key_name.key_name = key_name;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateKeyName' at ../src/xkbcomp/ast-build.c:117:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateIdent' at ../src/xkbcomp/ast-build.c:127:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateIdent':
+../src/xkbcomp/ast-build.c:130:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  130 |     expr->ident.ident = ident;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateIdent' at ../src/xkbcomp/ast-build.c:127:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateUnary' at ../src/xkbcomp/ast-build.c:138:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateUnary':
+../src/xkbcomp/ast-build.c:141:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  141 |     expr->unary.child = child;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateUnary' at ../src/xkbcomp/ast-build.c:138:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBinary':
+../src/xkbcomp/ast-build.c:156:13: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  156 |         expr->expr.value_type = left->expr.value_type;
+      |             ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBinary':
+../src/xkbcomp/ast-build.c:153:13: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  153 |         expr->expr.value_type = right->expr.value_type;
+      |             ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBinary':
+../src/xkbcomp/ast-build.c:157:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  157 |     expr->binary.left = left;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateBinary':
+../src/xkbcomp/ast-build.c:158:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  158 |     expr->binary.right = right;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateBinary' at ../src/xkbcomp/ast-build.c:148:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateFieldRef' at ../src/xkbcomp/ast-build.c:166:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateFieldRef':
+../src/xkbcomp/ast-build.c:169:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  169 |     expr->field_ref.element = element;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateFieldRef' at ../src/xkbcomp/ast-build.c:166:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateFieldRef':
+../src/xkbcomp/ast-build.c:170:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  170 |     expr->field_ref.field = field;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateFieldRef' at ../src/xkbcomp/ast-build.c:166:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateArrayRef' at ../src/xkbcomp/ast-build.c:177:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateArrayRef':
+../src/xkbcomp/ast-build.c:180:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  180 |     expr->array_ref.element = element;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateArrayRef' at ../src/xkbcomp/ast-build.c:177:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateArrayRef':
+../src/xkbcomp/ast-build.c:181:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  181 |     expr->array_ref.field = field;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateArrayRef' at ../src/xkbcomp/ast-build.c:177:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateArrayRef':
+../src/xkbcomp/ast-build.c:182:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  182 |     expr->array_ref.entry = entry;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateArrayRef' at ../src/xkbcomp/ast-build.c:177:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateAction' at ../src/xkbcomp/ast-build.c:189:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateAction':
+../src/xkbcomp/ast-build.c:192:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  192 |     expr->action.name = name;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateAction' at ../src/xkbcomp/ast-build.c:189:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateAction':
+../src/xkbcomp/ast-build.c:193:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[40]' [-Warray-bounds]
+  193 |     expr->action.args = args;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateAction' at ../src/xkbcomp/ast-build.c:189:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 40 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+In function 'ExprCreate',
+    inlined from 'ExprCreateActionList' at ../src/xkbcomp/ast-build.c:200:21:
+../src/xkbcomp/ast-build.c:67:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   67 |     expr->common.type = STMT_EXPR;
+      |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:68:23: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   68 |     expr->common.next = NULL;
+      |                       ^
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:69:19: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   69 |     expr->expr.op = op;
+      |     ~~~~~~~~~~~~~~^~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c:70:27: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+   70 |     expr->expr.value_type = type;
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+../src/xkbcomp/ast-build.c: In function 'ExprCreateActionList':
+../src/xkbcomp/ast-build.c:203:9: warning: array subscript 'ExprDef[0]' is partly outside array bounds of 'unsigned char[32]' [-Warray-bounds]
+  203 |     expr->actions.actions = actions;
+      |         ^~
+In function 'ExprCreate',
+    inlined from 'ExprCreateActionList' at ../src/xkbcomp/ast-build.c:200:21:
+../src/xkbcomp/ast-build.c:63:21: note: object of size 32 allocated by 'malloc'
+   63 |     ExprDef *expr = malloc(size);
+      |                     ^~~~~~~~~~~~
+[100/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_compat.c.o
+[101/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_expr.c.o
+[102/199] Compiling C object xkbcli-interactive-wayland.p/tools_interactive-wayland.c.o
+[103/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_include.c.o
+[104/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_keymap.c.o
+[105/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_keycodes.c.o
+[106/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_keymap-dump.c.o
+[107/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_keywords.c.o
+[108/199] Compiling C object libxkbcommon-test-internal.a.p/src_context-priv.c.o
+[109/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_scanner.c.o
+[110/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_vmod.c.o
+[111/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_rules.c.o
+[112/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_xkbcomp.c.o
+[113/199] Compiling C object libxkbcommon-test-internal.a.p/src_atom.c.o
+[114/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_symbols.c.o
+[115/199] Compiling C object libxkbcommon-test-internal.a.p/src_context.c.o
+[116/199] Compiling C object libxkbcommon-test-internal.a.p/src_xkbcomp_types.c.o
+[117/199] Compiling C object libxkbcommon-test-internal.a.p/src_keysym-utf.c.o
+[118/199] Compiling C object libxkbcommon-test-internal.a.p/src_keymap-priv.c.o
+[119/199] Compiling C object libxkbcommon-test-internal.a.p/src_state.c.o
+[120/199] Compiling C object libxkbcommon-test-internal.a.p/src_keysym.c.o
+[121/199] Compiling C object libxkbcommon-test-internal.a.p/src_utf8.c.o
+[122/199] Compiling C object libxkbcommon-test-internal.a.p/src_text.c.o
+[123/199] Compiling C object libxkbcommon-test-internal.a.p/src_keymap.c.o
+[124/199] Compiling C object libxkbcommon-x11-internal.a.p/src_keymap-priv.c.o
+[125/199] Compiling C object libxkbcommon-x11-internal.a.p/src_context-priv.c.o
+[126/199] Compiling C object libxkbcommon-test-internal.a.p/src_utils.c.o
+[127/199] Compiling C object libxkbcommon-x11-internal.a.p/src_atom.c.o
+[128/199] Compiling C object libxkbcommon-x11-internal.a.p/src_x11_keymap.c.o
+[129/199] Compiling C object test-keysym.p/test_keysym.c.o
+[130/199] Compiling C object test-keymap.p/test_keymap.c.o
+[131/199] Compiling C object libxkbcommon-x11-internal.a.p/src_x11_state.c.o
+[132/199] Linking static target libxkbcommon-test-internal.a
+[133/199] Compiling C object libxkbcommon-x11-internal.a.p/src_x11_util.c.o
+[134/199] Compiling C object test-filecomp.p/test_filecomp.c.o
+[135/199] Linking static target libxkbcommon-x11-internal.a
+[136/199] Compiling C object test-rules-file.p/test_rules-file.c.o
+[137/199] Compiling C object test-rules-file-includes.p/test_rules-file-includes.c.o
+[138/199] Generating symbol file libxkbregistry.so.0.0.0.p/libxkbregistry.so.0.0.0.symbols
+[139/199] Compiling C object test-context.p/test_context.c.o
+[140/199] Compiling C object test-stringcomp.p/test_stringcomp.c.o
+[141/199] Compiling C object test-buffercomp.p/test_buffercomp.c.o
+[142/199] Compiling C object test-log.p/test_log.c.o
+[143/199] Compiling C object test-utf8.p/test_utf8.c.o
+[144/199] Linking target test-keysym
+[145/199] Compiling C object test-atom.p/test_atom.c.o
+[146/199] Compiling C object test-keyseq.p/test_keyseq.c.o
+[147/199] Compiling C object test-state.p/test_state.c.o
+[148/199] Compiling C object test-rulescomp.p/test_rulescomp.c.o
+[149/199] Compiling C object test-compose.p/test_compose.c.o
+[150/199] Compiling C object test-utils.p/test_utils.c.o
+[151/199] Linking target test-atom
+[152/199] Linking target test-log
+[153/199] Linking target test-keymap
+[154/199] Linking target test-rules-file-includes
+[155/199] Linking target test-filecomp
+[156/199] Compiling C object test-x11.p/test_x11.c.o
+[157/199] Linking target test-stringcomp
+[158/199] Linking target test-utils
+[159/199] Linking target test-rules-file
+[160/199] Linking target test-context
+[161/199] Linking target xkbcli-list
+[162/199] Linking target test-buffercomp
+[163/199] Linking target test-utf8
+[164/199] Linking target test-keyseq
+[165/199] Linking target test-rulescomp
+[166/199] Linking target test-compose
+[167/199] Compiling C object fuzz-keymap.p/fuzz_keymap_target.c.o
+[168/199] Compiling C object fuzz-compose.p/fuzz_compose_target.c.o
+[169/199] Compiling C object test-registry.p/test_registry.c.o
+[170/199] Linking target test-state
+[171/199] Compiling C object bench-rules.p/bench_rules.c.o
+[172/199] Compiling C object bench-key-proc.p/bench_key-proc.c.o
+[173/199] Compiling C object bench-atom.p/bench_atom.c.o
+[174/199] Compiling C object bench-compose.p/bench_compose.c.o
+[175/199] Compiling C object bench-rulescomp.p/bench_rulescomp.c.o
+[176/199] Compiling C object bench-x11.p/bench_x11.c.o
+[177/199] Compiling C object test-x11comp.p/test_x11comp.c.o
+[178/199] Linking target fuzz-compose
+[179/199] Linking target bench-atom
+[180/199] Linking target test-x11
+[181/199] Linking target fuzz-keymap
+[182/199] Linking target bench-x11
+[183/199] Linking target bench-key-proc
+[184/199] Linking target bench-rules
+[185/199] Linking target bench-rulescomp
+[186/199] Linking target bench-compose
+[187/199] Linking target test-x11comp
+[188/199] Linking target test-registry
+[189/199] Generating symbol file libxkbcommon.so.0.0.0.p/libxkbcommon.so.0.0.0.symbols
+[190/199] Linking target xkbcli-compile-keymap
+[191/199] Linking target xkbcli-interactive-wayland
+[192/199] Linking target compose
+[193/199] Linking target xkbcli
+[194/199] Linking target xkbcli-how-to-type
+[195/199] Linking target xkbcli-interactive-evdev
+[196/199] Linking target libxkbcommon-x11.so.0.0.0
+[197/199] Linking target compile-keymap
+[198/199] Generating symbol file libxkbcommon-x11.so.0.0.0.p/libxkbcommon-x11.so.0.0.0.symbols
+[199/199] Linking target xkbcli-interactive-x11
++build:5> DESTDIR=/usr/pkgmk/work/libxkbcommon/pkg ninja -C build install
+ninja: Entering directory `build'
+[0/1] Installing files.
+Installing libxkbcommon.so.0.0.0 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/lib64
+Installing libxkbcommon-x11.so.0.0.0 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/lib64
+Installing libxkbregistry.so.0.0.0 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/lib64
+Installing xkbcli to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/bin
+Installing xkbcli-compile-keymap to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/libexec/xkbcommon
+Installing xkbcli-how-to-type to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/libexec/xkbcommon
+Installing xkbcli-interactive-evdev to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/libexec/xkbcommon
+Installing xkbcli-interactive-x11 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/libexec/xkbcommon
+Installing xkbcli-interactive-wayland to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/libexec/xkbcommon
+Installing xkbcli-list to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/libexec/xkbcommon
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/tabs.css to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/jquery.js to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/menu.js to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/dynsections.js to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/tab_a.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/tab_b.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/tab_h.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/tab_s.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/tab_ad.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/tab_bd.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/tab_hd.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/tab_sd.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/nav_h.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/nav_hd.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/nav_f.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/nav_fd.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/bc_s.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/bc_sd.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/doxygen.svg to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/closed.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/open.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/bdwn.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/sync_on.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/sync_off.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/nav_g.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/doxygen.css to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/doc.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/docd.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/folderopen.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/folderclosed.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/splitbar.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/splitbard.png to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/doxygen-extra.css to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/xkbcommon-compose_8h.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/xkbcommon-names_8h.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/xkbcommon-x11_8h.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/xkbcommon_8h.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/xkbregistry_8h.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/md_doc_quick_guide.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/md_doc_compat.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/md_doc_user_configuration.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/md_doc_rules_format.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/md_doc_keymap_format_text_v1.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/deprecated.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/group__keysyms.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/group__context.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/group__include-path.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/group__logging.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/group__keymap.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/group__components.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/group__state.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/group__x11.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/group__compose.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/group__registry.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structrxkb__context.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structrxkb__iso3166__code.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structrxkb__iso639__code.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structrxkb__layout.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structrxkb__model.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structrxkb__option.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structrxkb__option__group.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structxkb__compose__state.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structxkb__compose__table.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structxkb__context.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structxkb__keymap.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structxkb__rule__names.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/structxkb__state.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/dir_e68e8157741866f444e17edd764ebbae.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/dir_d44c64559bbebec7f509842c48db8b23.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/dir_63ce773eee1f9b680e6e312b48cc99ca.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/menudata.js to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/index.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/pages.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/modules.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/annotated.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/classes.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/functions.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/functions_func.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/functions_vars.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/functions_type.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/files.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/globals.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/globals_func.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/globals_type.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/globals_enum.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/globals_eval.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/html/globals_defs.html to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/doc/libxkbcommon/html
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/include/xkbcommon/xkbcommon.h to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/include/xkbcommon/
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/include/xkbcommon/xkbcommon-compat.h to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/include/xkbcommon/
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/include/xkbcommon/xkbcommon-compose.h to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/include/xkbcommon/
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/include/xkbcommon/xkbcommon-keysyms.h to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/include/xkbcommon/
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/include/xkbcommon/xkbcommon-names.h to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/include/xkbcommon/
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/include/xkbcommon/xkbcommon-x11.h to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/include/xkbcommon/
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/include/xkbcommon/xkbregistry.h to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/include/xkbcommon/
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/tools/xkbcli.1 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/man/man1
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/tools/xkbcli-compile-keymap.1 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/man/man1
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/tools/xkbcli-how-to-type.1 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/man/man1
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/tools/xkbcli-interactive-evdev.1 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/man/man1
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/tools/xkbcli-interactive-x11.1 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/man/man1
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/tools/xkbcli-interactive-wayland.1 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/man/man1
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/tools/xkbcli-list.1 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/share/man/man1
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/meson-private/xkbcommon.pc to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/lib64/pkgconfig
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/meson-private/xkbcommon-x11.pc to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/lib64/pkgconfig
+Installing /usr/pkgmk/work/libxkbcommon/src/libxkbcommon-1.5.0/build/meson-private/xkbregistry.pc to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/lib64/pkgconfig
+Installing symlink pointing to libxkbcommon.so.0.0.0 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/lib64/libxkbcommon.so.0
+Installing symlink pointing to libxkbcommon.so.0 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/lib64/libxkbcommon.so
+Installing symlink pointing to libxkbcommon-x11.so.0.0.0 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/lib64/libxkbcommon-x11.so.0
+Installing symlink pointing to libxkbcommon-x11.so.0 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/lib64/libxkbcommon-x11.so
+Installing symlink pointing to libxkbregistry.so.0.0.0 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/lib64/libxkbregistry.so.0
+Installing symlink pointing to libxkbregistry.so.0 to /usr/pkgmk/work/libxkbcommon/pkg/usr/local/lib64/libxkbregistry.so
+=======> Build result:
+pkgmk: Creating package.
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/lib64/
+-rwxr-xr-x root/root    277216 2023-01-21 21:30 usr/local/lib64/libxkbcommon.so.0.0.0
+-rwxr-xr-x root/root     39792 2023-01-21 21:30 usr/local/lib64/libxkbcommon-x11.so.0.0.0
+-rwxr-xr-x root/root     35328 2023-01-21 21:30 usr/local/lib64/libxkbregistry.so.0.0.0
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/lib64/pkgconfig/
+-rw-r--r-- root/root       207 2023-01-21 21:30 usr/local/lib64/pkgconfig/xkbcommon.pc
+-rw-r--r-- root/root       296 2023-01-21 21:30 usr/local/lib64/pkgconfig/xkbcommon-x11.pc
+-rw-r--r-- root/root       274 2023-01-21 21:30 usr/local/lib64/pkgconfig/xkbregistry.pc
+lrwxrwxrwx root/root         0 2023-01-21 21:30 usr/local/lib64/libxkbcommon.so.0 -> libxkbcommon.so.0.0.0
+lrwxrwxrwx root/root         0 2023-01-21 21:30 usr/local/lib64/libxkbcommon.so -> libxkbcommon.so.0
+lrwxrwxrwx root/root         0 2023-01-21 21:30 usr/local/lib64/libxkbcommon-x11.so.0 -> libxkbcommon-x11.so.0.0.0
+lrwxrwxrwx root/root         0 2023-01-21 21:30 usr/local/lib64/libxkbcommon-x11.so -> libxkbcommon-x11.so.0
+lrwxrwxrwx root/root         0 2023-01-21 21:30 usr/local/lib64/libxkbregistry.so.0 -> libxkbregistry.so.0.0.0
+lrwxrwxrwx root/root         0 2023-01-21 21:30 usr/local/lib64/libxkbregistry.so -> libxkbregistry.so.0
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/bin/
+-r-xr-xr-x root/root     15392 2023-01-21 21:30 usr/local/bin/xkbcli
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/libexec/
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/libexec/xkbcommon/
+-rwxr-xr-x root/root     15624 2023-01-21 21:30 usr/local/libexec/xkbcommon/xkbcli-compile-keymap
+-rwxr-xr-x root/root     15528 2023-01-21 21:30 usr/local/libexec/xkbcommon/xkbcli-how-to-type
+-rwxr-xr-x root/root     24136 2023-01-21 21:30 usr/local/libexec/xkbcommon/xkbcli-interactive-evdev
+-rwxr-xr-x root/root     19528 2023-01-21 21:30 usr/local/libexec/xkbcommon/xkbcli-interactive-x11
+-rwxr-xr-x root/root     28160 2023-01-21 21:30 usr/local/libexec/xkbcommon/xkbcli-interactive-wayland
+-rwxr-xr-x root/root     19456 2023-01-21 21:30 usr/local/libexec/xkbcommon/xkbcli-list
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/share/
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/share/doc/
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/
+-rw-r--r-- root/root     11055 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/tabs.css
+-rw-r--r-- root/root    176630 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/jquery.js
+-rw-r--r-- root/root      5925 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/menu.js
+-rw-r--r-- root/root      4545 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/dynsections.js
+-rw-r--r-- root/root       142 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/tab_a.png
+-rw-r--r-- root/root       169 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/tab_b.png
+-rw-r--r-- root/root       177 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/tab_h.png
+-rw-r--r-- root/root       184 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/tab_s.png
+-rw-r--r-- root/root       135 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/tab_ad.png
+-rw-r--r-- root/root       173 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/tab_bd.png
+-rw-r--r-- root/root       180 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/tab_hd.png
+-rw-r--r-- root/root       188 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/tab_sd.png
+-rw-r--r-- root/root        98 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/nav_h.png
+-rw-r--r-- root/root       114 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/nav_hd.png
+-rw-r--r-- root/root       153 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/nav_f.png
+-rw-r--r-- root/root       169 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/nav_fd.png
+-rw-r--r-- root/root       676 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/bc_s.png
+-rw-r--r-- root/root       635 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/bc_sd.png
+-rw-r--r-- root/root     15382 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/doxygen.svg
+-rw-r--r-- root/root       132 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/closed.png
+-rw-r--r-- root/root       123 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/open.png
+-rw-r--r-- root/root       147 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/bdwn.png
+-rw-r--r-- root/root       845 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/sync_on.png
+-rw-r--r-- root/root       853 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/sync_off.png
+-rw-r--r-- root/root        95 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/nav_g.png
+-rw-r--r-- root/root     43469 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/doxygen.css
+-rw-r--r-- root/root       746 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/doc.png
+-rw-r--r-- root/root       756 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/docd.png
+-rw-r--r-- root/root       597 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/folderopen.png
+-rw-r--r-- root/root       616 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/folderclosed.png
+-rw-r--r-- root/root       314 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/splitbar.png
+-rw-r--r-- root/root       282 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/splitbard.png
+-rw-r--r-- root/root       151 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/doxygen-extra.css
+-rw-r--r-- root/root      6209 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/xkbcommon-compose_8h.html
+-rw-r--r-- root/root      6604 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/xkbcommon-names_8h.html
+-rw-r--r-- root/root      5696 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/xkbcommon-x11_8h.html
+-rw-r--r-- root/root     36378 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/xkbcommon_8h.html
+-rw-r--r-- root/root     33923 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/xkbregistry_8h.html
+-rw-r--r-- root/root     29307 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/md_doc_quick_guide.html
+-rw-r--r-- root/root      4678 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/md_doc_compat.html
+-rw-r--r-- root/root     14528 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/md_doc_user_configuration.html
+-rw-r--r-- root/root      7457 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/md_doc_rules_format.html
+-rw-r--r-- root/root     21698 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/md_doc_keymap_format_text_v1.html
+-rw-r--r-- root/root      2614 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/deprecated.html
+-rw-r--r-- root/root     21851 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/group__keysyms.html
+-rw-r--r-- root/root     14426 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/group__context.html
+-rw-r--r-- root/root     10485 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/group__include-path.html
+-rw-r--r-- root/root     14712 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/group__logging.html
+-rw-r--r-- root/root     24926 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/group__keymap.html
+-rw-r--r-- root/root     49860 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/group__components.html
+-rw-r--r-- root/root     92764 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/group__state.html
+-rw-r--r-- root/root     22087 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/group__x11.html
+-rw-r--r-- root/root     50706 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/group__compose.html
+-rw-r--r-- root/root    103390 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/group__registry.html
+-rw-r--r-- root/root      2780 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structrxkb__context.html
+-rw-r--r-- root/root      2850 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structrxkb__iso3166__code.html
+-rw-r--r-- root/root      2813 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structrxkb__iso639__code.html
+-rw-r--r-- root/root      2699 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structrxkb__layout.html
+-rw-r--r-- root/root      2499 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structrxkb__model.html
+-rw-r--r-- root/root      2616 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structrxkb__option.html
+-rw-r--r-- root/root      2676 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structrxkb__option__group.html
+-rw-r--r-- root/root      8214 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structxkb__compose__state.html
+-rw-r--r-- root/root      6284 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structxkb__compose__table.html
+-rw-r--r-- root/root     10885 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structxkb__context.html
+-rw-r--r-- root/root     20790 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structxkb__keymap.html
+-rw-r--r-- root/root      8869 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structxkb__rule__names.html
+-rw-r--r-- root/root     21216 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/structxkb__state.html
+-rw-r--r-- root/root      2155 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/dir_e68e8157741866f444e17edd764ebbae.html
+-rw-r--r-- root/root      2625 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/dir_d44c64559bbebec7f509842c48db8b23.html
+-rw-r--r-- root/root      3825 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/dir_63ce773eee1f9b680e6e312b48cc99ca.html
+-rw-r--r-- root/root      5254 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/menudata.js
+-rw-r--r-- root/root      6262 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/index.html
+-rw-r--r-- root/root      3472 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/pages.html
+-rw-r--r-- root/root      4762 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/modules.html
+-rw-r--r-- root/root      6260 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/annotated.html
+-rw-r--r-- root/root      4790 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/classes.html
+-rw-r--r-- root/root     15414 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/functions.html
+-rw-r--r-- root/root     14189 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/functions_func.html
+-rw-r--r-- root/root      2546 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/functions_vars.html
+-rw-r--r-- root/root      2032 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/functions_type.html
+-rw-r--r-- root/root      4582 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/files.html
+-rw-r--r-- root/root     24067 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/globals.html
+-rw-r--r-- root/root     11430 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/globals_func.html
+-rw-r--r-- root/root      3014 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/globals_type.html
+-rw-r--r-- root/root      4239 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/globals_enum.html
+-rw-r--r-- root/root     10301 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/globals_eval.html
+-rw-r--r-- root/root      2579 2023-01-21 21:30 usr/local/share/doc/libxkbcommon/html/globals_defs.html
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/share/man/
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/share/man/man1/
+-r--r--r-- root/root       614 2023-01-02 20:23 usr/local/share/man/man1/xkbcli.1.gz
+-r--r--r-- root/root       639 2023-01-02 20:23 usr/local/share/man/man1/xkbcli-compile-keymap.1.gz
+-r--r--r-- root/root       446 2023-01-02 20:23 usr/local/share/man/man1/xkbcli-how-to-type.1.gz
+-r--r--r-- root/root       805 2023-01-02 20:23 usr/local/share/man/man1/xkbcli-interactive-evdev.1.gz
+-r--r--r-- root/root       446 2023-01-02 20:23 usr/local/share/man/man1/xkbcli-interactive-x11.1.gz
+-r--r--r-- root/root       458 2023-01-02 20:23 usr/local/share/man/man1/xkbcli-interactive-wayland.1.gz
+-r--r--r-- root/root       522 2023-01-02 20:23 usr/local/share/man/man1/xkbcli-list.1.gz
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/include/
+drwxr-xr-x root/root         0 2023-01-21 21:30 usr/local/include/xkbcommon/
+-rw-r--r-- root/root     67422 2023-01-02 20:23 usr/local/include/xkbcommon/xkbcommon.h
+-rw-r--r-- root/root      4295 2023-01-02 20:23 usr/local/include/xkbcommon/xkbcommon-compat.h
+-rw-r--r-- root/root     16612 2023-01-02 20:23 usr/local/include/xkbcommon/xkbcommon-compose.h
+-rw-r--r-- root/root    231671 2023-01-02 20:23 usr/local/include/xkbcommon/xkbcommon-keysyms.h
+-rw-r--r-- root/root      1718 2023-01-02 20:23 usr/local/include/xkbcommon/xkbcommon-names.h
+-rw-r--r-- root/root      9191 2023-01-02 20:23 usr/local/include/xkbcommon/xkbcommon-x11.h
+-rw-r--r-- root/root     24340 2023-01-02 20:23 usr/local/include/xkbcommon/xkbregistry.h
+pkgmk: rm -rf /usr/pkgmk/work/libxkbcommon
+=======> Building `/usr/pkgmk/package/libxkbcommon_1.5.0-1.pkg.tar.gz' succeeded.

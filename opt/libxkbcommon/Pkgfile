@@ -1,0 +1,17 @@
+# Description: Library for handling of keyboard descriptions
+# URL:         https://xkbcommon.org/
+# depends:
+
+name=libxkbcommon
+version=1.5.0
+release=1
+branch=master
+source=(https://xkbcommon.org/download/libxkbcommon-$version.tar.xz)
+
+build()
+{
+    cd $name-$version
+    meson build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}

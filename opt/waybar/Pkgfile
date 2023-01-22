@@ -1,6 +1,6 @@
 # Description: i3bar for wayland
-# URL:         https://github.com/swaywm/sway.git
-# depends: libappindicator-gtk3
+# URL:         https://github.com/Alexays/Waybar.git
+# depends:     libappindicator-gtk3
 name=waybar
 version=git
 release=1
