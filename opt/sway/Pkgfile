@@ -11,7 +11,11 @@ source=(https://github.com/swaywm/sway.git)
 build()
 {
     cd $name
-    meson build --wrap-mode=nofallback -Dfish-completions=false -Dbash-completions=false
+    meson build \
+          --wrap-mode=nofallback \
+          -Dfish-completions=false \
+          -Dbash-completions=false \
+          -Ddefault-wallpaper=false
     ninja -C build
     DESTDIR=$PKG ninja -C build install
 }
