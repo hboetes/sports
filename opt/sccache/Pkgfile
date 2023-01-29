@@ -2,7 +2,6 @@
 # URL:          https://github.com/mozilla/sccache
 # Dependencies: rust
 
-
 name=sccache
 version=git
 release=1
