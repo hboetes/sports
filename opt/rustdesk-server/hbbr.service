@@ -1,0 +1,13 @@
+[Unit]
+Description=Rustdesk Relay Server
+[Service]
+Type=simple
+LimitNOFILE=1000000
+ExecStart=/usr/local/sbin/hbbr -k _
+WorkingDirectory=/usr/local/sbin
+User=hbbr
+Group=rustdesk
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target

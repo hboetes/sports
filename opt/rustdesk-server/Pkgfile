@@ -1,0 +1,35 @@
+# Description: rustdesk server
+# URL:         https://github.com/rustdesk/rustdesk-server.git
+
+name=rustdesk-server
+version=git
+release=1
+source=(
+    hbbs.service
+    hbbr.service
+    https://github.com/rustdesk/rustdesk-server.git
+)
+
+build()
+{
+    install -m 644 -D $SRC/hbbs.service      $PKG/usr/lib/systemd/system/hbbs.service
+    install -m 644 -D $SRC/hbbr.service      $PKG/usr/lib/systemd/system/hbbr.service
+    install -d                               $PKG/var/log/rustdesk
+    install -d -m700                         $PKG/var/db/hbbs
+
+    cd $name
+    cargo build --release
+
+    install -D target/release/hbbs           $PKG/usr/local/sbin/hbbs
+    install -D target/release/hbbr           $PKG/usr/local/sbin/hbbr
+    install -D target/release/rustdesk-utils $PKG/usr/local/bin/rustdesk-utils
+}
+
+post-install()
+{
+    groupadd -f rustdesk
+    useradd     hbbs -g rustdesk
+    useradd     hbbr -g rustdesk
+    chown -R hbbs:rustdesk /var/db/hbbs
+    chmod 700              /var/db/hbbs
+}

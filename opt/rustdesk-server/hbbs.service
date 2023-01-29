@@ -1,0 +1,13 @@
+[Unit]
+Description=Rustdesk Signal Server
+[Service]
+Type=simple
+LimitNOFILE=1000000
+ExecStart=/usr/local/sbin/hbbs -k _ -r thing.axis-simulation.com:21117
+WorkingDirectory=/var/db/hbbs
+User=hbbs
+Group=rustdesk
+Restart=always
+RestartSec=10
+[Install]
+WantedBy=multi-user.target
