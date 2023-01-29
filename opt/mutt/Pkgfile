@@ -26,9 +26,6 @@ build () {
         --enable-locales-fix \
         --sysconfdir=/etc/mutt \
         --enable-external-dotlock
-    # I really don't want to have to chmod 644 each file I save.
-    # Not that this helps...
-    # sed-i 's|umask|// umask|' main.c
     make
     make install DESTDIR=$PKG
     rm -r $PKG/usr/local/share/doc
