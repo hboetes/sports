@@ -1,4 +1,4 @@
-# Description: jack audio daemon
+# Description: free, open source, and cross-platform media player
 
 name=mpv
 version=git
@@ -9,8 +9,7 @@ source=(https://github.com/mpv-player/mpv.git)
 build()
 {
     cd $name
-    ./bootstrap.py
-    ./waf configure --prefix /usr/local
-    ./waf
-    ./waf install --destdir=$PKG
+    meson setup build
+    meson compile -C build
+    DESTDIR=$PKG meson install -C build
 }
