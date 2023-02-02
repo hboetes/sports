@@ -1,0 +1,16 @@
+# Description: rofi clone with wayland support
+# URL:         https://github.com/lbonn/rofi.git
+
+name=rofi
+version=git
+release=1
+branch=wayland
+source=(https://github.com/lbonn/rofi.git)
+
+build()
+{
+    cd $name
+    meson setup build -Dxcb=disabled
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
