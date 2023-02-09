@@ -1,0 +1,13 @@
+diff --git a/main.c b/main.c
+index 31fed7e..2529776 100644
+--- a/main.c
++++ b/main.c
+@@ -759,7 +759,7 @@ void keypress(struct menu_state *state, enum wl_keyboard_key_state key_state,
+ 		if (!state->selection) {
+ 			return;
+ 		}
+-		strncpy(state->text, state->selection->text, sizeof state->text);
++		strncpy(state->text, state->selection->text, sizeof(state->text));
+ 		state->cursor = strlen(state->text);
+ 		match(state);
+ 		render_frame(state);

@@ -1,0 +1,19 @@
+# Description: dmenu alternative for wayland
+# URL:         https://sr.ht/~adnano/wmenu/
+# Depends:     cairo pango wayland xkbcommon
+
+name=wmenu
+version=git
+release=1
+branch=master
+source=(
+    https://git.sr.ht/~adnano/wmenu.git
+)
+
+build()
+{
+    cd $name
+    meson build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
