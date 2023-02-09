@@ -4,6 +4,7 @@ local packages=($@)
 local all=false
 local reinstall=()
 local skip=(angband)
+unset depends
 if [[ -z $packages ]]; then
     packages=($(prt-get listinst))
     all=true
@@ -20,6 +21,12 @@ for i in $packages; do
         if git -C /usr/pkgmk/source/$i status -uno|grep 'git pull'; then
             (
                 cd /usr/sports/*/$i
+                # First check if the dependencies need an update
+                # XXX this will result in multiple reinstall requests.
+                source Pkgfile
+                for dep in $depends; do
+                    update-git-ports $dep
+                done
                 pkgmk -f
             ) && reinstall+=$i
         fi
