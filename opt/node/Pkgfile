@@ -2,7 +2,7 @@
 # URL:         https://nodejs.org/
 
 name=node
-version=16.17.1
+version=19.6.0
 release=1
 source=(https://nodejs.org/dist/v$version/node-v$version-linux-arm64.tar.xz)
 
