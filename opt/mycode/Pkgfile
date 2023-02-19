@@ -14,7 +14,6 @@ source=(
     munlink.c
     find_unlinked.sh
     makeindexhtml.sh
-    mirrortest.sh
     remind.sh
     statusbar_right.c
     update-git-ports.sh
