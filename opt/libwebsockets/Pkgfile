@@ -1,5 +1,5 @@
 # Description: libwebsockets
-# URL:         https://libwebsockets.org/repo/libwebsockets
+# URL:         https://libwebsockets.org/
 
 name=libwebsockets
 version=git
