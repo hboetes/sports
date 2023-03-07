@@ -1,0 +1,23 @@
+# Description: sway notification centre
+# URL:         https://github.com/ErikReider/SwayNotificationCenter.git
+
+name=swaync
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/ErikReider/SwayNotificationCenter.git
+)
+
+build()
+{
+    cd $name
+    meson --prefix=/usr build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
+
+post-install()
+{
+    glib-compile-schemas /usr/share/glib-2.0/schemas/
+}
