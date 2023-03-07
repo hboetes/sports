@@ -11,7 +11,7 @@ depends=(wlroots)
 build()
 {
     cd $name
-    meson build \
+    meson setup build \
           --wrap-mode=nofallback \
           -Dfish-completions=false \
           -Dbash-completions=false \
