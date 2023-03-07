@@ -10,6 +10,8 @@ build()
 {
     cd $name
     install -D stuff/main.glade $PKG/usr/share/nwg-look/main.glade
+    install -d $PKG/usr/share/nwg-look/langs/
+    install langs/* $PKG/usr/share/nwg-look/langs/
     unset CC
     export PATH=$PATH:/usr/local/go/bin
     GOBIN=$PKG/usr/local/bin go install
