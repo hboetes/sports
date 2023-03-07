@@ -3,7 +3,7 @@
 # Dependencies: taglib-devel go nodejs ffmpeg
 
 name=navidrome
-version=0.48.0
+version=0.49.3
 release=git
 source=(
     https://github.com/navidrome/navidrome.git
@@ -21,6 +21,7 @@ build()
     install -m 640 -D $name.toml       $PKG/var/lib/navidrome/navidrome.toml
     cd navidrome*/
     export PATH=$PATH:/usr/local/go/bin
+    export GOPROXY=https://goproxy.io,direct
     # Nice, but it doesn't work.
     # sed -i 's@npm ci@npm ci \&\& npm audit fix --force ||:@' Makefile
     # sed -i 's@npm ci@npm ci \&\& npm audit fix ||:@' Makefile

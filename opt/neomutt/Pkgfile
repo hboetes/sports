@@ -1,0 +1,25 @@
+# Description: Text-based email client that sucks less
+# URL:         http://www.mutt.org
+# Depends on:
+
+name=neomutt
+version=git
+release=1
+branch=stable
+source=(
+    https://github.com/neomutt/neomutt.git
+)
+
+build () {
+    cd $name
+    ./configure \
+        --prefix=/usr/local \
+        --mandir=/usr/local/man \
+        --with-ssl=1 \
+        --disable-nls \
+        --enable-locales-fix \
+        --sysconfdir=/etc/mutt \
+        --disable-doc
+    make
+    make install DESTDIR=$PKG
+}

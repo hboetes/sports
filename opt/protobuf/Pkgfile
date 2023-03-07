@@ -1,3 +1,6 @@
+# echo 'https://github.com/bazelbuild/rules_kotlin/issues/883'
+# exit 1
+
 # Description: Protocol Buffers - Google's data interchange format
 # URL:         https://github.com/protocolbuffers/protobuf.git
 # Dependencies: https://bazel.build/install/ubuntu

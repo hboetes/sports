@@ -12,6 +12,7 @@ source=(
 
 build()
 {
+    export PKG_CONFIG_PATH=/usr/local/lib/x86_64-linux-gnu/pkgconfig/
     install -D $SRC/janus.service $PKG/etc/systemd/system/janus.service
     # This ensures /run/janus is created at boot
     install -d $PKG/etc/tmpfiles.d/
