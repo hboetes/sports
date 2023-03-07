@@ -37,7 +37,7 @@ fi
 
 
 find_wp() {
-    wallpapers=($WPDIR/*.(jpg|png))
+    wallpapers=($WPDIR/*.(jpg|png|webp))
     if ((${#wallpapers} == 0)); then
         return 1
     fi
@@ -70,12 +70,13 @@ set_wp() {
 }
 
 mv_wp() {
-     mv "${wallpapers[$wallpaperid]}" $WPSDIR
+    [[ -d $WPSDIR ]] || { echo "$WPSDIR is not a dir. Bailing out"; exit 1}
+    mv "${wallpapers[$wallpaperid]}" $WPSDIR
 }
 
 mv_wp_back() {
-    if [[ $WPSDIR/*.(jpg|png) == $WPSDIR/'*.(jpg|png)' ]]; then
-        mv $WPSDIR/*.(jpg|png) $WPDIR
+    if [[ $WPSDIR/*.(jpg|png|webp) == $WPSDIR/'*.(jpg|png)' ]]; then
+        mv $WPSDIR/*.(jpg|png|webp) $WPDIR
     else
         echo "No wallpaper found in $WPSDIR." >&2
         exit 1
