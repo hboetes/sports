@@ -1,0 +1,17 @@
+# Description: EDID and DisplayID library.
+# URL:
+# Dependencies: edid-decode
+
+name=libdisplay-info
+version=git
+release=1
+branch=master
+source=(https://gitlab.freedesktop.org/emersion/libdisplay-info.git)
+
+build()
+{
+    cd $name
+    meson setup build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
