@@ -1,6 +1,7 @@
 # Description: modular Wayland compositor library
 # URL:
 # dnf install -y git gcc meson ninja-build wayland-devel mesa-libEGL-devel mesa-libGLES-devel mesa-dri-drivers xorg-x11-server-Xwayland-devel libdrm-devel libgbm-devel libxkbcommon-devel libudev-devel pixman-devel libinput-devel libevdev-devel systemd-devel cairo-devel libpcap-devel json-c-devel pam-devel pango-devel pcre-devel gdk-pixbuf2-devel
+# Dependencies: libdisplay-info
 
 name=wlroots
 version=git
@@ -11,7 +12,7 @@ source=(https://gitlab.freedesktop.org/wlroots/wlroots.git)
 build()
 {
     cd $name
-    meson build
+    meson setup build -Dbackends=drm,libinput,x11
     ninja -C build
     DESTDIR=$PKG ninja -C build install
 }

@@ -10,6 +10,6 @@ source=(https://gitlab.freedesktop.org/mstoeckl/waypipe.git)
 build()
 {
     mkdir build-waypipe
-    meson --buildtype debugoptimized waypipe build-waypipe
+    meson setup --buildtype debugoptimized waypipe build-waypipe
     DESTDIR=$PKG ninja -C build-waypipe install
 }

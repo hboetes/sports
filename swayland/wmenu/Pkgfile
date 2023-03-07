@@ -13,7 +13,7 @@ source=(
 build()
 {
     cd $name
-    meson build
+    meson setup build
     ninja -C build
     DESTDIR=$PKG ninja -C build install
 }
