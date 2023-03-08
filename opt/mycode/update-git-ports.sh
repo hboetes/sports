@@ -3,7 +3,7 @@
 local packages=($@)
 local all=false
 local reinstall=()
-local skip=(angband)
+local skip=(emacs sccache)
 unset depends
 if [[ -z $packages ]]; then
     packages=($(prt-get listinst))
