@@ -32,4 +32,6 @@ post-install()
     useradd     hbbr -g rustdesk
     chown -R hbbs:rustdesk /var/db/hbbs
     chmod 700              /var/db/hbbs
+    systemctl daemon-reload
+    systemctl restart hbbs hbbr
 }
