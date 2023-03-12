@@ -47,7 +47,7 @@ mktempfiles()
     dirsnewpackage=$DIR/dirsnewpackage
 
     # Put files and dirs in sepperate files.
-    tar tvzf $path_package | egrep -v " var/(package|$)" > $TMP1
+    tar tvzf $path_package | grep -Ev " var/(package|$)" > $TMP1
     awk '/^[^d]/ {print $6}' $TMP1 > $filesnewpackage
     awk '/^d/    {print $6}' $TMP1 > $dirsnewpackage
 
