@@ -1,5 +1,6 @@
 # Description: webrtc gateway daemon
 # URL:         https://github.com/meetecho/janus-gateway.git
+# Depends:     libsrtp
 
 name=janus-gateway
 version=git
