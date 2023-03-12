@@ -150,7 +150,7 @@ mktempfiles
 )
 
 # Run ldconfig if the package contained libraries.
-fgrep -q '\.so' $dbase/$name-footprint && ldconfig -R
+grep -Fq '\.so' $dbase/$name-footprint && ldconfig -R
 
 # Auto post-uninstall infopages.
 for i in $(grep -E '^usr/local/info/[^-]*$' $filesoldpackage); do

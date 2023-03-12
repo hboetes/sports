@@ -72,7 +72,7 @@ owner()
     mktempfiles
     filename=${1#/}
     # TODO: add 2> /dev/null?
-    fgrep "$filename" $dbase/*-footprint > $TMP1 # 2> /dev/null
+    grep -F "$filename" $dbase/*-footprint > $TMP1 # 2> /dev/null
     if [ -s $TMP1 ]; then
         sed -e "s|^$dbase/\(.*\)-footprint:|\1  |" $TMP1
     else
