@@ -1,0 +1,13 @@
+# Description: simple screen recording program
+# URL:         https://github.com/henrywoo/kazam.git
+
+name=kazam
+version=git
+release=1
+source=(https://github.com/henrywoo/kazam.git)
+
+build()
+{
+    cd $name
+    python3 setup.py install --root $PKG
+}
