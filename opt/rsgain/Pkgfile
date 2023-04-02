@@ -1,5 +1,5 @@
-# Description: rspamd
-# Dependencies: cmake
+# Description: really simple gain
+# dnf install cmake libebur128-devel taglib-devel libavformat-free-devel libavcodec-free-devel libswresample-free-devel libavutil-free-devel fmt-devel inih-devel
 
 name=rsgain
 version=git
