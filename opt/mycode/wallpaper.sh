@@ -75,7 +75,7 @@ mv_wp() {
 }
 
 mv_wp_back() {
-    if [[ $WPSDIR/*.(jpg|png|webp) == $WPSDIR/'*.(jpg|png)' ]]; then
+    if [[ $WPSDIR/*.(jpg|png|webp) == $WPSDIR/'*.(jpg|png|webp)' ]]; then
         mv $WPSDIR/*.(jpg|png|webp) $WPDIR
     else
         echo "No wallpaper found in $WPSDIR." >&2
