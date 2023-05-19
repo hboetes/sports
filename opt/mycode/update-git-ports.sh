@@ -3,6 +3,8 @@
 local packages=($@)
 local all=false
 local reinstall=()
+# Don't build these packages automatically, they _always_ have changes
+# and are massive hogs to build.
 local skip=(emacs sccache)
 unset depends
 if [[ -z $packages ]]; then
@@ -12,13 +14,13 @@ fi
 
 for i in $packages; do
     # Skip packages in the skip array
-    if (($skip[(Ie)$i])); then
+    if [[ $all == true ]] && (($skip[(Ie)$i])); then
         continue
     fi
     if [ -d /usr/pkgmk/source/$i/.git/ ]; then
         echo "checking if $i is up to date"
         git -C /usr/pkgmk/source/$i remote update
-        if git -C /usr/pkgmk/source/$i status -uno|grep 'git pull'; then
+        if git -C /usr/pkgmk/source/$i status -uno|grep -q 'git pull'; then
             (
                 cd /usr/sports/*/$i
                 # First check if the dependencies need an update
@@ -36,7 +38,7 @@ for i in $packages; do
 done
 
 if [[ -n $reinstall ]]; then
-    echo 'you there?'
+    echo 'you there? [Y/n]'
     read -sk1 niets
     prt-get update $reinstall
 fi
