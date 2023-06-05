@@ -10,6 +10,7 @@ source=(https://github.com/hboetes/mg.git)
 build()
 {
     cd $name
-    make
-    make install DESTDIR=$PKG
+    meson setup build
+    meson compile -C build
+    DESTDIR=$PKG meson install -C build
 }
