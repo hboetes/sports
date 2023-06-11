@@ -1,10 +1,10 @@
-# Description: sway notification centre
+# Description: sway notification center
 # URL:         https://github.com/ErikReider/SwayNotificationCenter.git
 
 name=swaync
 version=git
 release=1
-branch=master
+branch=main
 source=(
     https://github.com/ErikReider/SwayNotificationCenter.git
 )
@@ -12,8 +12,8 @@ source=(
 build()
 {
     cd $name
-    meson --prefix=/usr build
-    ninja -C build
+    meson setup --prefix=/usr build
+    meson compile -C build
     DESTDIR=$PKG ninja -C build install
 }
 
