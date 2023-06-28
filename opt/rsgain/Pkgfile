@@ -1,0 +1,19 @@
+# Description: really simple gain
+# dnf install cmake libebur128-devel taglib-devel libavformat-free-devel libavcodec-free-devel libswresample-free-devel libavutil-free-devel fmt-devel inih-devel
+
+name=rsgain
+version=git
+release=1
+source=(
+    https://github.com/complexlogic/rsgain.git
+)
+
+build()
+{
+    cd $name
+    mkdir build
+    cd build
+    cmake .. -DCMAKE_BUILD_TYPE=Release
+    make
+    make install DESTDIR=$PKG
+}

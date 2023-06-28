@@ -19,11 +19,12 @@ PATH=/usr/local/bin:/usr/bin:/bin
 WPDIR=~/Wallpapers
 WPSDIR=~/Wallpapers/seen
 # Deprecated? That's news to me.
-USER=$(whoami)
+local USER=$(whoami)
+local ID=$(id -u)
 
 # Test if sway is running and set the SWAYSOCK env var.
-if pgrep -x sway > /dev/null 2>&1; then
-    export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
+if pgrep -u $USER -x sway > /dev/null 2>&1; then
+    export SWAYSOCK=/run/user/$ID/sway-ipc.$ID.$(pgrep -u $USER -x sway).sock
     # XXX, where can I find out how this should be set?
     export WAYLAND_DISPLAY='wayland-1'
 else
@@ -75,7 +76,7 @@ mv_wp() {
 }
 
 mv_wp_back() {
-    if [[ $WPSDIR/*.(jpg|png|webp) == $WPSDIR/'*.(jpg|png)' ]]; then
+    if [[ $WPSDIR/*.(jpg|png|webp) == $WPSDIR/'*.(jpg|png|webp)' ]]; then
         mv $WPSDIR/*.(jpg|png|webp) $WPDIR
     else
         echo "No wallpaper found in $WPSDIR." >&2

@@ -8,7 +8,6 @@ source=(
     # https://github.com/zsh-users/zsh.git
     _pkgutils
     _find
-    # https://sourceforge.net/projects/zsh/files/zsh-test/5.8.1.2-test/zsh-5.8.1.2-test.tar.xz
     http://www.zsh.org/pub/$name-$version.tar.xz
 )
 
