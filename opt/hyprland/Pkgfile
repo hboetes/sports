@@ -12,7 +12,7 @@ source=(
 build()
 {
     cd $name
-    meson --prefix=/usr/local build
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
+    meson setup build --prefix=/usr/local
+    meson compile -C build
+    DESTDIR=$PKG meson install -C build
 }
