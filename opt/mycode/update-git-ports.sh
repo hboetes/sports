@@ -16,6 +16,7 @@ for i in $packages; do
     # skip packages in the weekly array not older than 7 days.
     if [[ $all == true ]] && (($weekly[(Ie)$i])); then
         if find /usr/pkgmk/package/${i}_*pkg.tar.gz -mtime -7 | \grep -q . ; then
+            echo "Skipping $i, it's less than 7 days old."
             continue
         fi
     fi
