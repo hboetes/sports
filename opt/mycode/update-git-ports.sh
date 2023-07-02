@@ -20,6 +20,11 @@ for i in $packages; do
             continue
         fi
     fi
+    if [ /usr/pkgmk/package/${i}_*pkg.tar.gz -nt /var/package/$i-footprint ]; then
+        echo "A updated package is available for ${i}."
+        reinstall+=$i
+        continue
+    fi
     if [ -d /usr/pkgmk/source/$i/.git/ ]; then
         echo "checking if $i is up to date"
         git -C /usr/pkgmk/source/$i remote update
