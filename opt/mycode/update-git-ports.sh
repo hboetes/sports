@@ -13,17 +13,17 @@ if [[ -z $packages ]]; then
 fi
 
 for i in $packages; do
+    if [ /usr/pkgmk/package/${i}_*pkg.tar.gz -nt /var/package/$i-footprint ]; then
+        echo "A updated package is available for ${i}."
+        reinstall+=$i
+        continue
+    fi
     # skip packages in the weekly array not older than 7 days.
     if [[ $all == true ]] && (($weekly[(Ie)$i])); then
         if find /usr/pkgmk/package/${i}_*pkg.tar.gz -mtime -7 | \grep -q . ; then
             echo "Skipping $i, it's less than 7 days old."
             continue
         fi
-    fi
-    if [ /usr/pkgmk/package/${i}_*pkg.tar.gz -nt /var/package/$i-footprint ]; then
-        echo "A updated package is available for ${i}."
-        reinstall+=$i
-        continue
     fi
     if [ -d /usr/pkgmk/source/$i/.git/ ]; then
         echo "checking if $i is up to date"
