@@ -27,6 +27,8 @@ build()
 
 post-install()
 {
+    chown -R root:signaling     /usr/local/etc/janus
+    chmod -R u+rwX,g+rX-w,o-rwx /usr/local/etc/janus
     systemctl daemon-reload
     systemctl restart janus.service
 }
