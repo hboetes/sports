@@ -12,7 +12,16 @@ build()
 {
     cd $name*
     ./autogen.sh
-    ./configure --with-x --with-x-toolkit=gtk --without-makeinfo --with-native-compilation
+    ./configure \
+        --with-pgtk \
+        --with-json \
+        --with-gnutls  \
+        --with-rsvg  \
+        --without-xwidgets \
+        --without-xaw3d \
+        --without-mailutils \
+        --with-native-compilation=aot
+
     # ./configure --without-all --without-makeinfo --without-x --with-gnutls=yes # --with-native-compilation
     make
     make install DESTDIR=$PKG

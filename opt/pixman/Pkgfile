@@ -1,12 +1,12 @@
 # Description: pixman
-# URL:         https://github.com/freedesktop/pixman.git
+# URL:         https://gitlab.freedesktop.org/pixman/pixman.git
 
 name=pixman
 version=git
 release=1
 branch=master
 source=(
-    https://github.com/freedesktop/pixman.git
+    https://gitlab.freedesktop.org/pixman/pixman.git
 )
 
 build()

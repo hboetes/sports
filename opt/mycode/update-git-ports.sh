@@ -3,7 +3,9 @@
 local packages=($@)
 local all=false
 local reinstall=()
-local skip=(emacs sccache)
+# Don't build these packages automatically, they _always_ have changes
+# and are massive hogs to build.
+local weekly=(emacs sccache rspamd)
 unset depends
 if [[ -z $packages ]]; then
     packages=($(prt-get listinst))
@@ -11,14 +13,22 @@ if [[ -z $packages ]]; then
 fi
 
 for i in $packages; do
-    # Skip packages in the skip array
-    if (($skip[(Ie)$i])); then
+    if [ /usr/pkgmk/package/${i}_*pkg.tar.gz -nt /var/package/$i-footprint ]; then
+        echo "A updated package is available for ${i}."
+        reinstall+=$i
         continue
+    fi
+    # skip packages in the weekly array not older than 7 days.
+    if [[ $all == true ]] && (($weekly[(Ie)$i])); then
+        if find /usr/pkgmk/package/${i}_*pkg.tar.gz -mtime -7 | \grep -q . ; then
+            echo "Skipping $i, it's less than 7 days old."
+            continue
+        fi
     fi
     if [ -d /usr/pkgmk/source/$i/.git/ ]; then
         echo "checking if $i is up to date"
         git -C /usr/pkgmk/source/$i remote update
-        if git -C /usr/pkgmk/source/$i status -uno|grep 'git pull'; then
+        if git -C /usr/pkgmk/source/$i status -uno|grep -q 'git pull'; then
             (
                 cd /usr/sports/*/$i
                 # First check if the dependencies need an update
@@ -36,7 +46,7 @@ for i in $packages; do
 done
 
 if [[ -n $reinstall ]]; then
-    echo 'you there?'
+    echo 'you there? [Y/n]'
     read -sk1 niets
     prt-get update $reinstall
 fi

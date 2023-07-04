@@ -2,10 +2,10 @@
 # URL:          https://github.com/bcpierce00/unison/
 
 name=unison
-version=2.52.1
+version=2.53.3
 release=1
 source=(
-    https://github.com/bcpierce00/unison/releases/download/v$version/unison-v$version+ocaml-4.04.2+x86_64.linux.tar.gz
+    https://github.com/bcpierce00/unison/releases/download/v$version/unison-$version-ubuntu-x86_64-static.tar.gz
 )
 
 build()
