@@ -1,0 +1,18 @@
+# Description: fancy wayland toolbar
+# URL:         https://elkowar.github.io/eww/
+
+name=eww
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/elkowar/eww.git
+)
+
+build()
+{
+    export PATH="$HOME/.cargo/bin:$PATH"
+    cd $name
+    cargo build --release --no-default-features --features=wayland
+    install -D target/release/$name $PKG/usr/local/bin/$name
+}
