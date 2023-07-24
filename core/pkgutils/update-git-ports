@@ -13,7 +13,7 @@ if [[ -z $packages ]]; then
 fi
 
 for i in $packages; do
-    if [ /usr/pkgmk/package/${i}_*pkg.tar.gz -nt /var/package/$i-footprint ]; then
+    if [[ /usr/pkgmk/package/${i}_*pkg.tar.gz -nt /var/package/$i-footprint ]]; then
         echo "A updated package is available for ${i}."
         reinstall+=$i
         continue

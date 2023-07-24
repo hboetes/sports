@@ -1,0 +1,18 @@
+# Description: 
+# URL:         https://www.nlnetlabs.nl/projects/unbound/about/
+# Depends on:  flex libssl-dev libexpat1-dev byacc
+
+name=unbound
+version=git
+release=1
+# branch=stable
+source=(
+    https://github.com/NLnetLabs/unbound.git
+)
+
+build () {
+    cd $name
+    ./configure
+    make
+    make install DESTDIR=$PKG
+}

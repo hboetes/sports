@@ -8,6 +8,5 @@ b5b4d5612e4a142e80567d27e1ef6f69  munlink.c
 96f4f6120920533ee3fc47f2e529c5c1  remind.sh
 cd3b3b38594eed6118d05843e99e2d49  slowcat.c
 01b12240dacb2d1cb767eb8357525293  statusbar_right.c
-1a92114fad47abe5565814796c49392e  update-git-ports.sh
 1f157be534ebb60390fb7cbd77813cbf  wallpaper.sh
 471e5ecfac3e1d958c9d698a59703cb2  whitelist-generator.sh

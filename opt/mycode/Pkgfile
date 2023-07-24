@@ -16,7 +16,6 @@ source=(
     makeindexhtml.sh
     remind.sh
     statusbar_right.c
-    update-git-ports.sh
     whitelist-generator.sh
     wallpaper.sh
 )
