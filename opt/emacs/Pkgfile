@@ -3,10 +3,10 @@
 
 name=emacs
 version=29.1
-release=git
-branch=emacs-29
-source=(git://git.savannah.gnu.org/emacs.git)
-# source=(https://ftp.wayne.edu/gnu/emacs/emacs-$version.tar.xz)
+release=1
+# branch=emacs-29
+# source=(git://git.savannah.gnu.org/emacs.git)
+source=(https://ftp.wayne.edu/gnu/emacs/emacs-$version.tar.xz)
 
 build()
 {
