@@ -1,0 +1,33 @@
+# Description: shared task manager
+# URL:         https://vikunja.io/
+
+name=vikunja
+version=0.21.0
+release=1
+source=(
+    https://dl.vikunja.io/api/$version/vikunja-v$version-linux-amd64-full.zip
+    https://dl.vikunja.io/frontend/vikunja-frontend-$version.zip
+    $name.service
+)
+
+
+build()
+{
+    sha256sum -c $name-v$version-linux-amd64.sha256
+    rm $name-v$version-linux-amd64.sha256
+    mkdir -p $PKG/usr/local/sbin $PKG/var/lib/$name $PKG/var/www/$name $PKG/etc/systemd/system $PKG/etc/$name
+    mv $name-v$version-linux-amd64 $PKG/usr/local/sbin/$name
+    mv $name.service $PKG/etc/systemd/system
+    mv config.yml.sample $PKG/etc/$name/config.yml
+    mv * $PKG/var/www/$name
+}
+
+post-install()
+{
+    getent group  $name > /dev/null 2>&1 || groupadd $name
+    getent passwd $name > /dev/null 2>&1 || useradd  -g $name -s $(which nologin) -d /nonexistant $name
+    chown -R $name:$name /var/lib/$name
+    chmod 700 /var/lib/$name
+    systemctl daemon-reload
+    systemctl restart $name
+}
