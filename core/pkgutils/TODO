@@ -4,3 +4,4 @@
   * gradual cleanup options - ie only old source packages, only source packages, only packages, etc.
   * Fix that stupid tar output about removing /
   * Äfoo.go etc don't get deleted
+  * git rev-parse --short  HEAD
