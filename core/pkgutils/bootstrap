@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-required=(file sudo tar zsh patch)
+required="file sudo tar zsh patch"
 
 pkversion=$(awk -F'=' '/pkversion/ {print $2}' pkgutils.shared)
 
@@ -12,7 +12,7 @@ fi
 for i in $required; do
     if ! command -v $i > /dev/null 2>&1; then
         echo "Please install $i." >&2
-        local stop=1
+        stop=1
     fi
 done
 [ "$stop" = "1" ] && exit 1
@@ -69,10 +69,10 @@ pkgmk -f
 
 if pkginfo -i pkgutils; then
     echo 'Updating pkgutils'
-    sudo pkgadd -u /usr/pkgmk/package/pkgutils_$pkversion-1.pkg.tar.gz
+    sudo /usr/local/bin/pkgadd -u /usr/pkgmk/package/pkgutils_$pkversion-1.pkg.tar.gz
 else
     echo 'Installing pkgutils for the first time.'
-    sudo pkgadd -i /usr/pkgmk/package/pkgutils_$pkversion-1.pkg.tar.gz
+    sudo /usr/local/bin/pkgadd -i /usr/pkgmk/package/pkgutils_$pkversion-1.pkg.tar.gz
 fi
 
 echo "Setting the right permissions on the builddir."
