@@ -1,0 +1,20 @@
+# Description: 3D Wayland compositor, inspired by Compiz and based on wlroots.
+
+
+name=wayfire
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/WayfireWM/wayfire.git
+)
+
+build()
+{
+    cd $name
+    meson --prefix=/usr/local build \
+          -Duse_system_wfconfig=disabled \
+          -Duse_system_wlroots=disabled
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
