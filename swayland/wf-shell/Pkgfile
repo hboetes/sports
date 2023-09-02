@@ -1,0 +1,18 @@
+# Description: various components needed to built a fully functional DE based around wayfire.
+# URL:         https://github.com/WayfireWM/wf-shell.git
+
+name=wf-shell
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/WayfireWM/wf-shell.git
+)
+
+build()
+{
+    cd $name
+    meson --prefix=/usr/local build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
