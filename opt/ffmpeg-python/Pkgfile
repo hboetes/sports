@@ -9,5 +9,5 @@ source=(https://github.com/kkroening/ffmpeg-python.git)
 build()
 {
     cd $name
-    python3 setup.py install --root $PKG
+    python_fakeinstall
 }

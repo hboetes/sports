@@ -12,5 +12,5 @@ source=(
 build()
 {
     cd fake-useragent*
-    python3 setup.py install --root $PKG
+    python_fakeinstall
 }

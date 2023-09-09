@@ -104,3 +104,9 @@ replaceyn()
 {
     print -n "\b\b\b\b\b\b\b$1      \b\b\b\b\b"
 }
+
+python_fakeinstall()
+{
+    python -m build --wheel --no-isolation
+    python -m installer --destdir=$PKG dist/*.whl
+}

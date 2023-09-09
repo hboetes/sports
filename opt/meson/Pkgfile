@@ -10,5 +10,5 @@ source=(https://github.com/mesonbuild/meson.git)
 build()
 {
     cd $name
-    python3 setup.py install --root $PKG
+    python_fakeinstall
 }
