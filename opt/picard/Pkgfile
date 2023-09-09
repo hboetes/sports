@@ -5,10 +5,15 @@ name=picard
 version=git
 branch=master
 release=1
-source=(https://github.com/metabrainz/picard.git)
+source=(
+    https://github.com/metabrainz/picard.git
+    https://github.com/metabrainz/picard/pull/2307.diff
+)
 
 build()
 {
     cd $name
-    python3 setup.py install --root $PKG
+    patch -p1 -i $SRC/2307.diff
+    python -m build --wheel --no-isolation
+    python -m installer --destdir=$PKG dist/*.whl
 }
