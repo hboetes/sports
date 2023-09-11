@@ -7,12 +7,10 @@ branch=master
 release=1
 source=(
     https://github.com/metabrainz/picard.git
-    https://github.com/metabrainz/picard/pull/2307.diff
 )
 
 build()
 {
     cd $name
-    patch -p1 -i $SRC/2307.diff
     python_fakeinstall
 }
