@@ -2,11 +2,9 @@
 # URL:         https://vikunja.io/
 
 name=vikunja
-version=unstable # 0.21.0
+version=unstable
 release=1
 source=(
-    # https://dl.vikunja.io/api/$version/vikunja-v$version-linux-amd64-full.zip
-    # https://dl.vikunja.io/frontend/vikunja-frontend-$version.zip
     https://dl.vikunja.io/api/unstable/vikunja-unstable-linux-amd64-full.zip
     https://dl.vikunja.io/frontend/vikunja-frontend-unstable.zip
     $name.service

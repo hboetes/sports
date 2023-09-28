@@ -8,7 +8,6 @@ After=network.target
 #Requires=postgresql.service
 #Requires=redis.service
 
-
 [Service]
 RestartSec=2s
 Type=simple
