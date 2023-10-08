@@ -66,7 +66,7 @@ ipc(){
 }
 
 # Groups of hosts to be queried (edit to your liking)
-for domain in google.com hotmail.com github.com paypal.com gmx.com linkedin.com amazon.com telenet.be boetes.org axis-simulation.com easybank.at payr.co.at; do
+for domain in google.com hotmail.com github.com paypal.com gmx.com linkedin.com amazon.com telenet.be boetes.org axis-simulation.com easybank.at payr.co.at bike24.net; do
     whattodo=permit
     echo "# $domain"
     recurse $domain
