@@ -16,7 +16,7 @@ build()
             GOOS=linux GOARCH=arm64 GOARM=7 GOBIN=$PKG/usr/local/bin go install
             ;;
         x86_64)
-            GOBIN=$PKG/usr/local/bin go install
+            CGO_ENABLED=0 GOBIN=$PKG/usr/local/bin go install
             ;;
     esac
 }
