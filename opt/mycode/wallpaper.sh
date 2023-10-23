@@ -38,7 +38,7 @@ fi
 
 
 find_wp() {
-    wallpapers=($WPDIR/*.(jpg|png|webp))
+    wallpapers=($WPDIR/*.(jpg|png|webp|avif))
     if ((${#wallpapers} == 0)); then
         return 1
     fi

@@ -1,0 +1,18 @@
+# Description: wallpaper setter for sway
+# Depends: gdk-pixbuf2-devel webp-pixbuf-loader rsvg-pixbuf-loader jxl-pixbuf-loader gdk-pixbuf2-modules avif-pixbuf-loader
+
+name=swaybg
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/swaywm/swaybg.git
+)
+
+build()
+{
+    cd $name
+    meson --prefix=/usr/local -Dgdk-pixbuf=enabled build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
