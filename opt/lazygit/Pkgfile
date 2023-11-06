@@ -4,11 +4,15 @@
 name=lazygit
 version=git
 release=1
-source=(https://github.com/jesseduffield/lazygit.git)
+source=(
+    https://github.com/jesseduffield/lazygit.git
+    https://patch-diff.githubusercontent.com/raw/jesseduffield/lazygit/pull/3017.diff
+)
 
 build()
 {
     cd $name
+    patch -p1 -i $SRC/3017.diff
     unset CC
     export PATH=$PATH:/usr/local/go/bin
     case $(uname -m) in
@@ -16,7 +20,7 @@ build()
             GOOS=linux GOARCH=arm64 GOARM=7 GOBIN=$PKG/usr/local/bin go install
             ;;
         x86_64)
-            GOBIN=$PKG/usr/local/bin go install
+            CGO_ENABLED=0 GOBIN=$PKG/usr/local/bin go install
             ;;
     esac
 }

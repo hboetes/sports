@@ -13,5 +13,5 @@ source=(
 build()
 {
     cd web_cache*
-    python3 setup.py install --root $PKG
+    python_fakeinstall
 }

@@ -1,0 +1,21 @@
+[Unit]
+Description=Vikunja
+After=syslog.target
+After=network.target
+# Depending on how you configured Vikunja, you may want to uncomment these:
+#Requires=mysql.service
+#Requires=mariadb.service
+#Requires=postgresql.service
+#Requires=redis.service
+
+[Service]
+RestartSec=2s
+Type=simple
+WorkingDirectory=/var/lib/vikunja
+ExecStart=/usr/local/sbin/vikunja
+Restart=always
+User=vikunja
+Group=vikunja
+
+[Install]
+WantedBy=multi-user.target

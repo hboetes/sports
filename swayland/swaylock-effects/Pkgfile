@@ -12,9 +12,12 @@ source=(
 build()
 {
     cd $name
-    meson setup --prefix=/usr/local build
+    meson setup --prefix=/usr/local build \
+          -Dgdk-pixbuf=enabled \
+          -Dzsh-completions=true \
+          -Dbash-completions=false \
+          -Dfish-completions=false
     ninja -C build
     DESTDIR=$PKG ninja -C build install
-    # No idea what that does.
-    rm -rf $PKG/usr/local/share/fish/ $PKG/usr/share/
+    mv $PKG/usr/local/etc $PKG/etc
 }

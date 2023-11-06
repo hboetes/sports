@@ -9,5 +9,5 @@ source=(https://github.com/henrywoo/kazam.git)
 build()
 {
     cd $name
-    python3 setup.py install --root $PKG
+    python_fakeinstall
 }

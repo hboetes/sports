@@ -8,5 +8,6 @@ source=(https://github.com/virt-manager/virt-bootstrap.git)
 build()
 {
     cd $name
-    python setup.py install --prefix $PKG/usr
+    python_fakeinstall
+    # python setup.py install --prefix $PKG/usr
 }

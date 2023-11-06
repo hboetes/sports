@@ -12,5 +12,5 @@ build()
     cd $name
     sed -i 's|freedb.freedb|gnudb.gnudb|' puddlestuff/tagsources/CDDB.py
     sed -i 's|share/man/man1/|man/man1/|' setup.py
-    python3 setup.py install --root=$PKG
+    python_fakeinstall
 }

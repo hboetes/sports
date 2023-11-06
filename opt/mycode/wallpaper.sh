@@ -38,7 +38,7 @@ fi
 
 
 find_wp() {
-    wallpapers=($WPDIR/*.(jpg|png|webp))
+    wallpapers=($WPDIR/*.(jpg|png|webp|avif))
     if ((${#wallpapers} == 0)); then
         return 1
     fi
@@ -59,7 +59,17 @@ set_wp_wl() {
     swaybg -c '#000000' -i "$WPSDIR/${wallpapers[$wallpaperid]##*/}" &
 }
 
+set_wp_gnome() {
+    mv_wp
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://$WPSDIR/${wallpapers[$wallpaperid]##*/}"
+    exit 0
+}
+
 set_wp() {
+    # Are we running gnome?
+    if pgrep -f /usr/bin/gnome-shell >& /dev/null; then
+        set_wp_gnome
+    fi
     # Are we running i3 on X or sway on wayland
     if [[ -n $SWAYSOCK ]]; then
         set_wp_wl

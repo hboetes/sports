@@ -1,0 +1,16 @@
+# Description: wallpaper setter
+# URL:
+
+name=picard
+version=git
+branch=2.10.x
+release=1
+source=(
+    https://github.com/metabrainz/picard.git
+)
+
+build()
+{
+    cd $name
+    python_fakeinstall
+}

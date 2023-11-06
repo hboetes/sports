@@ -12,5 +12,5 @@ build()
 {
     cd $name
     sed -i 's|virutal|virtual|' dr14tmeter/{query,table}.py
-    python3 setup.py install --root $PKG
+    python_fakeinstall
 }
