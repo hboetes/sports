@@ -11,18 +11,16 @@ recurse()
     t=${(Q)t}
     for i in ${=t}; do
         case $i in
-            ip4:*)
-                # if it's a /32
+            ip4:*) # if it's a /32
                 if [[ $i == */32 ]]; then
                     ip4=${i%/32}
                     echo "${ip4#ip4:} $whattodo"
-                # If it's an ip range.
-                elif [[ ${i#ip4} == */* ]]; then
+                elif [[ ${i#ip4} == */* ]]; then # If it's an ip range.
                     # Even professional sysadmins make mistakes. And
                     # postfix will complain about that.
                     ip4="$(ipc ${i#ip4:})"
                     echo "${ip4} $whattodo"
-               else
+                else
                     echo "${i#ip4:} $whattodo"
                 fi
                 ;;
@@ -65,14 +63,24 @@ ipc(){
     ipcalc $1| awk '/^Network:/ {print $2}'
 }
 
-# Groups of hosts to be queried (edit to your liking)
-for domain in google.com hotmail.com github.com paypal.com gmx.com linkedin.com amazon.com telenet.be boetes.org axis-simulation.com easybank.at payr.co.at bike24.net; do
-    whattodo=permit
-    echo "# $domain"
-    recurse $domain
-done
+if [[ -n $1 ]]; then
+    whatdodo=permit
+    recurse $1
+else
 
-# Blacklisting is also possible: format
-# 172.93.224.0/24 reject optional message.
-echo '# The rejects from /etc/postfix/blacklist'
-cat /etc/postfix/blacklist
+    # Groups of hosts to be queried (edit to your liking)
+    for domain in \
+        google.com hotmail.com github.com paypal.com gmx.com \
+                   linkedin.com amazon.com telenet.be boetes.org \
+                   axis-simulation.com easybank.at payr.co.at bike24.net
+    do
+        whattodo=permit
+        echo "# $domain"
+        recurse $domain
+    done
+
+    # Blacklisting is also possible: format
+    # 172.93.224.0/24 reject optional message.
+    echo '# The rejects from /etc/postfix/blacklist'
+    cat /etc/postfix/blacklist
+fi
