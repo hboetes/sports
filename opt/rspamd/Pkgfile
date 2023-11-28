@@ -7,12 +7,17 @@ release=1
 source=(
     https://github.com/rspamd/rspamd.git
     $name.service
+    $name.logrotate
 )
 
 build()
 {
-    install -m 644 -D $SRC/$name.service $PKG/usr/lib/systemd/system/$name.service
+    install -m 644 -D $SRC/$name.service   $PKG/usr/lib/systemd/system/$name.service
+    install -m 644 -D $SRC/$name.logrotate $PKG/etc/logrotate.d/$name
+    install -m 775 -d $PKG/var/$name
+
     cd $name
+    git checkout 3.7.3
     git submodule update --recursive --remote
     # cmake requires a special treatment.
     unset CXX CC
@@ -26,12 +31,12 @@ EOF
     cd build
     cmake .. \
           -DCMAKE_C_OPT_FLAGS="${CFLAGS}" \
-          -DCONFDIR="/etc/rspamd" \
-          -DDBDIR="/var/rspamd" \
-          -DLOGDIR="/var/log/rspamd" \
+          -DCONFDIR="/etc/$name" \
+          -DDBDIR="/var/$name" \
+          -DLOGDIR="/var/log/$name" \
           -DMANDIR="/usr/local/man" \
-          -DRUNDIR="/var/run/rspamd" \
-          -DRSPAMD_USER="rspamd" \
+          -DRUNDIR="/var/run/$name" \
+          -DRSPAMD_USER="$name" \
           -DENABLE_LTO=OFF \
           -DENABLE_LUAJIT=OFF
     make
@@ -40,6 +45,7 @@ EOF
 
 post-install()
 {
+    chown -R root:$name /var/$name
     systemctl daemon-reload
-    systemctl restart rspamd.service
+    systemctl restart $name.service
 }

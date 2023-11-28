@@ -3,7 +3,7 @@
 
 name=nicotine
 version=git
-release=2.3.2
+release=3.3.0
 branch=master
 source=(
     https://github.com/Nicotine-Plus/nicotine-plus.git
