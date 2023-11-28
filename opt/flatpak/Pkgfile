@@ -3,7 +3,7 @@
 # Dependencies: libcap-dev libarchive-dev libgpgme-dev libpolkit-agent-1-dev libfuse3-dev libostree-dev libappstream-dev libseccomp-dev gobject-introspection
 
 name=flatpak
-version=1.14.4
+version=1.15.6
 release=1
 source=(https://github.com/flatpak/flatpak/releases/download/$version/flatpak-$version.tar.xz)
 
