@@ -1,5 +1,4 @@
 # Description: workaround for c&p problem
-# See also: https://bugzilla.mozilla.org/show_bug.cgi?id=1791417
 
 name=gtkclipblock
 version=git
@@ -13,5 +12,5 @@ build()
 {
     cd $name
     meson setup build
-    DESTDIR=$PKG meson -C build install
+    DESTDIR=$PKG meson install -C build
 }
