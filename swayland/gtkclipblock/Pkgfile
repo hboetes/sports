@@ -1,0 +1,17 @@
+# Description: workaround for c&p problem
+# See also: https://bugzilla.mozilla.org/show_bug.cgi?id=1791417
+
+name=gtkclipblock
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/notpeelz/gtkclipblock.git
+)
+
+build()
+{
+    cd $name
+    meson setup build
+    DESTDIR=$PKG meson -C build install
+}
