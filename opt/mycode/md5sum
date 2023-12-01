@@ -8,5 +8,5 @@ b5b4d5612e4a142e80567d27e1ef6f69  munlink.c
 96f4f6120920533ee3fc47f2e529c5c1  remind.sh
 cd3b3b38594eed6118d05843e99e2d49  slowcat.c
 01b12240dacb2d1cb767eb8357525293  statusbar_right.c
-ba6df71e3bbb2be0bf5b7ce3c053aa9d  wallpaper.sh
-ad457f31a07926eed395272e0d741cfc  whitelist-generator.sh
+92627c2d716e8e54c0ebf1a7ec52fefd  wallpaper.sh
+6b2bdfe342eda0ede19df44b4b0f382a  whitelist-generator.sh
