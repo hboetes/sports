@@ -25,6 +25,10 @@ WPSDIR=~/Wallpapers/seen
 local USER=$(whoami)
 local ID=$(id -u)
 
+# Chances are this variable is not set in a cronjob.
+XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:=/run/user/$ID}
+export XDG_RUNTIME_DIR
+
 # Test if sway is running and set the SWAYSOCK env var.
 if pgrep -u $USER -x sway > /dev/null 2>&1; then
     export SWAYSOCK=/run/user/$ID/sway-ipc.$ID.$(pgrep -u $USER -x sway).sock
