@@ -1,11 +1,14 @@
 # Description:  acme client
-# URL:          https://git.sr.ht/~graywolf/acme-client-portable
+# URL:          https://git.wolfsden.cz/acme-client-portable
 # Dependencies: automake autoconf gcc openssl-devel byacc
 
 name=acme-client
 version=git
 release=1.3
-source=(https://git.sr.ht/~graywolf/acme-client-portable.git)
+source=(
+    https://git.wolfsden.cz/.git/acme-client-portable.git
+)
+
 
 build()
 {

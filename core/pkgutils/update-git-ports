@@ -46,7 +46,10 @@ for i in $packages; do
 done
 
 if [[ -n $reinstall ]]; then
-    echo 'you there? [Y/n]'
-    read -sk1 niets
+    # Check if sudo permissions are already valid.
+    if ! sudo -n true >& /dev/null; then
+        echo 'you there? [Y/n]'
+        read -sk1 niets
+    fi
     prt-get update $reinstall
 fi

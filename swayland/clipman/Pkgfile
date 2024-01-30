@@ -1,0 +1,18 @@
+# Description: clipboard manager for wayland
+
+name=clipman
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/chmouel/clipman.git
+    https://patch-diff.githubusercontent.com/raw/chmouel/clipman/pull/1.diff
+)
+
+build()
+{
+    cd $name
+    patch -p1 -i $SRC/1.diff
+    GOBIN=$PKG/usr/local/bin go install
+    install -m 444 -D docs/$name.1 $PKG/usr/local/man/man1/$name.1
+}

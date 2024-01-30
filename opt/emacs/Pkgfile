@@ -2,11 +2,11 @@
 # URL:         https://www.gnu.org/software/emacs/
 
 name=emacs
-version=29.1
+version=29.2
 release=1
-# branch=emacs-29
-# source=(git://git.savannah.gnu.org/emacs.git)
-source=(https://ftp.wayne.edu/gnu/emacs/emacs-$version.tar.xz)
+branch=emacs-29
+source=(git://git.savannah.gnu.org/emacs.git)
+# source=(https://ftp.wayne.edu/gnu/emacs/emacs-$version.tar.xz)
 
 build()
 {
@@ -14,14 +14,8 @@ build()
     ./autogen.sh
     ./configure \
         --with-pgtk \
-        --with-json \
-        --with-gnutls  \
-        --with-rsvg  \
-        --without-xwidgets \
-        --without-xaw3d \
-        --without-mailutils \
+        --without-makeinfo \
         --with-native-compilation=aot
-
     # ./configure --without-all --without-makeinfo --without-x --with-gnutls=yes # --with-native-compilation
     make
     make install DESTDIR=$PKG

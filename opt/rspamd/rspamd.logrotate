@@ -1,0 +1,8 @@
+/var/log/rspamd/log {
+    weekly
+    rotate 3
+    copytruncate
+    compress
+    notifempty
+    missingok
+}

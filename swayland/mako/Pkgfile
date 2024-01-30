@@ -1,0 +1,14 @@
+# Description: lightweight notification daemon for Wayland.
+
+name=mako
+version=git
+release=1
+source=(https://github.com/emersion/mako.git)
+
+build()
+{
+    cd $name
+    meson setup build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}

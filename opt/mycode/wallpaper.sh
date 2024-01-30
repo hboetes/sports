@@ -5,13 +5,16 @@
 # directory. Only after all wallpapers have been seen, move them back
 # in the main directory.
 
+imgFiles='*.(jpg|png|webp|avif)'
+
 # For debugging
 setopt local_options xtrace
 exec > $HOME/.local/wallpaper.log 2>&1
 
 # To avoid getting an error in an empty directory
 setopt null_glob
-
+# Make extension searching case insensitive.
+setopt nocaseglob
 #todo, require feh
 
 PATH=/usr/local/bin:/usr/bin:/bin
@@ -21,6 +24,10 @@ WPSDIR=~/Wallpapers/seen
 # Deprecated? That's news to me.
 local USER=$(whoami)
 local ID=$(id -u)
+
+# Chances are this variable is not set in a cronjob.
+XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:=/run/user/$ID}
+export XDG_RUNTIME_DIR
 
 # Test if sway is running and set the SWAYSOCK env var.
 if pgrep -u $USER -x sway > /dev/null 2>&1; then
@@ -38,7 +45,7 @@ fi
 
 
 find_wp() {
-    wallpapers=($WPDIR/*.(jpg|png|webp|avif))
+    wallpapers=($WPDIR/$~imgFiles)
     if ((${#wallpapers} == 0)); then
         return 1
     fi
@@ -86,10 +93,10 @@ mv_wp() {
 }
 
 mv_wp_back() {
-    if [[ $WPSDIR/*.(jpg|png|webp) == $WPSDIR/'*.(jpg|png|webp)' ]]; then
-        mv $WPSDIR/*.(jpg|png|webp) $WPDIR
+    if empty=($WPSDIR/$~imgFiles) >& /dev/null; then
+        mv $WPSDIR/$~imgFiles $WPDIR
     else
-        echo "No wallpaper found in $WPSDIR." >&2
+        echo "No wallpapers found in $WPSDIR." >&2
         exit 1
     fi
 }
