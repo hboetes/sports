@@ -3,7 +3,7 @@
 
 name=rspamd
 version=git
-release=1
+release=3.8.1
 source=(
     https://github.com/rspamd/rspamd.git
     $name.service
@@ -17,7 +17,7 @@ build()
     install -m 775 -d $PKG/var/$name
 
     cd $name
-    git checkout 3.7.3
+    git checkout $release
     git submodule update --recursive --remote
     # cmake requires a special treatment.
     unset CXX CC
