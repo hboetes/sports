@@ -1,0 +1,21 @@
+# Description:  magical history
+# Dependencies: rust
+
+name=atuin
+version=git
+release=1
+branch=main
+source=(https://github.com/atuinsh/atuin.git)
+
+build()
+{
+    # export PATH=$PATH:/home/han/.cargo/bin
+    cd $name
+    cargo build --release
+    for i in atuin; do
+        install -D target/release/$i   $PKG/usr/local/bin/$i
+    done
+    # install -D assets/open-wezterm-here $PKG/usr/local/bin/open-wezterm-here
+    # install -D assets//shell-integration/wezterm.sh $PKG/etc/profile.d/wezterm.sh
+    # install -D assets/shell-completion/zsh $PKG/usr/share/zsh/site-functions/_wezterm
+}
