@@ -1,0 +1,25 @@
+#!/bin/sh
+export PATH="$HOME/.bin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin"
+export TMP="$HOME/.local/tmp"
+export TMPDIR="$TMP"
+
+# Session
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+export XDG_SESSION_DESKTOP=sway
+export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_TYPE=wayland
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
+
+# Wayland stuff
+export QT_QPA_PLATFORM=wayland
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export SDL_VIDEODRIVER=wayland
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+export MOZ_ENABLE_WAYLAND=1
+export MOZ_USE_XINPUT2=1
+
+mkdir -m 700 -p $HOME/.local/{log,tmp}/
+mkdir -m 700 -p $HOME/.local/
+
+sway -d > $HOME/.local/log/sway.log
