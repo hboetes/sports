@@ -26,11 +26,15 @@ build()
 
     export PATH=$PATH:/home/h.boetes/.cargo/bin
     cargo build --release
-    install -m 555 -D target/release/$name   $PKG/usr/local/sbin/$name
-    install -m 555 -D target/release/agreety $PKG/usr/local/sbin/agreety
+    install -m 555 -D target/release/$name     $PKG/usr/local/sbin/$name
+    install -m 555 -D target/release/agreety   $PKG/usr/local/sbin/agreety
+    # wtf is this?
+    # install -m 555 -D target/release/fakegreet $PKG/usr/local/sbin/fakegreet
 }
 
 post-install()
 {
-    useradd -M -G video greeter
+    user=greeter
+    getent passwd $user > /dev/null 2>&1 || useradd -g $user -s $(which nologin) -d /nonexistant $user -G video -M
+    systemctl daemon-reload
 }
