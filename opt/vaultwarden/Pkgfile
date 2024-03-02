@@ -1,0 +1,56 @@
+# Description: unofficial lightweight implementation of the bitwarden-server using rust and sqlite
+# URL:         https://github.com/dani-garcia/vaultwarden
+
+name=vaultwarden
+version=1.30.4
+release=1
+bw_web=v2024.1.2
+
+# For the vault binary check this URL:
+# https://github.com/dani-garcia/bw_web_builds/releases
+
+# For the git version:
+# https://github.com/dani-garcia/vaultwarden.git
+
+source=(
+    https://github.com/dani-garcia/$name/archive/$version.tar.gz
+    $name.service
+    $name.env
+    thorin
+    https://github.com/dani-garcia/bw_web_builds/releases/download/$bw_web/bw_web_${bw_web}.tar.gz
+)
+
+build() {
+        export PATH=/home/h.boetes/.cargo/bin:$PATH
+	# https://github.com/dani-garcia/vaultwarden/discussions/2056#discussioncomment-1513405
+	cargo-cache -r all
+	fqdn=$(hostname -f)
+        hostname=$(hostname)
+        install -D -m 0644 $SRC/$hostname $PKG/etc/nginx/sites-enabled/$hostname
+	install -d -m 0770 $PKG/var/lib/$name
+	install -d -m 0755 $PKG/usr/share/$name
+        tar -xzf $PKGMK_SOURCE_DIR/bw_web_${bw_web}.tar.gz -C $PKG/usr/share/$name
+        # Why add that dash?!
+        mv $PKG/usr/share/$name/web{-,}vault
+	cd $name-$version
+	cargo build --release --features sqlite
+	install -D -m 0644 $SRC/$name.service   $PKG/usr/lib/systemd/system/$name.service
+	install -D -m 0600 $SRC/$name.env       $PKG/etc/$name.env
+	install -D -m 0755 target/release/$name $PKG/usr/bin/$name
+}
+
+post-install()
+{
+    if ! getent passwd $name; then
+        echo Adding $name account
+        useradd -s /usr/sbin/nologin $name
+    fi
+    # Now managed by ipa-getcert.
+    # chgrp $name /etc/nginx/ssl/$(hostname -f).{crt,key} /var/lib/$name
+    # chmod 440 /etc/nginx/ssl/$(hostname -f).{crt,key}
+    chgrp -R $name /var/lib/$name
+    chmod 440             /etc/$name.env
+    sudo chown root:$name /etc/$name.env
+    systemctl daemon-reload 
+    systemctl restart $name
+}
