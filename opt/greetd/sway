@@ -20,6 +20,5 @@ export MOZ_ENABLE_WAYLAND=1
 export MOZ_USE_XINPUT2=1
 
 mkdir -m 700 -p $HOME/.local/{log,tmp}/
-mkdir -m 700 -p $HOME/.local/
 
 sway -d > $HOME/.local/log/sway.log
