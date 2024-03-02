@@ -1,0 +1,15 @@
+# Description: great clock does not properly describe it
+
+name=mongoclock
+version=git
+release=1
+source=(
+    https://codeberg.org/maandree/mongoclock.git
+)
+
+build()
+{
+    cd $name
+    make
+    make install PREFIX=/usr/local DESTDIR=$PKG
+}

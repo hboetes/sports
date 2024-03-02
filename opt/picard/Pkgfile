@@ -3,8 +3,7 @@
 
 name=picard
 version=git
-branch=2.10.x
-release=1
+release=2.11
 source=(
     https://github.com/metabrainz/picard.git
 )
@@ -12,5 +11,6 @@ source=(
 build()
 {
     cd $name
+    git checkout release-$release
     python_fakeinstall
 }

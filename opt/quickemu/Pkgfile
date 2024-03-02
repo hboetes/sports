@@ -1,0 +1,17 @@
+# Description: kvm frontend
+# Dependencies: sudo dnf install qemu bash coreutils edk2-tools grep jq lsb procps python3 genisoimage usbutils util-linux sed spice-gtk-tools swtpm wget xdg-user-dirs xrandr unzip
+
+
+name=quickemu
+version=git
+release=1
+source=(
+    https://github.com/quickemu-project/quickemu.git
+)
+
+build()
+{
+    cd $name
+    install -d $PKG/usr/local/bin
+    install macrecovery quickemu quickget windowskey $PKG/usr/local/bin/
+}

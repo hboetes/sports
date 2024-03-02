@@ -1,0 +1,40 @@
+# Description:  minimal greeter
+# URL:          https://git.sr.ht/~kennylevinsen/greetd
+# Dependencies: scdoc cargo
+
+name=greetd
+version=git
+release=1
+source=(
+    sway
+    https://git.sr.ht/~kennylevinsen/greetd.git
+)
+
+build()
+{
+    cd $name
+
+    install -d $PKG/usr/local/share/man{1,5,7}
+    scdoc < man/agreety-1.scd     | gzip > $PKG/usr/local/share/man1/agreety.1.gz
+    scdoc < man/greetd-1.scd      | gzip > $PKG/usr/local/share/man1/greetd.1.gz
+    scdoc < man/greetd-5.scd      | gzip > $PKG/usr/local/share/man5/greetd.5.gz
+    scdoc < man/greetd-ipc-7.scd  | gzip > $PKG/usr/local/share/man7/greetd-ipc.7.gz
+
+    install -m 644 -D config.toml            $PKG/etc/$name/config.toml
+    install -m 644 -D $name.service          $PKG/etc/systemd/system/greetd.service
+    install -m 555 -D $SRC/sway              $PKG/etc/$name/starters/sway
+
+    export PATH=$PATH:/home/h.boetes/.cargo/bin
+    cargo build --release
+    install -m 555 -D target/release/$name     $PKG/usr/local/sbin/$name
+    install -m 555 -D target/release/agreety   $PKG/usr/local/sbin/agreety
+    # wtf is this?
+    # install -m 555 -D target/release/fakegreet $PKG/usr/local/sbin/fakegreet
+}
+
+post-install()
+{
+    user=greeter
+    getent passwd $user > /dev/null 2>&1 || useradd -g $user -s $(which nologin) -d /nonexistant $user -G video -M
+    systemctl daemon-reload
+}
