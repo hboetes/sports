@@ -1,0 +1,22 @@
+# Description:  minimal greeter
+# URL:          https://git.sr.ht/~kennylevinsen/greetd
+# Dependencies: scdoc cargo
+
+name=regreet
+version=git
+release=1
+branch=main
+source=(
+    https://github.com/rharish101/ReGreet.git
+)
+
+build()
+{
+    cd $name
+    install -m 444 -D systemd-tmpfiles.conf    $PKG/etc/tmpfiles.d/$name.conf
+    install -m 644 -D regreet.sample.toml      $PKG/etc/greetd/regreet.toml
+
+    export PATH=$PATH:/home/h.boetes/.cargo/bin
+    cargo build --release
+    install -m 555 -D target/release/$name     $PKG/usr/local/sbin/$name
+}
