@@ -24,12 +24,10 @@ build()
     install -m 644 -D $name.service          $PKG/etc/systemd/system/greetd.service
     install -m 555 -D $SRC/sway              $PKG/etc/$name/starters/sway
 
-    export PATH=$PATH:/home/h.boetes/.cargo/bin
+    command -v cargo >& /dev/null || export PATH=$PATH:$HOME/.cargo/bin
     cargo build --release
     install -m 555 -D target/release/$name     $PKG/usr/local/sbin/$name
     install -m 555 -D target/release/agreety   $PKG/usr/local/sbin/agreety
-    # wtf is this?
-    # install -m 555 -D target/release/fakegreet $PKG/usr/local/sbin/fakegreet
 }
 
 post-install()
