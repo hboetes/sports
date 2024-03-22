@@ -5,7 +5,7 @@ local all=false
 local reinstall=()
 # Don't build these packages automatically, they _always_ have changes
 # and are massive hogs to build.
-local weekly=(emacs sccache rspamd)
+local weekly=(emacs sccache rspamd atuin)
 unset depends
 if [[ -z $packages ]]; then
     packages=($(prt-get listinst))
