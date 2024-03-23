@@ -13,8 +13,9 @@ source=(
 build()
 {
     cd $name
-    install -m 444 -D systemd-tmpfiles.conf    $PKG/etc/tmpfiles.d/$name.conf
     install -m 644 -D regreet.sample.toml      $PKG/etc/greetd/regreet.toml
+    sed -i 's|greeter|greetd|g' systemd-tmpfiles.conf
+    install -m 644 -D systemd-tmpfiles.conf    $PKG/usr/lib/tmpfiles.d/regreet.conf
 
     export PATH=$PATH:/home/h.boetes/.cargo/bin
     cargo build --release
