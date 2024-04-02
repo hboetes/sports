@@ -1,0 +1,14 @@
+# Description: wayland kiosk
+
+name=cage
+version=git
+release=1
+source=(https://github.com/cage-kiosk/cage.git)
+
+build()
+{
+    cd $name
+    meson setup build --buildtype=release
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
