@@ -1,5 +1,7 @@
 # Description: p2p for music
 # URL:         https://github.com/Nicotine-Plus/nicotine-plus
+# Dependencies:   python3-build python3-installer XXX
+
 
 name=nicotine
 version=git
