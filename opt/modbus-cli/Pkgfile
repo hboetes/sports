@@ -1,0 +1,18 @@
+# Description: Read and write registers of Modbus devices.
+# URL:         https://github.com/favalex/modbus-cli
+# Dependencies:   python3-build python3-installer libmodbus libmodbus-devel python3-build
+
+name=modbus-cli
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/favalex/modbus-cli.git
+)
+
+build()
+{
+    cd $name
+    python -m build --wheel --no-isolation
+    python -m installer --destdir=$PKG dist/*.whl
+}
