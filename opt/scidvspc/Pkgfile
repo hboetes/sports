@@ -2,7 +2,7 @@
 # URL:         http://scidvspc.sourceforge.net/
 
 name=scidvspc
-version=4.23
+version=4.24
 release=1
 source=(
     http://sourceforge.net/projects/scidvspc/files/source/scid_vs_pc-$version.tgz
