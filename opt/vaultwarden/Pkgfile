@@ -4,7 +4,7 @@
 name=vaultwarden
 version=1.30.5
 release=1
-bw_web=v2024.1.2
+bw_web=v2024.3.0
 
 # For the vault binary check this URL:
 # https://github.com/dani-garcia/bw_web_builds/releases

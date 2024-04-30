@@ -1,0 +1,18 @@
+# Description: uModbus or (μModbus) is a pure Python implementation of the Modbus protocol
+# URL:         https://github.com/AdvancedClimateSystems/uModbus.git
+# Dependencies:   python3-build python3-installer libmodbus libmodbus-devel
+
+name=umodbus
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/AdvancedClimateSystems/uModbus.git
+)
+
+build()
+{
+    cd $name
+    python -m build --wheel --no-isolation
+    python -m installer --destdir=$PKG dist/*.whl
+}

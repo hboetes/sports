@@ -12,7 +12,6 @@ source=(
 
 build()
 {
-    export PATH="$PATH:$HOME/.cargo/bin"
     install -m 644 -D $SRC/hbbs.service      $PKG/usr/lib/systemd/system/hbbs.service
     install -m 644 -D $SRC/hbbr.service      $PKG/usr/lib/systemd/system/hbbr.service
     install -d                               $PKG/var/log/rustdesk
