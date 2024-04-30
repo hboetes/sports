@@ -12,7 +12,7 @@ build()
     cd $name
     mkdir -p build && cd build
     sed -i 's|G_APPLICATION_FLAGS_NONE|G_APPLICATION_DEFAULT_FLAGS|' ../gtkgreet/gtkgreet.c
-    meson --prefix=/usr/local ../
+    meson setup --prefix=/usr/local ../
     ninja
     DESTDIR=$PKG ninja install
     rm -rf $PKG/usr/local/share
