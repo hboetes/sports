@@ -1,0 +1,19 @@
+# Description: Single-player tile-matching game, commonly known as Mahjong solitaire.
+
+name=gnome-mahjongg
+version=git
+release=1
+source=(https://gitlab.gnome.org/GNOME/gnome-mahjongg.git)
+
+build()
+{
+    cd $name
+    meson setup build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
+
+post-install()
+{
+    glib-compile-schemas /usr/local/share/glib-2.0/schemas/
+}
