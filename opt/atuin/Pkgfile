@@ -1,5 +1,5 @@
 # Description:  magical history
-# Dependencies: rust
+# Dependencies: rust rust-protobuf-codegen-pure-devel protobuf-devel
 
 name=atuin
 version=git
