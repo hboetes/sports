@@ -70,9 +70,10 @@ else
 
     # Groups of hosts to be queried (edit to your liking)
     for domain in \
-        google.com hotmail.com github.com paypal.com \
+        google.com hotmail.com     github.com         paypal.com \
                    linkedin.com amazon.com telenet.be boetes.org \
-                   axis-simulation.com easybank.at payr.co.at bike24.net
+                   axis-simulation.com   easybank.at  payr.co.at \
+                   bike24.net digid.nl
     do
         whattodo=permit
         echo "# $domain"
