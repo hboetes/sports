@@ -23,7 +23,7 @@
 # This file contains all settings and options common to all pkgutils scripts.
 
 # Make sure we're not tricked into using the wrong binaries.
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
+export PATH=/usr/local/bin:/bin:/sbin:/usr/bin:/usr/sbin
 
 setopt shwordsplit
 

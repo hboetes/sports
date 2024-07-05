@@ -225,7 +225,7 @@ EOF
 
 make_footprint()
 {
-    pkginfo -f $TARGET | sort -k 3
+    /usr/local/bin/pkginfo -f $TARGET | sort -k 3
 }
 
 make_md5sum()
