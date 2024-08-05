@@ -2,7 +2,7 @@
 # URL:         https://anydesk.com/
 
 name=anydesk
-version=6.2.0
+version=6.3.2
 release=1
 source=(https://download.anydesk.com/linux/anydesk-$version-amd64.tar.gz)
 
