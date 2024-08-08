@@ -3,7 +3,7 @@
 
 name=rspamd
 version=git
-release=3.8.1
+release=3.9.1
 source=(
     https://github.com/rspamd/rspamd.git
     $name.service
@@ -39,7 +39,7 @@ EOF
           -DRSPAMD_USER="$name" \
           -DENABLE_LTO=OFF \
           -DENABLE_LUAJIT=OFF
-    make
+    make -j1
     make install DESTDIR=$PKG
 }
 

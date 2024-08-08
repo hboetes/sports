@@ -1,5 +1,5 @@
 # Description: really simple gain
-# dnf install cmake libebur128-devel taglib-devel libavformat-free-devel libavcodec-free-devel libswresample-free-devel libavutil-free-devel fmt-devel inih-devel
+# dnf install cmake fmt-devel inih-devel taglib-devel libebur128-devel fmt-devel
 
 name=rsgain
 version=git
