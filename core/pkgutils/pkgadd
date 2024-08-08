@@ -95,7 +95,7 @@ find_conflicts()
     if [ -s $TMP1 ]; then
         cat $TMP1 | while read line; do
             if [ -z "$FORCE" ]; then
-                pkginfo -o $line || error 'aborting.'
+                /usr/local/bin/pkginfo -o $line || error 'aborting.'
             else
                 # Remove the conflicting line from the database.
                 footprint=$(grep -l "${tab}$line$" $dbase/*-footprint)
@@ -358,7 +358,7 @@ else
 fi
 
 # Add footprint to the database.
-pkginfo -f "$path_package"  > $dbase/$name-footprint || error 'aborting.'
+/usr/local/bin/pkginfo -f "$path_package"  > $dbase/$name-footprint || error 'aborting.'
 
 # Run ldconfig if the package contains libraries.
 grep -Fq '\.so' $dbase/$name-footprint && ldconfig -R
