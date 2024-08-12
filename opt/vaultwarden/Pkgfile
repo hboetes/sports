@@ -21,7 +21,7 @@ source=(
 )
 
 build() {
-        export PATH=/home/h.boetes/.cargo/bin:$PATH
+        export PATH=$HOME/.cargo/bin:$PATH
         # https://github.com/dani-garcia/vaultwarden/discussions/2056#discussioncomment-1513405
         # cargo-cache -r all
         fqdn=$(hostname -f)
