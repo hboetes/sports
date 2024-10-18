@@ -13,6 +13,5 @@ source=(
 build()
 {
     cd $name
-    python -m build --wheel --no-isolation
-    python -m installer --destdir=$PKG dist/*.whl
+    python_fakeinstall
 }
