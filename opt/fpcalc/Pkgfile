@@ -1,0 +1,16 @@
+# Dependencies: cmake ffmpeg-devel (from rpmfusion)
+
+name=fpcalc
+version=git
+release=1
+source=(
+    https://github.com/acoustid/chromaprint.git
+)
+
+build()
+{
+    cd $name
+    cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TOOLS=ON .
+    make -j4
+    install -D ./src/cmd/$name $PKG/usr/local/bin/$name
+}
