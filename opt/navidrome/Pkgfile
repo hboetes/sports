@@ -16,7 +16,7 @@ source=(
 build()
 {
     install -m 644 -D nginx_$name.conf $PKG/usr/local/share/doc/navidrome/nginx_$name.conf
-    install -m 644 -D $name.service    $PKG/etc/systemd/system/navidrome.service
+    install -m 644 -D $name.service    $PKG/usr/lib/systemd/system/navidrome.service
     install -m 750 -d                  $PKG/var/lib/navidrome
     install -m 640 -D $name.toml       $PKG/var/lib/navidrome/navidrome.toml
     cd navidrome*/

@@ -2,9 +2,9 @@
 # URL:         https://github.com/dani-garcia/vaultwarden
 
 name=vaultwarden
-version=1.32.0
+version=1.32.7
 release=1
-bw_web=v2024.6.2b
+bw_web=v2024.6.2c
 
 # For the vault binary check this URL:
 # https://github.com/dani-garcia/bw_web_builds/releases
