@@ -8,7 +8,7 @@ release=git
 source=(
     https://github.com/navidrome/navidrome.git
     # https://github.com/navidrome/navidrome/releases/download/v$version/navidrome_${version}_Linux_arm64.tar.gz
-    navidrome.service
+    navidrome.service.diff
     navidrome.toml
     nginx_navidrome.conf
 )
@@ -16,10 +16,12 @@ source=(
 build()
 {
     install -m 644 -D nginx_$name.conf $PKG/usr/local/share/doc/navidrome/nginx_$name.conf
-    install -m 644 -D $name.service    $PKG/usr/lib/systemd/system/navidrome.service
     install -m 750 -d                  $PKG/var/lib/navidrome
     install -m 640 -D $name.toml       $PKG/var/lib/navidrome/navidrome.toml
     cd navidrome*/
+    patch -d contrib -i $SRC/navidrome.service.diff
+    install -m 644 -D contrib/$name.service    $PKG/usr/lib/systemd/system/navidrome.service
+
     export PATH=$PATH:/usr/local/go/bin
     export GOPROXY=https://goproxy.io,direct
     # Nice, but it doesn't work.
