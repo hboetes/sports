@@ -1,4 +1,5 @@
 # Description: grep, but faster
+# Dependencies: pcre-devel
 name=the_silver_searcher
 version=git
 release=1
