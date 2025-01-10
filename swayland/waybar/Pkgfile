@@ -1,0 +1,16 @@
+# Description: nice bar for wayland
+# URL:         https://github.com/Alexays/Waybar.git
+
+name=waybar
+version=git
+release=1
+branch=master
+source=(https://github.com/Alexays/Waybar.git)
+
+build()
+{
+    cd waybar
+    meson setup build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
