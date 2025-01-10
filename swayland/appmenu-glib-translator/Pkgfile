@@ -1,0 +1,14 @@
+# Description:
+# Dependencies: meson vala valadoc gtk3-devel gtk-layer-shell-devel gobject-introspection-devel
+
+name=appmenu-glib-translator
+version=git
+release=1
+source=(https://github.com/rilian-la-te/vala-panel-appmenu.git)
+
+build()
+{
+    cd appmenu-glib-translator/subprojects/appmenu-glib-translator
+    meson setup --prefix /usr build
+    DESTDIR=$PKG meson install -C build
+}

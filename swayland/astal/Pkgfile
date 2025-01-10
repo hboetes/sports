@@ -10,14 +10,43 @@ build()
 {
     # XXX fix this mess, the first part is a dependency of the second part.
     cd $SRC/$name/lib/astal/io
-    meson setup --prefix /usr/local build
+    meson setup --prefix /usr build
+    DESTDIR=$PKG meson install -C build
+
+    cd $SRC/$name/lib/battery
+    meson setup --prefix /usr build
     DESTDIR=$PKG meson install -C build
 
     cd $SRC/$name/lib/astal/gtk3
-    meson setup --prefix /usr/local build
+    meson setup --prefix /usr build
     DESTDIR=$PKG meson install -C build
 
     cd $SRC/$name/lang/gjs
-    meson setup --prefix /usr/local build
+    meson setup --prefix /usr build
     DESTDIR=$PKG meson install -C build
+
+    cd $SRC/$name/lib/bluetooth
+    meson setup --prefix /usr build
+    DESTDIR=$PKG meson install -C build
+
+    cd $SRC/$name/lib/network
+    meson setup --prefix /usr build
+    DESTDIR=$PKG meson install -C build
+
+    cd $SRC/$name/lib/mpris
+    meson setup --prefix /usr build
+    DESTDIR=$PKG meson install -C build
+
+    cd $SRC/$name/lib/notifd
+    meson setup --prefix /usr build
+    DESTDIR=$PKG meson install -C build
+
+    cd $SRC/$name/lib/wireplumber
+    meson setup --prefix /usr build
+    DESTDIR=$PKG meson install -C build
+
+    cd $SRC/$name/lib/tray
+    meson setup --prefix /usr build
+    DESTDIR=$PKG meson install -C build
+
 }

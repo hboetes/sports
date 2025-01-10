@@ -10,7 +10,8 @@ source=(https://github.com/aylur/ags.git)
 build()
 {
     cd ags
-    GOBIN=$PKG/usr/local/bin go install -ldflags "\
-    -X 'main.gtk4LayerShell=$(pkg-config --variable=libdir gtk4-layer-shell-0)/libgtk4-layer-shell.so' \
-    -X 'main.astalGjs=$(pkg-config --variable=srcdir astal-gjs)'"
+    GOBIN=$PKG/usr/bin go install -ldflags "
+       -X 'main.gtk4LayerShell=$(pkg-config --variable=libdir gtk4-layer-shell-0)/libgtk4-layer-shell.so'
+       -X 'main.astalGjs=$(pkg-config --variable=srcdir astal-gjs)'
+    "
 }
