@@ -47,9 +47,9 @@ mktempfiles()
     dirsnewpackage=$DIR/dirsnewpackage
 
     # Put files and dirs in sepperate files.
-    tar tvzf $path_package | grep -Ev " var/(package|$)" > $TMP1
-    awk '/^[^d]/ {print $6}' $TMP1 > $filesnewpackage
-    awk '/^d/    {print $6}' $TMP1 > $dirsnewpackage
+    tar tf $path_package | grep -Ev " var/(package|$)" > $TMP1
+    grep -v '/$' $TMP1 > $filesnewpackage
+    grep    '/$' $TMP1 > $dirsnewpackage
 
     if [ -f $dbase/$name-footprint ]; then
         awk -F '\t' '/^[^d]/ {print $3}' $dbase/$name-footprint > $filesoldpackage
@@ -86,7 +86,7 @@ find_conflicts()
         # ... and all the footprints of all _other_ packages in
         # the dbase on stdout.  /dev/null on the end is an empty
         # file incase there are no packages installed.
-        awk -F '\t' '/^[^d]/ {print $3}' $(find $dbase -name '*-footprint' ! -name "$name-footprint") /dev/null
+        awk -F '\t' '/^[^d]/ {$1=""; $2=""; print $0}' $(find $dbase -name '*-footprint' ! -name "$name-footprint") /dev/null
     ) | sort | uniq -d > $TMP1
 
     # remove empty lines from $TMP1
@@ -95,7 +95,7 @@ find_conflicts()
     if [ -s $TMP1 ]; then
         cat $TMP1 | while read line; do
             if [ -z "$FORCE" ]; then
-                /usr/local/bin/pkginfo -o $line || error 'aborting.'
+                /usr/local/bin/pkginfo -o "$line" || error 'aborting.'
             else
                 # Remove the conflicting line from the database.
                 footprint=$(grep -l "${tab}$line$" $dbase/*-footprint)

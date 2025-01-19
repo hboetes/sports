@@ -70,7 +70,7 @@ installed()
 owner()
 {
     mktempfiles
-    filename=${1#/}
+    filename="${1#/}"
     # TODO: add 2> /dev/null?
     grep -F "$filename" $dbase/*-footprint > $TMP1 # 2> /dev/null
     if [ -s $TMP1 ]; then
