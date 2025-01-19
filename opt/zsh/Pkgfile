@@ -2,21 +2,26 @@
 # URL:         http://www.zsh.org/
 
 name=zsh
-version=5.9
+version=git
 release=1
 source=(
-    # https://github.com/zsh-users/zsh.git
+    https://github.com/zsh-users/zsh.git
     _pkgutils
     _find
-    http://www.zsh.org/pub/$name-$version.tar.xz
+    # http://www.zsh.org/pub/$name-$version.tar.xz
+    Makefile.in
 )
 
 
 build()
 {
-    cd zsh-$version
+    cd zsh*
     export CPPFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib"
     Util/preconfig
+
+    # building yodl/icmake/bobcat is a trip into a madhouse.
+    cp $SRC/Makefile.in .
+
     ./configure \
         --prefix=/usr/local \
         --mandir=/usr/local/man \
@@ -27,15 +32,12 @@ build()
         --enable-site-fndir=/usr/local/share/zsh/site-functions \
         --enable-zsh-secure-free \
         --enable-zshenv=/etc/zsh/zshenv \
-        --enable-zshlogin=/etc/zsh/zshlogin \
         --enable-zshrc=/etc/zsh/zshrc \
         --enable-maildir-support \
         --enable-multibyte \
         --enable-pcre \
-        --with-curses-terminfo \
-        --with-tcsetpgrp \
         --disable-gdbm \
-        --disable-zsh-mem \
+        --disable-zsh-mem
 
     gmake
     gmake DESTDIR=$PKG install
