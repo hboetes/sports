@@ -1,0 +1,30 @@
+# Description: Very powerfull shell
+# URL:
+# Dependencies: rust
+
+name=fish
+version=git
+release=1
+source=(
+    https://github.com/fish-shell/fish-shell.git
+)
+
+
+build()
+{
+    cd $name
+    mkdir build
+    cd build
+    cmake ..
+    cmake --build .
+    # cmake --install .
+    make install DESTDIR=$PKG
+}
+
+post-install()
+{
+    if ! grep -q '^/usr/local/bin/fish$' /etc/shells; then
+        echo Adding zsh to /etc/shells
+        echo /usr/local/bin/fish >> /etc/shells
+    fi
+}
