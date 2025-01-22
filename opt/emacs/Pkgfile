@@ -1,23 +1,30 @@
 # Description: the editor
 # URL:         https://www.gnu.org/software/emacs/
-# Dependencies: texinfo glib2-devel gtk3-devel libgccjit-devel gnutls-devel ncurses-devel
+# Dependencies: dnf install texinfo glib2-devel gtk3-devel libgccjit-devel gnutls-devel ncurses-devel
+# Dependencies: prt-get install tree-sitter
 
 name=emacs
-version=29
+version=30
 release=git
-branch=emacs-29
+branch=emacs-30
 source=(git://git.savannah.gnu.org/emacs.git)
-# source=(https://ftp.wayne.edu/gnu/emacs/emacs-$version.tar.xz)
+
 
 build()
 {
+    export \
+        CPPFLAGS='-I/usr/local/include' \
+        LDFLAGS='-L/usr/local/lib' \
+        LD_LIBRARY_PATH='/usr/local/lib/' \
+        PKG_CONFIG_PATH='/usr/local/lib/pkgconfig'
+
     cd $name*
     ./autogen.sh
     ./configure \
-        --with-pgtk \
-        --without-makeinfo \
-        --with-native-compilation=aot
-    # ./configure --without-all --without-makeinfo --without-x --with-gnutls=yes # --with-native-compilation
+        --without-toolkit-scroll-bars \
+        --without-x \
+        --with-native-compilation=aot\
+        --with-tree-sitter
     make
     make install DESTDIR=$PKG
 }

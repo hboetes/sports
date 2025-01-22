@@ -1,0 +1,14 @@
+# Description: dependency for emacs 29+
+
+name=tree-sitter
+version=1
+release=git
+source=(git@github.com:tree-sitter/tree-sitter.git)
+
+
+build()
+{
+    cd $name*
+    make
+    make install DESTDIR=$PKG
+}

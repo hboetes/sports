@@ -3,7 +3,7 @@
 #  pkgutils
 #
 #  Copyright (c) 2000-2004 Per Liden
-#  Copyright (c) 2005-2020 Han Boetes <hboetes@gmail.com>
+#  Copyright (c) 2005-2025 Han Boetes <hboetes@gmail.com>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -154,7 +154,7 @@ download_source()
     local FILE LOCAL_FILENAME
 
     for FILE in $source; do
-         if [[ "$FILE" != "${FILE%.git}" ]]; then
+        if [[ "$FILE" != "${FILE%.git}" ]]; then
             get_git_repo "$FILE"
             continue
         fi
@@ -286,7 +286,7 @@ EOF
         fi
         diff -w -t -U 0 $TMPFILE.md5sum.orig $TMPFILE.md5sum | \
             sed '/^@@/d;/^+++/d;/^---/d;s/^+/NEW       /g;s/^-/MISSING   /g' \
-            > $TMPFILE.md5sum.diff
+                > $TMPFILE.md5sum.diff
         if [ -s $TMPFILE.md5sum.diff ]; then
             error "Md5sum mismatch found:"
             cat $TMPFILE.md5sum.diff
@@ -318,7 +318,7 @@ strip_files()
 
     cd $PKG
     find ./{,/usr,/usr/X11R6}{,/local}/{sbin,bin,lib{,64,exec}} -type f 2> /dev/null | \
-           $FILTER | while read FILE; do
+        $FILTER | while read FILE; do
         # Some packages install files without write perms. I chmod -w
         # all binary files and manpages so that's no problem later on.
         case "$(file -b $FILE)" in
@@ -375,7 +375,7 @@ check_footprint()
             sort -k 3 $PKGMK_FOOTPRINT > $FILE.footprint.orig
             diff -w -t -U 0 $FILE.footprint.orig $FILE.footprint |\
                 sed '/^@@/d;/^+++/d;/^---/d;s/^+/NEW       /g;s/^-/MISSING   /g' \
-                > $FILE.footprint.diff
+                    > $FILE.footprint.diff
             if [ -s $FILE.footprint.diff ]; then
                 echo "Footprint mismatch found:"
                 cat $FILE.footprint.diff
@@ -729,13 +729,13 @@ remove_perlcrap()
 {
     # Remove perlcrap
     find $PKG \
-        \( \
-        -name '.packlist' -or \
-        -name '*.bs' -or \
-        -name autosplit.ix -or \
-        -name perllocal.pod \
-        \) \
-        -delete
+         \( \
+         -name '.packlist' -or \
+         -name '*.bs' -or \
+         -name autosplit.ix -or \
+         -name perllocal.pod \
+         \) \
+         -delete
     # Remove empty directories, ignore return code
     find $PKG -depth -type d -delete > /dev/null 2>&1 || :
 }
