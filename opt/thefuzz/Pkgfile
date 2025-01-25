@@ -1,0 +1,17 @@
+# Description: Fuzzy string matching like a boss.
+# Dependencies:
+
+
+name=thefuzz
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/seatgeek/thefuzz.git
+)
+
+build()
+{
+    cd $name
+    python_fakeinstall
+}

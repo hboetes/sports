@@ -1,0 +1,17 @@
+# Description: simple API for encoding and decoding dataclasses to and from JSON.
+# Dependencies: python3-jinja2 python3-dunamai
+
+
+name=dataclasses_json
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/lidatong/dataclasses-json.git
+)
+
+build()
+{
+    cd $name
+    python_fakeinstall
+}
