@@ -1,0 +1,15 @@
+# Description: matrix library for python
+
+name=mautrix-signale
+version=0.7.1
+release=1
+branch=master
+source=(
+    https://github.com/mautrix/signal/releases/download/v$version/mautrix-signal-amd64
+)
+
+build()
+{
+    install -d $PKG/usr/local/bin/
+    install $SRC/mautrix-signal-amd64 $PKG/usr/local/bin/mautrix-signal
+}

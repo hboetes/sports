@@ -1,0 +1,16 @@
+# Description: matrix library for python
+
+name=mautrix
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/mautrix/python.git
+)
+
+build()
+{
+    cd $name
+    python -m build --wheel --no-isolation
+    python -m installer --destdir=$PKG dist/*.whl
+}
