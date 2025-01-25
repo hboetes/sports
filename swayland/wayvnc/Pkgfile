@@ -17,7 +17,7 @@ build()
     git clone https://github.com/any1/neatvnc.git
     git clone https://github.com/any1/aml.git
 
-    sed -i '/h264/s|auto|disabled|' neatvnc/meson_options.txt
+    # sed -i '/h264/s|auto|disabled|' neatvnc/meson_options.txt
 
     mkdir wayvnc/subprojects
     cd wayvnc/subprojects
