@@ -38,6 +38,12 @@ else
     unset SWAYSOCK
 fi
 
+if pgrep -u $USER -x hyprland > /dev/null 2>&1; then
+    # hyprland doesn't care
+    export SWAYSOCK=/dev/null
+fi
+
+
 if ! i3proc=$(pgrep -f "^$(which i3)" -u $USER || pgrep -x -f i3 -u $USER); then
     unset i3proc
 fi

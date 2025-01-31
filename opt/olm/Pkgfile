@@ -1,0 +1,17 @@
+# Description: olm
+# Dependencies: cmake
+# https://gitlab.matrix.org/matrix-org/olm
+
+name=olm
+version=git
+release=1
+source=(https://gitlab.matrix.org/matrix-org/olm.git)
+
+build()
+{
+    cd $name
+    cmake . -Bbuild
+    cmake --build build
+    # make
+    make install DESTDIR=$PKG
+}

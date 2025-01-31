@@ -1,0 +1,17 @@
+# Description:      development tool for python
+# Dependencies:     libunwind-devel python3-maturin rust
+
+name=py-spy
+version=git
+release=git
+branch=master
+source=(
+    https://github.com/benfred/py-spy.git
+)
+
+build()
+{
+    cd $name
+    python -m build --wheel --no-isolation
+    python -m installer --destdir=$PKG dist/*.whl
+}

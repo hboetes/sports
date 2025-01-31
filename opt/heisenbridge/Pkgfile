@@ -1,0 +1,17 @@
+# Description: irc2matrix bridge
+# URL:         https://github.com/hifi/heisenbridge.git
+
+name=heisenbridge
+version=git
+release=1.14.6
+branch=master
+source=(
+    https://github.com/hifi/heisenbridge.git
+)
+
+build()
+{
+    cd $name
+    python -m build --wheel --no-isolation
+    python -m installer --destdir=$PKG dist/*.whl
+}
