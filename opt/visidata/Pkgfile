@@ -1,0 +1,20 @@
+# Description: csv data browser
+# URL:         https://github.com/saulpw/visidata.git
+# Dependencies:   python3-build python3-installer
+
+
+name=visidata
+version=git
+release=git
+branch=master
+source=(
+    https://github.com/saulpw/visidata.git
+)
+
+build()
+{
+    cd $name
+    sed -i 's|@async|@async2|' $(grep -rl '@async' .)
+    sed -i 's|def async|def async2|' $(grep -rl 'def async' .)
+    python_fakeinstall
+}
