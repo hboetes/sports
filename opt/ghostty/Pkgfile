@@ -1,0 +1,16 @@
+# Description:  terminal emulator that differentiates itself by being fast, feature-rich, and native
+# URL:          https://ghostty.org
+# Dependencies: zig
+
+name=ghostty
+version=git
+release=1
+branch=main
+source=(https://github.com/ghostty-org/ghostty.git)
+
+build()
+{
+    cd $name
+    zig build -Doptimize=ReleaseFast
+    install -D zig-out/bin/$name $PKG/usr/local/bin/$name
+}
