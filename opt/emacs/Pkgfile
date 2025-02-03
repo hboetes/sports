@@ -21,10 +21,10 @@ build()
     cd $name*
     ./autogen.sh
     ./configure \
-        --without-toolkit-scroll-bars \
-        --without-x \
-        --with-native-compilation=aot\
+        --with-native-compilation=aot \
         --with-tree-sitter
+        # --without-toolkit-scroll-bars \
+        # --without-x \
     make
     make install DESTDIR=$PKG
 }
