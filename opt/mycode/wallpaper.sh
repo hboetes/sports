@@ -9,7 +9,7 @@ imgFiles='*.(jpg|png|webp|avif)'
 
 # For debugging
 setopt local_options xtrace
-exec > $HOME/.local/wallpaper.log 2>&1
+exec > $HOME/.local/log/wallpaper.log 2>&1
 
 # To avoid getting an error in an empty directory
 setopt null_glob
@@ -38,13 +38,15 @@ else
     unset SWAYSOCK
 fi
 
-if pgrep -u $USER -x hyprland > /dev/null 2>&1; then
+if pgrep -u $USER -f $(which Hyprland) >& /dev/null; then
     # hyprland doesn't care
-    export SWAYSOCK=/dev/null
+    export SWAYSOCK='/dev/null'
+    # In a cronjob WAYLAND_DISPLAY is not set, so figure it out.
+    [[ -z $WAYLAND_DISPLAY ]] && export WAYLAND_DISPLAY=$(hyprctl instances | awk -F : '/socket/ {sub(/^ +/, "", $2); print $2}')
 fi
 
 
-if ! i3proc=$(pgrep -f "^$(which i3)" -u $USER || pgrep -x -f i3 -u $USER); then
+if ! i3proc=$(pgrep -u $USER -f "^$(which i3)" -u $USER || pgrep -x -f i3 -u $USER); then
     unset i3proc
 fi
 

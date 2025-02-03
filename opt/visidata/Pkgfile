@@ -1,0 +1,18 @@
+# Description: csv data browser
+# URL:         https://github.com/saulpw/visidata.git
+# Dependencies:   python3-build python3-installer
+
+
+name=visidata
+version=git
+release=git
+branch=develop
+source=(
+    https://github.com/saulpw/visidata.git
+)
+
+build()
+{
+    cd $name
+    python_fakeinstall
+}
