@@ -1,116 +1,137 @@
 #!/bin/zsh
 
-# The idea behind this wallpaper setter is that you will see each
-# wallpaper equally often, by moving all seen wallpapers into the seen
-# directory. Only after all wallpapers have been seen, move them back
-# in the main directory.
+# Wallpaper Setter Script
+# Cycles through wallpapers ensuring equal viewing frequency by moving seen wallpapers
+# to a separate directory. Once all wallpapers are seen, they're moved back.
 
-imgFiles='*.(jpg|png|webp|avif)'
+# Strict error handling
+set -euo pipefail
+
+# Configuration
+readonly WPDIR=${HOME}/Wallpapers
+readonly WPSDIR=${WPDIR}/seen
+readonly LOG_FILE=${HOME}/.local/log/wallpaper.log
+readonly IMG_PATTERN='*.(jpg|png|webp|avif)'
 
 # For debugging
 setopt local_options xtrace
-exec > $HOME/.local/log/wallpaper.log 2>&1
+exec > "${LOG_FILE}" 2>&1
 
-# To avoid getting an error in an empty directory
-setopt null_glob
-# Make extension searching case insensitive.
-setopt nocaseglob
-#todo, require feh
+# Shell options
+setopt null_glob nocaseglob
 
-PATH=/usr/local/bin:/usr/bin:/bin
+# Environment setup
+readonly USER=$(whoami)
+readonly ID=$(id -u)
+export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/${ID}}
+export PATH=/usr/local/bin:/usr/bin:/bin
 
-WPDIR=~/Wallpapers
-WPSDIR=~/Wallpapers/seen
-# Deprecated? That's news to me.
-local USER=$(whoami)
-local ID=$(id -u)
+# Check required dependencies
+check_dependencies() {
+    local deps=(feh swaybg)
+    for dep in "${deps[@]}"; do
+        if ! command -v "${dep}" >/dev/null 2>&1; then
+            echo "Error: Required dependency '${dep}' not found" >&2
+            exit 1
+        fi
+    done
+}
 
-# Chances are this variable is not set in a cronjob.
-XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:=/run/user/$ID}
-export XDG_RUNTIME_DIR
+# Desktop environment detection
+detect_environment() {
+    # Sway detection
+    if pgrep -u "${USER}" -x sway >/dev/null 2>&1; then
+        export SWAYSOCK=/run/user/${ID}/sway-ipc.${ID}.$(pgrep -u "${USER}" -x sway).sock
+        export WAYLAND_DISPLAY=${WAYLAND_DISPLAY:-wayland-1}
+        return
+    else
+        unset SWAYSOCK
+    fi
 
-# Test if sway is running and set the SWAYSOCK env var.
-if pgrep -u $USER -x sway > /dev/null 2>&1; then
-    export SWAYSOCK=/run/user/$ID/sway-ipc.$ID.$(pgrep -u $USER -x sway).sock
-    # XXX, where can I find out how this should be set?
-    export WAYLAND_DISPLAY='wayland-1'
-else
-    unset SWAYSOCK
-fi
+    # Hyprland detection
+    if pgrep -u "${USER}" -f "$(command -v Hyprland)" >/dev/null 2>&1; then
+        export SWAYSOCK=/dev/null
+        [[ -z ${WAYLAND_DISPLAY:-} ]] && export WAYLAND_DISPLAY=$(hyprctl instances | awk -F: '/socket/ {sub(/^ +/, "", $2); print $2}')
+        return
+    fi
 
-if pgrep -u $USER -f $(which Hyprland) >& /dev/null; then
-    # hyprland doesn't care
-    export SWAYSOCK='/dev/null'
-    # In a cronjob WAYLAND_DISPLAY is not set, so figure it out.
-    [[ -z $WAYLAND_DISPLAY ]] && export WAYLAND_DISPLAY=$(hyprctl instances | awk -F : '/socket/ {sub(/^ +/, "", $2); print $2}')
-fi
+    # i3 detection
+    I3_PROC=$(pgrep -u "${USER}" -f "^$(command -v i3)" || pgrep -x -f i3 -u "${USER}" || true)
+}
 
+find_wallpaper() {
+    local -a wallpapers
+    wallpapers=("${WPDIR}"/${~IMG_PATTERN})
 
-if ! i3proc=$(pgrep -u $USER -f "^$(which i3)" -u $USER || pgrep -x -f i3 -u $USER); then
-    unset i3proc
-fi
-
-
-
-find_wp() {
-    wallpapers=($WPDIR/$~imgFiles)
-    if ((${#wallpapers} == 0)); then
+    if (( ${#wallpapers} == 0 )); then
         return 1
     fi
-    ((wallpaperid = $RANDOM % ${#wallpapers} + 1))
+
+    wallpaper=${wallpapers[$((RANDOM % ${#wallpapers} + 1))]}
+    return 0
 }
 
-set_wp_X() {
-    # Set DISPLAY — This is important for cronjobs.
-    eval export $(strings /proc/$i3proc/environ | grep DISPLAY=)
-    feh --bg-fill -B black "${wallpapers[$wallpaperid]}"
+set_wallpaper_x11() {
+    eval export "$(strings /proc/${I3_PROC}/environ | grep DISPLAY=)"
+    feh --bg-fill -B black "${wallpaper}"
 }
 
-set_wp_wl() {
-    pkill swaybg
+set_wallpaper_wayland() {
+    pkill swaybg || true
     sleep 0.1
-    mv_wp
-    # swaybg doesn't like it if it can't find the current wallpaper.
-    swaybg -c '#000000' -i "$WPSDIR/${wallpapers[$wallpaperid]##*/}" &
+    move_wallpaper
+    swaybg -c '#000000' -i "${WPSDIR}/${wallpaper##*/}" &
 }
 
-set_wp_gnome() {
-    mv_wp
-    gsettings set org.gnome.desktop.background picture-uri-dark "file://$WPSDIR/${wallpapers[$wallpaperid]##*/}"
-    exit 0
+set_wallpaper_gnome() {
+    move_wallpaper
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://${WPSDIR}/${wallpaper##*/}"
 }
 
-set_wp() {
-    # Are we running gnome?
-    if pgrep -f /usr/bin/gnome-shell >& /dev/null; then
-        set_wp_gnome
+set_wallpaper() {
+    # Check for each environment and set accordingly
+    if pgrep -f /usr/bin/gnome-shell >/dev/null 2>&1; then
+        set_wallpaper_gnome
+        return
     fi
-    # Are we running i3 on X or sway on wayland
-    if [[ -n $SWAYSOCK ]]; then
-        set_wp_wl
-    fi
-    # and what if we run both?
-    if [[ -n $i3proc ]]; then
-        set_wp_X
-    fi
+
+    [[ -n ${SWAYSOCK:-} ]] && set_wallpaper_wayland
+    [[ -n ${I3_PROC:-} ]] && set_wallpaper_x11
 }
 
-mv_wp() {
-    [[ -d $WPSDIR ]] || { echo "$WPSDIR is not a dir. Bailing out"; exit 1}
-    mv "${wallpapers[$wallpaperid]}" $WPSDIR
+move_wallpaper() {
+    if [[ ! -d ${WPSDIR} ]]; then
+        echo "Error: ${WPSDIR} is not a directory" >&2
+        exit 1
+    fi
+    mv "${wallpaper}" "${WPSDIR}"
 }
 
-mv_wp_back() {
-    if empty=($WPSDIR/$~imgFiles) >& /dev/null; then
-        mv $WPSDIR/$~imgFiles $WPDIR
+move_wallpapers_back() {
+    local -a seen_wallpapers
+    seen_wallpapers=("${WPSDIR}"/${~IMG_PATTERN})
+
+    if (( ${#seen_wallpapers} > 0 )); then
+        mv "${WPSDIR}"/${~IMG_PATTERN} "${WPDIR}"
     else
-        echo "No wallpapers found in $WPSDIR." >&2
+        echo "No wallpapers found in ${WPSDIR}" >&2
         exit 1
     fi
 }
 
-if ! find_wp; then
-    mv_wp_back
-    find_wp
-fi
-set_wp
+main() {
+    check_dependencies
+    detect_environment
+
+    if ! find_wallpaper; then
+        move_wallpapers_back
+        find_wallpaper || {
+            echo "Error: No wallpapers found in either directory" >&2
+            exit 1
+        }
+    fi
+
+    set_wallpaper
+}
+
+main "$@"
