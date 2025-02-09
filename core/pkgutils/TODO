@@ -6,3 +6,4 @@
   * Äfoo.go etc don't get deleted
   * git rev-parse --short  HEAD
   * New files in /etc/ don't get installed, because they are rejected and since rejmerge can't find them in /etc they are deleted.
+  %  rm -rf /usr/pkgmk/source/rustdesk-server
