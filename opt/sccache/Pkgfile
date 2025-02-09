@@ -9,7 +9,7 @@ source=(https://github.com/mozilla/sccache.git)
 
 build()
 {
-    export PATH=$PATH:/home/han/.cargo/bin
+    export PATH=$PATH:~/.cargo/bin
     cd $name
     cargo build --release
     install -D target/release/$name   $PKG/usr/local/bin/$name
