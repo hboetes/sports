@@ -2,12 +2,12 @@
 # URL:         https://github.com/rustdesk/rustdesk-server.git
 
 name=rustdesk-server
-version=git
+version=1.1.14
 release=1
 source=(
     hbbs.service
     hbbr.service
-    https://github.com/rustdesk/rustdesk-server.git
+    https://github.com/rustdesk/rustdesk-server/releases/download/1.1.14/rustdesk-server-linux-amd64.zip
 )
 
 build()
@@ -17,12 +17,10 @@ build()
     install -d                               $PKG/var/log/rustdesk
     install -d -m700                         $PKG/var/db/hbbs
 
-    cd $name
-    cargo build --release
-
-    install -D target/release/hbbs           $PKG/usr/local/sbin/hbbs
-    install -D target/release/hbbr           $PKG/usr/local/sbin/hbbr
-    install -D target/release/rustdesk-utils $PKG/usr/local/bin/rustdesk-utils
+    cd amd64
+    install -D hbbs           $PKG/usr/local/sbin/hbbs
+    install -D hbbr           $PKG/usr/local/sbin/hbbr
+    install -D rustdesk-utils $PKG/usr/local/bin/rustdesk-utils
 }
 
 post-install()
