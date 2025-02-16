@@ -3,7 +3,7 @@
 
 name=picard
 version=git
-release=2.12.3
+release=2.13.2
 source=(
     https://github.com/metabrainz/picard.git
 )
