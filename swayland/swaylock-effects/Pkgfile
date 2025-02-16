@@ -1,5 +1,6 @@
-# Description: swaylock fork
-# URL:         https://github.com/mortie/swaylock-effects.git
+# Description:  swaylock fork
+# URL:          https://github.com/mortie/swaylock-effects.git
+# Dependencies: fprintd-devel
 
 name=swaylock-effects
 version=git
@@ -8,17 +9,22 @@ branch=master
 source=(
     https://github.com/jirutka/swaylock-effects.git
     70.diff
+    49.diff
+    34.diff
 )
 
 build()
 {
     cd $name
+    patch -p1 -i $SRC/49.diff
     patch -p1 -i $SRC/70.diff
+    patch -p1 -i $SRC/34.diff
     meson setup --prefix=/usr/local build \
           -Dgdk-pixbuf=enabled \
           -Dzsh-completions=true \
           -Dbash-completions=false \
-          -Dfish-completions=false
+          -Dfish-completions=false \
+          -Dfingerprint=enabled
     ninja -C build
     DESTDIR=$PKG ninja -C build install
     mv $PKG/usr/local/etc $PKG/etc
