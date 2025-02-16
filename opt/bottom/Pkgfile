@@ -1,0 +1,15 @@
+# Description:  like top, but then better
+# Dependencies: rust
+
+name=bottom
+version=git
+release=1
+source=(https://github.com/ClementTsang/bottom.git)
+
+build()
+{
+    export PATH=$PATH:~/.cargo/bin
+    cd $name
+    cargo build --release
+    install -D target/release/btm   $PKG/usr/local/bin/$name
+}
