@@ -1,6 +1,7 @@
 # Description:  web music player
 # URL:          https://github.com/navidrome/navidrome.git
-# Dependencies: taglib-devel go nodejs ffmpeg
+# Dependencies: go nodejs ffmpeg
+# Dependencies: taglib
 
 name=navidrome
 version=0.54.x
@@ -29,7 +30,7 @@ build()
     # sed -i 's@npm ci@npm ci \&\& npm audit fix ||:@' Makefile
     make setup
     make buildjs
-    make buildall
+    make build
     install -D -m 755 $name $PKG/usr/local/bin/navidrome
 
     # binary install

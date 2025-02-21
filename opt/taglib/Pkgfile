@@ -1,0 +1,20 @@
+# Description: really simple gain
+# dnf install cmake fmt-devel inih-devel taglib-devel libebur128-devel fmt-devel
+
+name=taglib
+version=git
+release=1
+source=(
+    https://github.com/taglib/taglib.git
+)
+
+build()
+{
+    cd $name
+    git submodule update --init
+    mkdir build
+    cd build
+    cmake .. -DCMAKE_BUILD_TYPE=Release
+    make
+    make install DESTDIR=$PKG
+}
