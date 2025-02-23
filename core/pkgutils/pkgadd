@@ -203,6 +203,11 @@ tarcommand()
 {
     if [ $(id -u) -eq 0 ]; then
         # Remove old rejects from previous installs.
+        if [[ $UPGRADE ]]; then
+            message "Upgrading $name"
+        else
+            message "Installing $name"
+        fi
         rm -rf $rejects/$name
         tar ${pattern} -zxpf $1 -C ${root:=/}
     else
@@ -251,7 +256,7 @@ help()
     cat << EOF
 usage: $n [options] <file>
 options:
-  -u, --upgrade <file> upgrade package with the same name
+  -u, --upgrade <file> upgrade package
   -f, --force <file>   force install, overwrite conflicting files
   -r, --root <path>    specify alternative installation root
   -v, --version        print version and exit
