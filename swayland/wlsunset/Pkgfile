@@ -7,13 +7,11 @@ release=1
 branch=master
 source=(
     https://git.sr.ht/~kennylevinsen/wlsunset.git
-    wlsunset-hyprland.diff
 )
 
 build()
 {
     cd $name
-    patch -i $SRC/wlsunset-hyprland.diff
     meson --prefix=/usr/local build
     ninja -C build
     DESTDIR=$PKG ninja -C build install
