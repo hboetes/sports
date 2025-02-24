@@ -31,7 +31,7 @@ build()
     cd -
 
     cd $name
-    meson build --buildtype=debug
+    meson setup build --buildtype=debug
     ninja -C build
     DESTDIR=$PKG ninja -C build install
 }
