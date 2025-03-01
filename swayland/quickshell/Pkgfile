@@ -1,0 +1,19 @@
+# Description:  beatiful toolbars
+# URL:          https://quickshell.outfoxxed.me/
+# Dependencies: qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtshadertools-devel spirv-tools-devel cli11-devel libdrm-devel libgbm-devel pipewire-devel pam-devel qt6-qtwayland-devel jemalloc-devel qt6-qtbase-private-devel
+
+name=quickshell
+version=git
+release=1
+source=(
+    https://git.outfoxxed.me/quickshell/quickshell.git
+)
+
+build()
+{
+    cd $name
+    unset CXX
+    cmake -GNinja -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCRASH_REPORTER=OFF -DDISTRIBUTOR="hboetes/sports"
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
