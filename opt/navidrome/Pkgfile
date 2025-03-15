@@ -4,7 +4,7 @@
 # Dependencies: taglib
 
 name=navidrome
-version=0.54.x
+version=0.55.x
 release=git
 source=(
     https://github.com/navidrome/navidrome.git
