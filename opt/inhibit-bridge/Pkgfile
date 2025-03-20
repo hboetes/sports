@@ -1,0 +1,16 @@
+# Description:  applet that displays the inhibit sleep/lock status
+# Dependencies: go
+
+name=inhibit-bridge
+version=1
+release=git
+source=(
+    https://github.com/bdwalton/inhibit-bridge.git
+)
+
+build()
+{
+    cd $name
+    export PATH=$PATH:/usr/local/go/bin
+    CC= CGO_ENABLED=0 GOBIN=$PKG/usr/local/bin go install
+}
