@@ -9,9 +9,8 @@ source=(https://github.com/BestImageViewer/geeqie.git)
 build()
 {
     cd $name
-    ./autogen.sh
-    ./configure
-    make
-    make install DESTDIR=$PKG
+    meson build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
     rm -rf $PKG/usr/local/share/doc/
 }
