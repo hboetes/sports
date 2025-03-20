@@ -9,7 +9,7 @@ source=(https://github.com/ImageMagick/ImageMagick.git)
 build()
 {
     cd $name
-    ./configure
+    ./configure --with-heif --with-heic
     make
     make install DESTDIR=$PKG
 }
