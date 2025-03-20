@@ -80,7 +80,7 @@ set_wallpaper_wayland() {
     pkill swaybg || true
     sleep 0.1
     move_wallpaper
-    swaybg -m stretch -c '#000000' -i "${WPSDIR}/${wallpaper##*/}" &
+    swaybg -m fill -c '#000000' -i "${WPSDIR}/${wallpaper##*/}" &
 }
 
 set_wallpaper_gnome() {
