@@ -1,0 +1,35 @@
+# Description: Reverse proxy to protect against scraper bots
+# URL:         https://anubis.techaro.lol/
+# Depends:     brotli esbuild git go npm zstd
+
+name=anubis
+version=1.20.0
+release=1
+source=(https://github.com/TecharoHQ/anubis.git)
+
+build()
+{
+  export PATH=$PATH:/usr/local/go/bin
+  export CGO_CPPFLAGS="${CPPFLAGS}"
+  export CGO_CFLAGS="${CFLAGS}"
+  export CGO_CXXFLAGS="${CXXFLAGS}"
+  export CGO_LDFLAGS="${LDFLAGS}"
+  export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
+
+  cd anubis
+  make deps
+
+  make assets
+  make prebaked-build
+
+  install -D var/anubis -t "$PKG/usr/local/bin"
+  install -D var/robots2policy "$PKG/usr/local/bin/anubis-robots2policy"
+
+  install -Dm644 run/anubis@.service -t "$PKG/usr/lib/systemd/system"
+  install -Dm644 run/default.env -t "$PKG/etc/anubis"
+
+  local docdir="$PKG/usr/local/share/doc/$name"
+  install -Dm644 README.md -t "$docdir"
+  cp -a docs/docs data -t "$docdir"
+  find "$docdir" \( -name _category_.json -o -name '*.go' \) -delete
+}
