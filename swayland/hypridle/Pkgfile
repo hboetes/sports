@@ -1,0 +1,26 @@
+# Description: manage idle events for hyprland
+# URL:         https://github.com/hyprwm/hypridle.git
+# Dependencies: sdbus-cpp-devel hyprland-protocols-devel hyprwayland-scanner-devel
+
+name=hypridle
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/hyprwm/hypridle.git
+)
+
+build()
+{
+    cd $name
+    export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:$PKG_CONFIG_PATH
+    mkdir build
+    cd build
+    cmake .. \
+          -DBUILD_EXAMPLES=OFF \
+          -DBUILD_TESTS=OFF \
+          -DCMAKE_EXE_LINKER_FLAGS="-L/usr/local/lib64" \
+          -DCMAKE_PREFIX_PATH=/usr/local
+    make -j$(nproc)
+    DESTDIR=$PKG make install
+}

@@ -1,0 +1,20 @@
+# Description: dynamic mouse cursors for hyprland
+
+echo "broken"
+exit 0
+
+
+name=hypr-dynamic-cursors
+version=git
+release=1
+branch=master
+source=(
+    https://github.com/VirtCode/hypr-dynamic-cursors.git
+)
+
+build()
+{
+    cd $name
+    make
+    DESTDIR=$PKG make install
+}
