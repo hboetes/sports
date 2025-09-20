@@ -39,6 +39,16 @@ check_dependencies() {
 
 # Desktop environment detection
 detect_environment() {
+    # Niri detection
+    for sock in /run/user/${ID}/niri.wayland-*.sock; do
+        [ -S "$sock" ] || continue
+        WAYLAND_DISPLAY=${sock#*/niri.}          # strip prefix
+        WAYLAND_DISPLAY=${WAYLAND_DISPLAY%.*.sock}  # strip suffix
+        export WAYLAND_DISPLAY
+        # echo "$WAYLAND_DISPLAY"
+        return
+    done
+
     # Sway detection
     if pgrep -u "${USER}" -x sway >/dev/null 2>&1; then
         export SWAYSOCK=/run/user/${ID}/sway-ipc.${ID}.$(pgrep -u "${USER}" -x sway).sock
@@ -52,6 +62,7 @@ detect_environment() {
     if pgrep -u "${USER}" -f "$(command -v Hyprland)" >/dev/null 2>&1; then
         export SWAYSOCK=/dev/null
         [[ -z ${WAYLAND_DISPLAY:-} ]] && export WAYLAND_DISPLAY=$(hyprctl instances | awk -F: '/socket/ {sub(/^ +/, "", $2); print $2}')
+        # echo hyprland
         return
     fi
 
@@ -80,7 +91,7 @@ set_wallpaper_wayland() {
     pkill swaybg || true
     sleep 0.1
     move_wallpaper
-    swaybg -m fill -c '#000000' -i "${WPSDIR}/${wallpaper##*/}" &
+    swaybg -m stretch -c '#000000' -i "${WPSDIR}/${wallpaper##*/}" &
 }
 
 set_wallpaper_gnome() {
@@ -89,14 +100,14 @@ set_wallpaper_gnome() {
 }
 
 set_wallpaper() {
+    [[ -n ${WAYLAND_DISPLAY:-} ]] && set_wallpaper_wayland
+    [[ -n ${I3_PROC:-} ]] && set_wallpaper_x11
     # Check for each environment and set accordingly
     if pgrep -f /usr/bin/gnome-shell >/dev/null 2>&1; then
         set_wallpaper_gnome
         return
     fi
 
-    [[ -n ${SWAYSOCK:-} ]] && set_wallpaper_wayland
-    [[ -n ${I3_PROC:-} ]] && set_wallpaper_x11
 }
 
 move_wallpaper() {
