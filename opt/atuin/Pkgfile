@@ -9,6 +9,7 @@ source=(https://github.com/atuinsh/atuin.git)
 
 build()
 {
+    export PATH=$PATH:~/.cargo/bin
     cd $name
     cargo build --release
     for i in atuin; do

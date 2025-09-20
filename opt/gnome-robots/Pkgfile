@@ -9,6 +9,7 @@ source=(https://github.com/GNOME/gnome-robots.git)
 
 build()
 {
+    export PATH=$PATH:~/.cargo/bin
     cd $name
     meson setup build
     meson compile -C build

@@ -62,7 +62,7 @@ detect_environment() {
     if pgrep -u "${USER}" -f "$(command -v Hyprland)" >/dev/null 2>&1; then
         export SWAYSOCK=/dev/null
         [[ -z ${WAYLAND_DISPLAY:-} ]] && export WAYLAND_DISPLAY=$(hyprctl instances | awk -F: '/socket/ {sub(/^ +/, "", $2); print $2}')
-        # echo hyprland
+        echo hyprland
         return
     fi
 

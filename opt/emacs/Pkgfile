@@ -23,8 +23,6 @@ build()
     ./configure \
         --with-native-compilation=aot \
         --with-tree-sitter
-        # --without-toolkit-scroll-bars \
-        # --without-x \
     make
     make install DESTDIR=$PKG
 }
