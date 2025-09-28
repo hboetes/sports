@@ -1,16 +1,17 @@
 # Description: measure dynamic range of recordings
-# URL:         https://github.com/simon-r/dr14_t.meter.git
+# URL:         https://github.com/hboetes/dr14_t.meter.git, forked from https://github.com/simon-r/dr14_t.meter.git
 # python3-numpy
 
 name=dr14_tmeter
 version=git
-release=1.0.16
+release=git
 branch=master
-source=(https://github.com/simon-r/dr14_t.meter.git)
+source=(
+    https://github.com/hboetes/dr14_t.meter.git
+)
 
 build()
 {
     cd $name
-    sed -i 's|virutal|virtual|' dr14tmeter/{query,table}.py
     python_fakeinstall
 }
