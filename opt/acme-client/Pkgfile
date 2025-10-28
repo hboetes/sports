@@ -6,7 +6,9 @@ name=acme-client
 version=git
 release=1.3
 source=(
-    https://git.wolfsden.cz/.git/acme-client-portable.git
+    https://github.com/hboetes/acme-client-portable.git
+    # Original. Rather flaky server.
+    # https://git.wolfsden.cz/.git/acme-client-portable.git
 )
 
 
