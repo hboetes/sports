@@ -5,14 +5,12 @@ name=tint
 version=git
 release=1
 source=(
-   https://github.com/DavidGriffith/tint.git
-   tint.diff
+    https://github.com/DavidGriffith/tint.git
 )
 
 build()
 {
     cd $name
-    # patch -i $SRC/tint.diff
     make
     install -D tint $PKG/usr/bin/tint
     install -D tint.6 $PKG/usr/share/man/man6.tint.6

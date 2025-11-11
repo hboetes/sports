@@ -13,7 +13,7 @@ source=(
 build()
 {
     cd $name
-    patch -p1 -i $SRC/$name.diff
+    # patch -p1 -i $SRC/$name.diff
     cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -S . -B ./build
     cmake --build ./build --config Release --target hyprlock -j$(nproc 2>/dev/null || getconf _NPROCESSORS_CONF)
     DESTDIR=$PKG cmake --install build

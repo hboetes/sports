@@ -8,6 +8,7 @@ source=(https://github.com/lilydjwg/dpms-off.git)
 
 build()
 {
+    export PATH=$PATH:~/.cargo/bin
     cd $name
     cargo build --release
     install -D target/release/$name $PKG/usr/local/bin/$name
