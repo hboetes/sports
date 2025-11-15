@@ -71,12 +71,7 @@ check_pkgfile()
     elif [ ! "$release" ]; then
         error1 "Variable \`release' not specified in $PKGMK_PKGFILE."
     fi
-    case $(type build) in
-        'build is a shell function from'*) : ;;
-        *)
-            error1 "Function \`build' not specified in $PKGMK_PKGFILE."
-            ;;
-    esac
+    functions -t build || error1 "Function \`build' not specified in $PKGMK_PKGFILE."
 }
 
 check_directory()
