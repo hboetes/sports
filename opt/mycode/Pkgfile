@@ -14,6 +14,7 @@ source=(
     munlink.c
     find_unlinked.sh
     makeindexhtml.sh
+    releaseupgrade.sh
     remind.sh
     statusbar_right.c
     whitelist-generator.sh
