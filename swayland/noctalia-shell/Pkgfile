@@ -1,0 +1,20 @@
+# Description: beautiful shell based on quick-shell
+# URL:         https://github.com/noctalia-dev/noctalia-shell.git
+
+name=noctalia-shell
+version=git
+release=3.5.0
+branch=master
+source=(
+    https://github.com/noctalia-dev/noctalia-shell.git
+)
+
+build()
+{
+    cd $name
+    git checkout v$release
+    cd ..
+    mkdir -p $PKG/usr/local/share
+    cp -r noctalia-shell $PKG/usr/local/share
+    rm -rf $PKG/usr/local/share/$name/{.git*,flake.*,*nix*,*lefthook.yml}
+}
