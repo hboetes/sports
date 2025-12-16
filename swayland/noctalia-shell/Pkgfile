@@ -4,17 +4,19 @@
 name=noctalia-shell
 version=git
 release=3.5.0
-branch=master
+branch=main
 source=(
     https://github.com/noctalia-dev/noctalia-shell.git
 )
 
 build()
 {
+    install_path=usr/local/share/quickshell
     cd $name
-    git checkout v$release
+    git checkout $branch # v$release
     cd ..
-    mkdir -p $PKG/usr/local/share
-    cp -r noctalia-shell $PKG/usr/local/share
-    rm -rf $PKG/usr/local/share/$name/{.git*,flake.*,*nix*,*lefthook.yml}
+
+    mkdir -p $PKG/$install_path
+    cp -r noctalia-shell $PKG/$install_path
+    rm -rf $PKG/$install_path/$name/{.git*,flake.*,*nix*,*lefthook.yml}
 }
