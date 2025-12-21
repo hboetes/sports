@@ -215,6 +215,7 @@ tarcommand()
     fi
 }
 
+
 installrejects()
 {
     (
@@ -263,6 +264,7 @@ options:
   -h, --help           print help and exit
 EOF
 }
+
 
 dbase()
 {
@@ -359,7 +361,7 @@ version=$version
 release=$release
 EOF
 else
-    . $dbase/$name-metadata
+    source $dbase/$name-metadata
 fi
 
 # Add footprint to the database.

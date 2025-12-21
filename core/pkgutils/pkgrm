@@ -40,7 +40,7 @@ isinstalled()
 verifypackage()
 {
     if [ -f "$dbase/$1-metadata" ]; then
-        . $dbase/$1-metadata
+        source $dbase/$1-metadata
         [ -z "$name"    ] && error 1 "no package name defined in $dbase/$1"
         [ -z "$version" ] && error 1 "no version number defined in $dbase/$1"
         [ -z "$release" ] && error 1 "no release number defined in $dbase/$1"
@@ -165,9 +165,8 @@ fi
 
 
 # For loading the post-uninstall function.
-. $dbase/$name-metadata
+source $dbase/$name-metadata
 
-# Only necesarry for !c4o packages.
 rm -f $dbase/$name-footprint $dbase/$name-metadata
 
 # TODO, make this a configurable function.
