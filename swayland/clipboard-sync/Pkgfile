@@ -1,0 +1,18 @@
+# Description: sync the primary and normal clipboards
+
+name=clipboard-sync
+version=git
+release=1
+source=(
+    https://github.com/dnut/clipboard-sync.git
+    45.diff
+)
+
+build()
+{
+    cd $name
+    patch -i $SRC/45.diff -p1
+    make
+    install -Dm755 target/release/clipboard-sync $PKG/usr/bin/clipboard-sync
+#     install -Dm644 clipboard-sync.service        $PKG/lib/systemd/user/clipboard-sync.service
+}
