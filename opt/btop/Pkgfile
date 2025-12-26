@@ -11,4 +11,5 @@ build()
     cd $name
     make
     make install DESTDIR=$PKG
+    rm -rf $PKG/usr/local/share/doc
 }
