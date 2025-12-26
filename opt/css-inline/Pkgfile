@@ -1,0 +1,15 @@
+# Description:  css-inliner
+# Dependencies: rust
+
+name=css-inliner
+version=git
+release=1
+source=(https://github.com/Stranger6667/css-inline.git)
+
+build()
+{
+    export PATH=$PATH:~/.cargo/bin
+    cd $name
+    cargo build --release
+    install -D target/release/$name   $PKG/usr/local/bin/$name
+}
