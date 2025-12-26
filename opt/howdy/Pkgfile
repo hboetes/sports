@@ -1,0 +1,19 @@
+# Description: unlock your system with your webcam
+# URL:         https://github.com/boltgolt/howdy
+# Dependencies: libevdev python3-devel cmake gcc-c++ pam-devel inih-devel opencv opencv-devel python3-opencv
+
+name=howdy
+version=git
+release=git
+source=(https://github.com/boltgolt/howdy.git)
+
+build()
+{
+    cd $name
+    meson setup build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+    # Make sure the library can be found.
+    mkdir -p $PKG/etc/ld.so.conf.d
+    echo /usr/local/lib64 > $PKG/etc/ld.so.conf.d/howdy.conf
+}
