@@ -13,7 +13,7 @@ EnvironmentFile=/etc/vaultwarden.env
 ExecStart=/usr/bin/vaultwarden
 # Set reasonable connection and process limits
 LimitNOFILE=1048576
-LimitNPROC=64
+LimitNPROC=infinity
 # Isolate vaultwarden from the rest of the system
 PrivateTmp=true
 PrivateDevices=true
