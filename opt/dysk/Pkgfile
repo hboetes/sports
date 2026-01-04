@@ -1,0 +1,19 @@
+# Description:  nice alternative for df
+# URL:          https://github.com/Canop/dysk.git
+# Dependencies: rust
+
+name=dysk
+version=git
+release=1
+branch=main
+source=(https://github.com/Canop/dysk.git)
+
+build()
+{
+    export PATH=$PATH:/home/han/.cargo/bin
+    cd $name
+    cargo build --release
+    for i in $name; do
+        install -D target/release/$i   $PKG/usr/local/bin/$i
+    done
+}
