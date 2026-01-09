@@ -3,7 +3,7 @@
 
 name=noctalia-shell
 version=git
-release=3.5.0
+release=3.8.0
 branch=main
 source=(
     https://github.com/noctalia-dev/noctalia-shell.git
