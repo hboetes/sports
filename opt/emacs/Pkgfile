@@ -4,9 +4,10 @@
 # Dependencies: prt-get install tree-sitter
 
 name=emacs
-version=30
+version=31
 release=git
-branch=emacs-30
+# branch=emacs-31
+branch=master
 source=(git://git.savannah.gnu.org/emacs.git)
 
 
