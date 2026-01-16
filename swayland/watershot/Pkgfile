@@ -1,0 +1,16 @@
+# Description: screenshots for wayland
+# URL:         https://github.com/Kirottu/watershot.git
+
+name=watershot
+version=git
+release=1
+branch=main
+source=(https://github.com/Kirottu/watershot.git)
+
+build()
+{
+    cd $name
+    command -v cargo >& /dev/null || export PATH=$PATH:$HOME/.cargo/bin
+    cargo build --release
+    install -D target/release/$name $PKG/usr/local/bin/$name
+}
