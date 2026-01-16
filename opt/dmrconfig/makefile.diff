@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index ade25b4..4e536b8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -56,7 +57,7 @@ clean:
+ 		rm -f *~ *.o core dmrconfig dmrconfig.exe
+ 
+ install:	dmrconfig
+-		install -c -s dmrconfig /usr/local/bin/dmrconfig
++		install -c -s dmrconfig $(DESTDIR)/usr/local/bin/dmrconfig
+ 
+ ###
+ anytone_ht.o: anytone_ht.c radio.h util.h anytone_ht-map.h

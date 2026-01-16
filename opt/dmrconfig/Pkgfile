@@ -1,0 +1,24 @@
+# Description: utility for programming digital radios via USB programming cable.
+# URL:         https://github.com/OpenRTX/dmrconfig
+# libusb1-devel
+
+name=dmrconfig
+version=git
+release=1
+source=(
+    https://github.com/OpenRTX/dmrconfig.git
+    $name.diff
+    91.diff
+    makefile.diff
+)
+
+build()
+{
+    cd $name
+    # patch -p1 -i $SRC/$name.diff
+    #patch -p1 -i $SRC/91.diff
+    patch -p1 -i $SRC/makefile.diff
+    make
+    install -d $PKG/usr/local/bin
+    make install DESTDIR=$PKG
+}
