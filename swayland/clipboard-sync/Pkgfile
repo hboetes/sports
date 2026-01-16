@@ -14,5 +14,5 @@ build()
     patch -i $SRC/45.diff -p1
     make
     install -Dm755 target/release/clipboard-sync $PKG/usr/bin/clipboard-sync
-#     install -Dm644 clipboard-sync.service        $PKG/lib/systemd/user/clipboard-sync.service
+    install -Dm644 clipboard-sync.service        $PKG/lib/systemd/user/clipboard-sync.service
 }
