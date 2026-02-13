@@ -15,9 +15,7 @@ build()
     unset CXX
     cd $name
     patch -p1 -i $SRC/quickshell_adminpath.patch
-    mkdir -p build
-    cd build
-    cmake .. \
+    cmake \
           -GNinja -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           -DHYPRLAND=ON -DI3=ON -DINSTALL_QMLDIR=/usr/lib64/qt6/qml
     cmake --build build
