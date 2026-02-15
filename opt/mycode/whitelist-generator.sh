@@ -73,7 +73,7 @@ else
         google.com hotmail.com     github.com         paypal.com \
                    linkedin.com amazon.com telenet.be boetes.org \
                    axis-simulation.com   easybank.at  payr.co.at \
-                   bike24.net digid.nl
+                   bike24.net digid.nl weblate.org
     do
         whattodo=permit
         echo "# $domain"
