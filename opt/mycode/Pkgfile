@@ -31,7 +31,7 @@ build()
     for i in *.sh; do
         install $i $PKG/usr/local/bin/${i%.sh}
     done
-    # for i in *.sbinsh; do
-    #     install $i $PKG/usr/local/sbin/${i%.sbinsh}
-    # done
+    for i in *.py; do
+        install $i $PKG/usr/local/bin/${i%.py}
+    done
 }
