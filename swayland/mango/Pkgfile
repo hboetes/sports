@@ -1,0 +1,20 @@
+# Description: Mango Wayland Compositor
+# Dependencies: dnf install wlroots-devel scenefx-devel
+
+name=mangowc
+version=git
+release=1
+branch=main
+source=(
+    https://github.com/DreamMaoMao/mangowc.git
+    workspace10.diff
+)
+
+build()
+{
+    cd $name
+    patch -p1 -i $SRC/workspace10.diff
+    meson setup build -Dprefix=/usr/local --sysconfdir=/etc
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
