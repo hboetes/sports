@@ -1,5 +1,6 @@
 # Description: Mango Wayland Compositor
-# Dependencies: dnf install wlroots-devel scenefx-devel
+# Dependencies: dnf install wlroots-devel xcb-util-wm-devel
+# Dependencies: scenefx
 
 name=mangowc
 version=git
