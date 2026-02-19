@@ -1,4 +1,5 @@
 # Description: drop-in replacement for the wlroots scene API that allows wayland compositors to render surfaces with eye-candy effects
+# Dependencies: sudo dnf install glslang-devel
 
 name=scenefx
 version=git
