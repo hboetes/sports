@@ -1,0 +1,17 @@
+# Description: drop-in replacement for the wlroots scene API that allows wayland compositors to render surfaces with eye-candy effects
+
+name=scenefx
+version=git
+release=1
+branch=0.4.1
+source=(
+    https://github.com/wlrfx/scenefx.git
+)
+
+build()
+{
+    cd $name
+    meson --prefix=/usr/local build
+    ninja -C build
+    DESTDIR=$PKG ninja -C build install
+}
