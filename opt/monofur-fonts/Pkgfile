@@ -1,0 +1,19 @@
+# Description: Monofur Nerd Font
+
+name=monofur-nerd-fonts
+version=3.4.0
+release=1
+source=(
+    https://github.com/ryanoasis/nerd-fonts/releases/download/v$version/Monofur.tar.xz
+)
+
+build()
+{
+    mkdir -p $PKG/usr/share/fonts/monofur-nerd-fonts
+    cp *.ttf $PKG/usr/share/fonts/monofur-nerd-fonts/
+}
+
+post-install()
+{
+    /usr/bin/fc-cache -f
+}

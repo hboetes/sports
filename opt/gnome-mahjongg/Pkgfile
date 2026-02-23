@@ -3,7 +3,7 @@
 name=gnome-mahjongg
 version=git
 release=1
-source=(https://gitlab.gnome.org/GNOME/gnome-mahjongg.git)
+source=(https://github.com/GNOME/gnome-mahjongg.git)
 
 build()
 {
