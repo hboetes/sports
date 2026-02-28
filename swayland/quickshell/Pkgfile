@@ -17,7 +17,7 @@ build()
     patch -p1 -i $SRC/quickshell_adminpath.patch
     cmake \
           -GNinja -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-          -DHYPRLAND=ON -DI3=ON -DINSTALL_QMLDIR=/usr/lib64/qt6/qml
+          -DHYPRLAND=ON -DI3=ON -DCRASH_REPORTER=OFF -DINSTALL_QMLDIR=/usr/lib64/qt6/qml
     cmake --build build
     DESTDIR=$PKG cmake --install build
 }
