@@ -6,18 +6,22 @@ version=git
 release=1
 source=(
     https://github.com/noctalia-dev/noctalia-qs.git
-    quickshell_adminpath.patch
+    gcc-warnings.patch
 )
 
 build()
 {
-    # Doesn't work with sccache
-    unset CXX
+    # Doesn't work with sccache, compiler is set with: -DCMAKE_CXX_COMPILER=clang++
+    # Without setting LC_ALL you get a whole lot of errors.
+    export LC_ALL=en_US.UTF-8
+
     cd $name
-    patch -p1 -i $SRC/quickshell_adminpath.patch
+    patch -p1 -i $SRC/gcc-warnings.patch
+
     cmake \
           -GNinja -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-          -DHYPRLAND=ON -DI3=ON -DCRASH_REPORTER=OFF -DINSTALL_QMLDIR=/usr/lib64/qt6/qml
+          -DHYPRLAND=ON -DI3=ON -DCRASH_REPORTER=OFF -DINSTALL_QMLDIR=/usr/lib64/qt6/qml \
+          -DCMAKE_CXX_COMPILER=c++ -DCMAKE_DISABLE_PRECOMPILE_HEADERS=ON
     cmake --build build
     DESTDIR=$PKG cmake --install build
 }

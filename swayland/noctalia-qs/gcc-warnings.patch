@@ -1,0 +1,118 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -84,7 +84,10 @@
+ include(cmake/install-qml-module.cmake)
+ include(cmake/util.cmake)
+ 
+-add_compile_options(-Wall -Wextra -Wno-vla-cxx-extension)
++add_compile_options(-Wall -Wextra)
++if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
++	add_compile_options(-Wno-vla-cxx-extension)
++endif()
+ 
+ # pipewire defines this, breaking PCH
+ add_compile_definitions(_REENTRANT)
+--- a/cmake/pch.cmake
++++ b/cmake/pch.cmake
+@@ -31,13 +31,17 @@
+ 		return()
+ 	endif()
+ 
+-	cmake_parse_arguments(PARSE_ARGV 1 arg "" "" "HEADERS;DEPENDENCIES")
++	cmake_parse_arguments(PARSE_ARGV 1 arg "" "" "HEADERS;DEPENDENCIES;COMPILE_DEFINITIONS")
+ 
+ 	set(LIBNAME "qs-pchset-${SETNAME}")
+ 
+ 	add_library(${LIBNAME} ${CMAKE_BINARY_DIR}/pchstub.cpp)
+ 	target_link_libraries(${LIBNAME} ${arg_DEPENDENCIES})
+ 	target_precompile_headers(${LIBNAME} PUBLIC ${arg_HEADERS})
++
++	if (arg_COMPILE_DEFINITIONS)
++		target_compile_definitions(${LIBNAME} PUBLIC ${arg_COMPILE_DEFINITIONS})
++	endif()
+ endfunction()
+ 
+ set(COMMON_PCH_SET
+@@ -56,6 +60,7 @@
+ qs_add_pchset(common
+ 	DEPENDENCIES Qt::Quick
+ 	HEADERS ${COMMON_PCH_SET}
++	COMPILE_DEFINITIONS _REENTRANT
+ )
+ 
+ qs_add_pchset(large
+@@ -72,6 +77,7 @@
+ 		<qdir.h>
+ 		<qtimer.h>
+ 		<qabstractitemmodel.h>
++	COMPILE_DEFINITIONS _REENTRANT
+ )
+ 
+ 
+--- a/src/services/pipewire/peak.cpp
++++ b/src/services/pipewire/peak.cpp
+@@ -32,7 +32,11 @@
+ #include "qml.hpp"
+ 
+ #pragma GCC diagnostic push
++#ifdef __clang__
+ #pragma GCC diagnostic ignored "-Wmissing-designated-field-initializers"
++#else
++#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
++#endif
+ 
+ namespace qs::service::pipewire {
+ 
+--- a/src/launch/main.cpp
++++ b/src/launch/main.cpp
+@@ -25,7 +25,10 @@
+ namespace {
+ 
+ void checkCrashRelaunch(char** argv, QCoreApplication* coreApplication) {
+-#if CRASH_REPORTER
++#if !CRASH_REPORTER
++	(void)argv;
++	(void)coreApplication;
++#else
+ 	auto lastInfoFdStr = qEnvironmentVariable("__QUICKSHELL_CRASH_INFO_FD");
+ 
+ 	if (!lastInfoFdStr.isEmpty()) {
+--- a/src/network/nm/backend.cpp
++++ b/src/network/nm/backend.cpp
+@@ -157,6 +157,7 @@
+ 			case NM80211Mode::Ap: return WifiDeviceMode::AccessPoint;
+ 			case NM80211Mode::Mesh: return WifiDeviceMode::Mesh;
+ 			}
++			Q_UNREACHABLE();
+ 		};
+ 		// clang-format off
+ 		frontendWifiDev->bindableMode().setBinding(translateMode);
+@@ -179,6 +180,7 @@
+ 		case 100: return DeviceConnectionState::Connected;
+ 		case 110 ... 120: return DeviceConnectionState::Disconnecting;
+ 		}
++		Q_UNREACHABLE();
+ 	};
+ 	// clang-format off
+ 	frontendDev->bindableName().setBinding([dev]() { return dev->interface(); });
+--- a/src/services/upower/powerprofiles.cpp
++++ b/src/services/upower/powerprofiles.cpp
+@@ -169,7 +169,7 @@
+ 	case PowerProfile::PowerSaver: return QStringLiteral("power-saver");
+ 	case PowerProfile::Balanced: return QStringLiteral("balanced");
+ 	case PowerProfile::Performance: return QStringLiteral("performance");
+-	default: qFatal() << "Attempted to convert invalid power profile" << data << "to wire format.";
++	default: qFatal() << "Attempted to convert invalid power profile" << data << "to wire format."; Q_UNREACHABLE();
+ 	}
+ }
+ 
+--- a/src/network/nm/utils.cpp
++++ b/src/network/nm/utils.cpp
+@@ -111,6 +111,7 @@
+ 		break;
+ 	case WifiSecurityType::Leap:
+ 		if (adhoc) return false;
++		[[fallthrough]];
+ 	case WifiSecurityType::StaticWep:
+ 		if (!(apFlags & NM80211ApFlags::Privacy)) return false;
+ 		if (apWpa || apRsn) {
