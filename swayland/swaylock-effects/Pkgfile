@@ -1,5 +1,5 @@
 # Description:  swaylock fork
-# URL:          https://github.com/mortie/swaylock-effects.git
+# URL:          https://github.com/hboetes/swaylock-effects.git
 # Dependencies: fprintd-devel
 
 name=swaylock-effects
@@ -7,18 +7,13 @@ version=git
 release=1
 branch=master
 source=(
-    https://github.com/jirutka/swaylock-effects.git
-    70.diff
-    49.diff
-    34.diff
+    https://github.com/hboetes/swaylock-effects.git
 )
 
 build()
 {
     cd $name
-    patch -p1 -i $SRC/49.diff
-    patch -p1 -i $SRC/70.diff
-    patch -p1 -i $SRC/34.diff
+
     meson setup --prefix=/usr/local build \
           -Dgdk-pixbuf=enabled \
           -Dzsh-completions=true \
