@@ -26,7 +26,7 @@ build()
 
     # export PATH=$PATH:/usr/local/go/bin
     export PATH=$PATH:/usr/lib/golang/bin
-    export GOPROXY=https://goproxy.io,direct
+    # export GOPROXY=https://goproxy.io,direct
     # Nice, but it doesn't work.
     # sed -i 's@npm ci@npm ci \&\& npm audit fix --force ||:@' Makefile
     # sed -i 's@npm ci@npm ci \&\& npm audit fix ||:@' Makefile
