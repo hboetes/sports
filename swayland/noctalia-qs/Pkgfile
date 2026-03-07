@@ -6,7 +6,6 @@ version=git
 release=1
 source=(
     https://github.com/noctalia-dev/noctalia-qs.git
-    gcc-warnings.patch
 )
 
 build()
@@ -16,7 +15,6 @@ build()
     export LC_ALL=en_US.UTF-8
 
     cd $name
-    patch -p1 -i $SRC/gcc-warnings.patch
 
     cmake \
           -GNinja -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
