@@ -13,7 +13,7 @@ source=(
 build()
 {
     cd sgrotum-$version
-    patch -i $SRC/sgrotum.diff
+    patch_apply sgrotum
     export CFLAGS="$CFLAGS -D__USE_GNU"
     ./configure \
         --prefix=/usr/local
