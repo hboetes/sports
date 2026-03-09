@@ -8,11 +8,14 @@ release=1
 branch=master
 source=(
     https://github.com/hboetes/swaylock-effects.git
+    fix-fingerprint-on-demand-short-option.patch
 )
 
 build()
 {
     cd $name
+
+    patch_apply fix-fingerprint-on-demand-short-option
 
     meson_build \
         --sysconfdir=/etc \
