@@ -11,11 +11,9 @@ depends=(wlroots)
 build()
 {
     cd $name
-    meson setup build \
+    meson_build \
           --wrap-mode=nofallback \
           -Dfish-completions=false \
           -Dbash-completions=false \
           -Ddefault-wallpaper=false
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
 }

@@ -10,11 +10,9 @@ source=(https://github.com/xkbcommon/libxkbcommon.git)
 build()
 {
     cd $name # -$version
-    meson setup build \
+    meson_build \
           -Denable-x11=false \
           -Dxkb-config-root=/usr/share/X11/xkb \
           -Dx-locale-root=/usr/share/X11/locale
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
     rm -rf $PKG/usr/local/share/doc
 }

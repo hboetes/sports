@@ -14,13 +14,12 @@ build()
 {
     cd $name
 
-    meson setup --prefix=/usr/local build \
-          -Dgdk-pixbuf=enabled \
-          -Dzsh-completions=true \
-          -Dbash-completions=false \
-          -Dfish-completions=false \
-          -Dfingerprint=enabled
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
-    mv $PKG/usr/local/etc $PKG/etc
+    meson_build \
+        --sysconfdir=/etc \
+        --prefix=/usr/local \
+        -Dgdk-pixbuf=enabled \
+        -Dzsh-completions=true \
+        -Dbash-completions=false \
+        -Dfish-completions=false \
+        -Dfingerprint=enabled
 }

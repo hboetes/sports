@@ -9,7 +9,5 @@ source=(https://gitlab.freedesktop.org/pipewire/wireplumber.git)
 build()
 {
     cd $name
-    meson build . --prefix=/usr
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
+    meson_build
 }

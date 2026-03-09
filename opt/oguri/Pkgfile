@@ -9,9 +9,6 @@ source=(https://github.com/vilhalmer/oguri.git)
 
 build()
 {
-    # export CC=clang-8
     cd $name
-    meson build
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
+    meson_build
 }

@@ -9,7 +9,5 @@ source=(https://git.sr.ht/~emersion/kanshi.git)
 build()
 {
     cd $name
-    meson build
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
+    meson_build
 }

@@ -17,7 +17,5 @@ build()
     cd $name
     # patch -p1 -i $SRC/workspace10.diff
     patch -p1 -i $SRC/739-fixed.patch
-    meson setup build -Dprefix=/usr/local --sysconfdir=/etc
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
+    meson_build --sysconfdir=/etc
 }

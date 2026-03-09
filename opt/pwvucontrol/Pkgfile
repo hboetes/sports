@@ -5,14 +5,10 @@ version=git
 release=1
 source=(
     https://github.com/saivert/pwvucontrol.git
-    0.5.diff
 )
 
 build()
 {
     cd $name
-    patch -i $SRC/0.5.diff -p1
-    meson build . --prefix=/usr
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
+    meson_build --prefix=/usr
 }

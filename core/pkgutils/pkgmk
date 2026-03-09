@@ -747,6 +747,13 @@ patch_apply() {
     esac
 }
 
+# Standard options for building with meson.
+meson_build() {
+    meson setup "${@}" build
+    meson compile -C build
+    DESTDIR=$PKG meson install -C build
+}
+
 main()
 {
     local FILE TARGET

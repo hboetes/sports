@@ -8,7 +8,5 @@ source=(https://github.com/cage-kiosk/cage.git)
 build()
 {
     cd $name
-    meson setup build --buildtype=release
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
+    meson_build --buildtype=release
 }

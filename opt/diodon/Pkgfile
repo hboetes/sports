@@ -12,11 +12,7 @@ build()
     cd $name
     # On redhat family this library is called somewhat different.
     [ -e /etc/redhat-release ] && sed -i 's|ayatana-appindicator3|appindicator3|' meson.build
-    meson builddir
-    cd builddir
-    ninja
-    ninja test
-    DESTDIR=$PKG ninja install
+    meson_build
 }
 
 post-install()

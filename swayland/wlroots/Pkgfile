@@ -12,7 +12,5 @@ source=(https://gitlab.freedesktop.org/wlroots/wlroots.git)
 build()
 {
     cd $name
-    meson setup build -Dbackends=drm,libinput,x11
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
+    meson_build -Dbackends=drm,libinput,x11
 }

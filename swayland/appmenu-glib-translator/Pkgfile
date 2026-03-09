@@ -9,6 +9,5 @@ source=(https://github.com/rilian-la-te/vala-panel-appmenu.git)
 build()
 {
     cd appmenu-glib-translator/subprojects/appmenu-glib-translator
-    meson setup --prefix /usr build
-    DESTDIR=$PKG meson install -C build
+    meson_build --prefix /usr
 }

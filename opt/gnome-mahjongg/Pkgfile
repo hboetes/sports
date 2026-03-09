@@ -8,9 +8,7 @@ source=(https://github.com/GNOME/gnome-mahjongg.git)
 build()
 {
     cd $name
-    meson setup build
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
+    meson_build
 }
 
 post-install()

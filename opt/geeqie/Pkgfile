@@ -9,8 +9,6 @@ source=(https://github.com/BestImageViewer/geeqie.git)
 build()
 {
     cd $name
-    meson build
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
+    meson_build
     rm -rf $PKG/usr/local/share/doc/
 }

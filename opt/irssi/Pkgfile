@@ -13,9 +13,7 @@ source=(
 build ()
 {
     cd $name
-    meson Build
-    ninja -C Build
-    DESTDIR=$PKG  ninja -C Build install
+    meson_build
     remove_perlcrap
     rm -rf $PKG/usr/local/share/doc/
 }

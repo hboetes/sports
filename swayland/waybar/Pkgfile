@@ -11,8 +11,5 @@ source=(https://github.com/Alexays/Waybar.git)
 build()
 {
     cd waybar
-    # meson setup build
-    meson setup build -Dwrap_mode=nodownload -Dtests=disabled
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
+    meson_build -Dwrap_mode=nodownload -Dtests=disabled
 }

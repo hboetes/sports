@@ -1,5 +1,4 @@
-# Description: i3 for wayland
-# URL:         https://github.com/swaywm/sway.git
+# Description: vnc for wayland
 # Dependends:  libdrm-devel jansson-devel
 
 name=wayvnc
@@ -31,7 +30,5 @@ build()
     cd -
 
     cd $name
-    meson setup build --buildtype=debug
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
+    meson_build --buildtype=debug
 }

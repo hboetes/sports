@@ -10,12 +10,10 @@ source=(https://github.com/boltgolt/howdy.git)
 build()
 {
     cd $name
-    meson setup build \
+    meson_build \
           --prefix=/usr \
           --sysconfdir=/etc \
           --libdir=/usr/lib64
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
     # Make sure the library can be found.
     mkdir -p $PKG/etc/ld.so.conf.d
     echo /usr/local/lib64 > $PKG/etc/ld.so.conf.d/howdy.conf

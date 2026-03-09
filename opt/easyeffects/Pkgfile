@@ -11,10 +11,7 @@ source=(https://github.com/wwmm/easyeffects.git)
 build()
 {
     cd $name
-    meson build
-    ninja -C build
-    DESTDIR=$PKG ninja -C build install
-    rm -rf $PKG/usr/local/share/locale/
+    meson_build
 }
 
 post-install()
