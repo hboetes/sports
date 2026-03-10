@@ -1,5 +1,5 @@
 diff --git a/mmsg/mmsg.c b/mmsg/mmsg.c
-index 4e0e1d8c..08932cf5 100644
+index 4e0e1d8c..017f3d2a 100644
 --- a/mmsg/mmsg.c
 +++ b/mmsg/mmsg.c
 @@ -46,7 +46,7 @@ static int32_t Aflag;
@@ -11,7 +11,7 @@ index 4e0e1d8c..08932cf5 100644
  static char *tagset;
  static char *layout_name;
  static int32_t layoutcount, layout_idx;
-@@ -85,10 +85,11 @@ static void noop_scale(void *data, struct wl_output *wl_output,
+@@ -85,20 +85,25 @@ static void noop_scale(void *data, struct wl_output *wl_output,
  static void noop_description(void *data, struct wl_output *wl_output,
  							 const char *description) {}
  
@@ -22,12 +22,17 @@ index 4e0e1d8c..08932cf5 100644
 +// Convert num to an N-bit binary string, store result in buf (minimum length
 +// nbits+1)
 +void bin_str_nbits(char *buf, uint32_t num, uint32_t nbits) {
++	if (nbits == 0) {
++		*buf = '\0';
++		return;
++	}
 +	for (int32_t i = nbits - 1; i >= 0; i--) {
 +		*buf++ = ((num >> i) & 1) ? '1' : '0';
  	}
- 	*buf = '\0'; // 字符串结尾
+-	*buf = '\0'; // 字符串结尾
++	*buf = '\0';
  }
-@@ -96,9 +97,9 @@ void bin_str_9bits(char *buf, uint32_t n) {
+ 
  static void dwl_ipc_tags(void *data,
  						 struct zdwl_ipc_manager_v2 *dwl_ipc_manager,
  						 uint32_t count) {
@@ -39,7 +44,7 @@ index 4e0e1d8c..08932cf5 100644
  }
  
  static void dwl_ipc_layout(void *data,
-@@ -324,7 +325,7 @@ static void dwl_ipc_output_frame(void *data,
+@@ -324,7 +329,7 @@ static void dwl_ipc_output_frame(void *data,
  		if (tflag) {
  			uint32_t mask = seltags;
  			char *t = tagset;
@@ -48,7 +53,7 @@ index 4e0e1d8c..08932cf5 100644
  
  			for (; *t && *t >= '0' && *t <= '9'; t++)
  				i = *t - '0' + i * 10;
-@@ -346,7 +347,7 @@ static void dwl_ipc_output_frame(void *data,
+@@ -346,7 +351,7 @@ static void dwl_ipc_output_frame(void *data,
  				}
  			}
  
@@ -57,7 +62,7 @@ index 4e0e1d8c..08932cf5 100644
  				die("bad tagset %s", tagset);
  
  			zdwl_ipc_output_v2_set_tags(dwl_ipc_output, mask, 0);
-@@ -354,7 +355,7 @@ static void dwl_ipc_output_frame(void *data,
+@@ -354,7 +359,7 @@ static void dwl_ipc_output_frame(void *data,
  		if (cflag) {
  			uint32_t and = ~0, xor = 0;
  			char *t = client_tags;
@@ -66,7 +71,7 @@ index 4e0e1d8c..08932cf5 100644
  
  			for (; *t && *t >= '0' && *t <= '9'; t++)
  				i = *t - '0' + i * 10;
-@@ -376,7 +377,7 @@ static void dwl_ipc_output_frame(void *data,
+@@ -376,7 +381,7 @@ static void dwl_ipc_output_frame(void *data,
  					break;
  				}
  			}
@@ -75,7 +80,7 @@ index 4e0e1d8c..08932cf5 100644
  				die("bad client tagset %s", client_tags);
  
  			zdwl_ipc_output_v2_set_client_tags(dwl_ipc_output, and, xor);
-@@ -395,11 +396,11 @@ static void dwl_ipc_output_frame(void *data,
+@@ -395,11 +400,11 @@ static void dwl_ipc_output_frame(void *data,
  
  			printf("%s clients %u\n", output_name, total_clients);
  
@@ -92,16 +97,23 @@ index 4e0e1d8c..08932cf5 100644
  			printf("%s tags %s %s %s\n", output_name, occ_str, seltags_str,
  				   urg_str);
 diff --git a/src/config/parse_config.h b/src/config/parse_config.h
-index 3220b713..dada63c0 100644
+index 3220b713..4ecf9c82 100644
 --- a/src/config/parse_config.h
 +++ b/src/config/parse_config.h
-@@ -8,15 +8,19 @@
+@@ -8,15 +8,26 @@
  #define SYSCONFDIR "/etc"
  #endif
  
++static bool config_initialized = false;
++
 +// Clamps value in range while preserving numeric type
 +#define CLAMP(x, min, max)                                                     \
-+	((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
++	({                                                                         \
++		__typeof__(x) _x = (x);                                                \
++		__typeof__(min) _min = (min);                                          \
++		__typeof__(max) _max = (max);                                          \
++		_x < _min ? _min : (_x > _max ? _max : _x);                            \
++	})
 +
  // 整数版本 - 截断小数部分
 +// Deprecated: use CLAMP or CLAMP with explicit casts instead
@@ -119,7 +131,7 @@ index 3220b713..dada63c0 100644
  
  enum { NUM_TYPE_MINUS, NUM_TYPE_PLUS, NUM_TYPE_DEFAULT };
  
-@@ -159,7 +163,7 @@ typedef struct {
+@@ -159,7 +170,7 @@ typedef struct {
  } GestureBinding;
  
  typedef struct {
@@ -128,7 +140,7 @@ index 3220b713..dada63c0 100644
  	char *layout_name;
  	char *monitor_name;
  	char *monitor_make;
-@@ -314,6 +318,7 @@ typedef struct {
+@@ -314,6 +325,7 @@ typedef struct {
  
  	char autostart[3][256];
  
@@ -136,7 +148,7 @@ index 3220b713..dada63c0 100644
  	ConfigTagRule *tag_rules; // 动态数组
  	int32_t tag_rules_count;  // 数量
  
-@@ -1118,7 +1123,7 @@ FuncType parse_func_name(char *func_name, Arg *arg, char *arg_value,
+@@ -1118,7 +1130,7 @@ FuncType parse_func_name(char *func_name, Arg *arg, char *arg_value,
  
  			while (token != NULL) {
  				int32_t num = atoi(token);
@@ -145,17 +157,25 @@ index 3220b713..dada63c0 100644
  					mask |= (1 << (num - 1));
  				}
  				token = strtok_r(NULL, "|", &saveptr);
-@@ -1584,6 +1589,9 @@ bool parse_option(Config *config, char *key, char *value) {
+@@ -1584,6 +1596,17 @@ bool parse_option(Config *config, char *key, char *value) {
  		config->default_mfact = atof(value);
  	} else if (strcmp(key, "default_nmaster") == 0) {
  		config->default_nmaster = atoi(value);
 +	} else if (strcmp(key, "tag_count") == 0) {
-+		config->tag_count = CLAMP(atoi(value), 1, 32);
-+		tag_count = config->tag_count;
++		uint32_t requested = CLAMP(atoi(value), 1, 32);
++		config->tag_count = requested;
++		if (!config_initialized) {
++			tag_count = requested;
++		} else if (tag_count != requested) {
++			wlr_log(WLR_INFO,
++					"tag_count change requires restart (current: %u, "
++					"requested: %u)",
++					tag_count, requested);
++		}
  	} else if (strcmp(key, "center_master_overspread") == 0) {
  		config->center_master_overspread = atoi(value);
  	} else if (strcmp(key, "center_when_single_stack") == 0) {
-@@ -1907,7 +1915,7 @@ bool parse_option(Config *config, char *key, char *value) {
+@@ -1907,7 +1930,7 @@ bool parse_option(Config *config, char *key, char *value) {
  				trim_whitespace(val);
  
  				if (strcmp(key, "id") == 0) {
@@ -164,7 +184,7 @@ index 3220b713..dada63c0 100644
  				} else if (strcmp(key, "layout_name") == 0) {
  					rule->layout_name = strdup(val);
  				} else if (strcmp(key, "monitor_name") == 0) {
-@@ -3309,6 +3317,7 @@ void set_value_default() {
+@@ -3309,6 +3332,7 @@ void set_value_default() {
  	config.new_is_master = new_is_master; // 新窗口是否插在头部
  	config.default_mfact = default_mfact; // master 窗口比例
  	config.default_nmaster = default_nmaster; // 默认master数量
@@ -172,7 +192,7 @@ index 3220b713..dada63c0 100644
  	config.center_master_overspread =
  		center_master_overspread; // 中心master时是否铺满
  	config.center_when_single_stack =
-@@ -3512,6 +3521,7 @@ bool parse_config(void) {
+@@ -3512,6 +3536,7 @@ bool parse_config(void) {
  	config.scroller_proportion_preset_count = 0;
  	config.circle_layout = NULL;
  	config.circle_layout_count = 0;
@@ -180,7 +200,15 @@ index 3220b713..dada63c0 100644
  	config.tag_rules = NULL;
  	config.tag_rules_count = 0;
  	config.cursor_theme = NULL;
-@@ -3701,9 +3711,9 @@ void reapply_pointer(void) {
+@@ -3545,6 +3570,7 @@ bool parse_config(void) {
+ 	parse_correct = parse_config_file(&config, filename, true);
+ 	set_default_key_bindings(&config);
+ 	override_config();
++	config_initialized = true;
+ 	return parse_correct;
+ }
+ 
+@@ -3701,9 +3727,9 @@ void reapply_pointer(void) {
  
  void reapply_master(void) {
  
@@ -192,7 +220,7 @@ index 3220b713..dada63c0 100644
  		wl_list_for_each(m, &mons, link) {
  			if (!m->wlr_output->enabled) {
  				continue;
-@@ -3719,12 +3729,12 @@ void reapply_master(void) {
+@@ -3719,12 +3745,12 @@ void reapply_master(void) {
  }
  
  void parse_tagrule(Monitor *m) {
@@ -207,7 +235,7 @@ index 3220b713..dada63c0 100644
  		m->pertag->nmasters[i] = default_nmaster;
  		m->pertag->mfacts[i] = default_mfact;
  	}
-@@ -3782,7 +3792,7 @@ void parse_tagrule(Monitor *m) {
+@@ -3782,7 +3808,7 @@ void parse_tagrule(Monitor *m) {
  		}
  	}
  
@@ -290,18 +318,18 @@ index ab0bdb8d..7a5be561 100644
  	}
  
 diff --git a/src/ext-protocol/ext-workspace.h b/src/ext-protocol/ext-workspace.h
-index 28aaeeeb..648690ef 100644
+index 28aaeeeb..3bb9e946 100644
 --- a/src/ext-protocol/ext-workspace.h
 +++ b/src/ext-protocol/ext-workspace.h
-@@ -1,4 +1,7 @@
+@@ -1,5 +1,7 @@
  #include "wlr_ext_workspace_v1.h"
-+#include <assert.h>
-+
-+#define WORKSPACE_NAME_MAX_SIZE 12
  
++#define WORKSPACE_NAME_MAX_SIZE 12
++
  #define EXT_WORKSPACE_ENABLE_CAPS                                              \
  	EXT_WORKSPACE_HANDLE_V1_WORKSPACE_CAPABILITIES_ACTIVATE |                  \
-@@ -8,8 +11,8 @@ typedef struct Monitor Monitor;
+ 		EXT_WORKSPACE_HANDLE_V1_WORKSPACE_CAPABILITIES_DEACTIVATE
+@@ -8,8 +10,8 @@ typedef struct Monitor Monitor;
  
  struct workspace {
  	struct wl_list link; // Link in global workspaces list
@@ -312,7 +340,7 @@ index 28aaeeeb..648690ef 100644
  	struct wlr_ext_workspace_handle_v1 *ext_workspace; // Protocol object
  	/* Event listeners */
  	struct wl_listener activate;
-@@ -22,24 +25,24 @@ struct wlr_ext_workspace_manager_v1 *ext_manager;
+@@ -22,24 +24,24 @@ struct wlr_ext_workspace_manager_v1 *ext_manager;
  struct wl_list workspaces;
  
  void goto_workspace(struct workspace *target) {
@@ -343,7 +371,7 @@ index 28aaeeeb..648690ef 100644
  	}
  }
  
-@@ -69,10 +72,13 @@ static void handle_ext_workspace_deactivate(struct wl_listener *listener,
+@@ -69,10 +71,14 @@ static void handle_ext_workspace_deactivate(struct wl_listener *listener,
  	wlr_log(WLR_INFO, "ext deactivating workspace %d", workspace->tag);
  }
  
@@ -353,7 +381,8 @@ index 28aaeeeb..648690ef 100644
 -	return (tag < sizeof(names) / sizeof(names[0])) ? names[tag] : NULL;
 +static void get_name_from_tag_number(char *dst_buf, size_t dst_len,
 +									 uint32_t tag_number) {
-+	assert(tag_number <= tag_count);
++	if (tag_number > tag_count)
++		die("tag_number %u exceeds tag_count %u", tag_number, tag_count);
 +	if (tag_number == 0)
 +		snprintf(dst_buf, dst_len, "overview");
 +	else
@@ -441,7 +470,7 @@ index d2b4fe62..6c1e8a24 100644
  		return 1 << (i - 1);
  	}
 diff --git a/src/mango.c b/src/mango.c
-index bdafcc58..b544863b 100644
+index bdafcc58..d1ca6973 100644
 --- a/src/mango.c
 +++ b/src/mango.c
 @@ -117,7 +117,7 @@
@@ -485,10 +514,12 @@ index bdafcc58..b544863b 100644
  	free(m->pertag);
  	free(m);
  }
-@@ -3028,6 +3032,14 @@ void createmon(struct wl_listener *listener, void *data) {
+@@ -3028,6 +3032,16 @@ void createmon(struct wl_listener *listener, void *data) {
  
  	wl_list_insert(&mons, &m->link);
  	m->pertag = calloc(1, sizeof(Pertag));
++	if (!m->pertag)
++		die("pertag calloc failed");
 +	m->pertag->nmasters = calloc(tag_count + 1, sizeof(int32_t));
 +	m->pertag->mfacts = calloc(tag_count + 1, sizeof(float));
 +	m->pertag->no_hide = calloc(tag_count + 1, sizeof(bool));
@@ -496,11 +527,11 @@ index bdafcc58..b544863b 100644
 +	m->pertag->ltidxs = calloc(tag_count + 1, sizeof(const Layout *));
 +	if (!m->pertag->nmasters || !m->pertag->mfacts || !m->pertag->no_hide ||
 +		!m->pertag->no_render_border || !m->pertag->ltidxs)
-+		die("pertag calloc failed");
++		die("pertag member calloc failed");
  	if (chvt_backup_tag &&
  		regex_match(chvt_backup_selmon, m->wlr_output->name)) {
  		m->tagset[0] = m->tagset[1] = (1 << (chvt_backup_tag - 1)) & TAGMASK;
-@@ -3039,7 +3051,7 @@ void createmon(struct wl_listener *listener, void *data) {
+@@ -3039,7 +3053,7 @@ void createmon(struct wl_listener *listener, void *data) {
  		m->pertag->curtag = m->pertag->prevtag = 1;
  	}
  
@@ -509,7 +540,7 @@ index bdafcc58..b544863b 100644
  		m->pertag->nmasters[i] = default_nmaster;
  		m->pertag->mfacts[i] = default_mfact;
  		m->pertag->ltidxs[i] = &layouts[0];
-@@ -3080,7 +3092,7 @@ void createmon(struct wl_listener *listener, void *data) {
+@@ -3080,7 +3094,7 @@ void createmon(struct wl_listener *listener, void *data) {
  		ext_manager, EXT_WORKSPACE_ENABLE_CAPS);
  	wlr_ext_workspace_group_handle_v1_output_enter(m->ext_group, m->wlr_output);
  
@@ -518,7 +549,7 @@ index bdafcc58..b544863b 100644
  		add_workspace_by_tag(i, m);
  	}
  
-@@ -6270,10 +6282,10 @@ void view_in_mon(const Arg *arg, bool want_animation, Monitor *m,
+@@ -6270,10 +6284,10 @@ void view_in_mon(const Arg *arg, bool want_animation, Monitor *m,
  		if (arg->ui == (~0 & TAGMASK))
  			m->pertag->curtag = 0;
  		else {
