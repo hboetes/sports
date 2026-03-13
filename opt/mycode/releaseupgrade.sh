@@ -1,7 +1,8 @@
 #!/bin/zsh
+
 release=$(rpm -E %fedora)
 release=$((release + 1))
-if [[ $release -gt 43 ]]; then
+if [[ $release -gt 44 ]]; then
     echo "Fedora Release $release is not yet available." >&2
     exit 1
 fi
@@ -17,6 +18,7 @@ if [[ -z  $TMUX ]]; then
 fi
 
 dnf -y upgrade --refresh
+
 dnf -y system-upgrade download --releasever=$release
 
 echo "Ready for reboot, press the any key to continue."
