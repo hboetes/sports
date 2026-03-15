@@ -1,5 +1,5 @@
 diff --git a/mmsg/mmsg.c b/mmsg/mmsg.c
-index 4e0e1d8c..017f3d2a 100644
+index 4e0e1d8..017f3d2 100644
 --- a/mmsg/mmsg.c
 +++ b/mmsg/mmsg.c
 @@ -46,7 +46,7 @@ static int32_t Aflag;
@@ -97,7 +97,7 @@ index 4e0e1d8c..017f3d2a 100644
  			printf("%s tags %s %s %s\n", output_name, occ_str, seltags_str,
  				   urg_str);
 diff --git a/src/config/parse_config.h b/src/config/parse_config.h
-index 3220b713..4ecf9c82 100644
+index 6ae9740..30d9f20 100644
 --- a/src/config/parse_config.h
 +++ b/src/config/parse_config.h
 @@ -8,15 +8,26 @@
@@ -140,15 +140,15 @@ index 3220b713..4ecf9c82 100644
  	char *layout_name;
  	char *monitor_name;
  	char *monitor_make;
-@@ -314,6 +325,7 @@ typedef struct {
- 
- 	char autostart[3][256];
+@@ -316,6 +327,7 @@ typedef struct {
+ 	int32_t log_level;
+ 	uint32_t capslock;
  
 +	uint32_t tag_count;
  	ConfigTagRule *tag_rules; // 动态数组
  	int32_t tag_rules_count;  // 数量
  
-@@ -1118,7 +1130,7 @@ FuncType parse_func_name(char *func_name, Arg *arg, char *arg_value,
+@@ -1125,7 +1137,7 @@ FuncType parse_func_name(char *func_name, Arg *arg, char *arg_value,
  
  			while (token != NULL) {
  				int32_t num = atoi(token);
@@ -157,7 +157,7 @@ index 3220b713..4ecf9c82 100644
  					mask |= (1 << (num - 1));
  				}
  				token = strtok_r(NULL, "|", &saveptr);
-@@ -1584,6 +1596,17 @@ bool parse_option(Config *config, char *key, char *value) {
+@@ -1591,6 +1603,17 @@ bool parse_option(Config *config, char *key, char *value) {
  		config->default_mfact = atof(value);
  	} else if (strcmp(key, "default_nmaster") == 0) {
  		config->default_nmaster = atoi(value);
@@ -175,7 +175,7 @@ index 3220b713..4ecf9c82 100644
  	} else if (strcmp(key, "center_master_overspread") == 0) {
  		config->center_master_overspread = atoi(value);
  	} else if (strcmp(key, "center_when_single_stack") == 0) {
-@@ -1907,7 +1930,7 @@ bool parse_option(Config *config, char *key, char *value) {
+@@ -1914,7 +1937,7 @@ bool parse_option(Config *config, char *key, char *value) {
  				trim_whitespace(val);
  
  				if (strcmp(key, "id") == 0) {
@@ -184,15 +184,15 @@ index 3220b713..4ecf9c82 100644
  				} else if (strcmp(key, "layout_name") == 0) {
  					rule->layout_name = strdup(val);
  				} else if (strcmp(key, "monitor_name") == 0) {
-@@ -3309,6 +3332,7 @@ void set_value_default() {
- 	config.new_is_master = new_is_master; // 新窗口是否插在头部
- 	config.default_mfact = default_mfact; // master 窗口比例
- 	config.default_nmaster = default_nmaster; // 默认master数量
+@@ -3267,6 +3290,7 @@ void set_value_default() {
+ 	config.new_is_master = 1;
+ 	config.default_mfact = 0.55f;
+ 	config.default_nmaster = 1;
 +	config.tag_count = tag_count;
- 	config.center_master_overspread =
- 		center_master_overspread; // 中心master时是否铺满
- 	config.center_when_single_stack =
-@@ -3512,6 +3536,7 @@ bool parse_config(void) {
+ 	config.center_master_overspread = 0;
+ 	config.center_when_single_stack = 1;
+ 
+@@ -3504,6 +3528,7 @@ bool parse_config(void) {
  	config.scroller_proportion_preset_count = 0;
  	config.circle_layout = NULL;
  	config.circle_layout_count = 0;
@@ -200,7 +200,7 @@ index 3220b713..4ecf9c82 100644
  	config.tag_rules = NULL;
  	config.tag_rules_count = 0;
  	config.cursor_theme = NULL;
-@@ -3545,6 +3570,7 @@ bool parse_config(void) {
+@@ -3537,6 +3562,7 @@ bool parse_config(void) {
  	parse_correct = parse_config_file(&config, filename, true);
  	set_default_key_bindings(&config);
  	override_config();
@@ -208,7 +208,7 @@ index 3220b713..4ecf9c82 100644
  	return parse_correct;
  }
  
-@@ -3701,9 +3727,9 @@ void reapply_pointer(void) {
+@@ -3702,9 +3728,9 @@ void reapply_pointer(void) {
  
  void reapply_master(void) {
  
@@ -220,7 +220,7 @@ index 3220b713..4ecf9c82 100644
  		wl_list_for_each(m, &mons, link) {
  			if (!m->wlr_output->enabled) {
  				continue;
-@@ -3719,12 +3745,12 @@ void reapply_master(void) {
+@@ -3720,12 +3746,12 @@ void reapply_master(void) {
  }
  
  void parse_tagrule(Monitor *m) {
@@ -232,10 +232,10 @@ index 3220b713..4ecf9c82 100644
  
 -	for (i = 0; i <= LENGTH(tags); i++) {
 +	for (i = 0; i <= tag_count; i++) {
- 		m->pertag->nmasters[i] = default_nmaster;
- 		m->pertag->mfacts[i] = default_mfact;
+ 		m->pertag->nmasters[i] = config.default_nmaster;
+ 		m->pertag->mfacts[i] = config.default_mfact;
  	}
-@@ -3782,7 +3808,7 @@ void parse_tagrule(Monitor *m) {
+@@ -3783,7 +3809,7 @@ void parse_tagrule(Monitor *m) {
  		}
  	}
  
@@ -245,11 +245,10 @@ index 3220b713..4ecf9c82 100644
  			if ((c->tags & (1 << (i - 1)) & TAGMASK) && ISTILED(c)) {
  				if (m->pertag->mfacts[i] > 0.0f)
 diff --git a/src/config/preset.h b/src/config/preset.h
-index f91da11a..480423bf 100644
+index 6952518..80f5340 100644
 --- a/src/config/preset.h
 +++ b/src/config/preset.h
-@@ -207,9 +207,7 @@ enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TAP_MAP_LRM;
- /* If you want to use the windows key for MODKEY, use WLR_MODIFIER_LOGO */
+@@ -1,8 +1,6 @@
  #define MODKEY WLR_MODIFIER_ALT
  
 -static const char *tags[] = {
@@ -257,13 +256,13 @@ index f91da11a..480423bf 100644
 -};
 +uint32_t tag_count = 9;
  
- float focused_opacity = 1.0;
- float unfocused_opacity = 1.0;
+ static const struct xkb_rule_names xkb_fallback_rules = {
+ 	.layout = "us",
 diff --git a/src/dispatch/bind_define.h b/src/dispatch/bind_define.h
-index 4f808bdf..b55c374f 100644
+index 449adf3..cbae132 100644
 --- a/src/dispatch/bind_define.h
 +++ b/src/dispatch/bind_define.h
-@@ -1538,10 +1538,10 @@ int32_t viewtoright_have_client(const Arg *arg) {
+@@ -1539,10 +1539,10 @@ int32_t viewtoright_have_client(const Arg *arg) {
  		return 0;
  	}
  
@@ -277,7 +276,7 @@ index 4f808bdf..b55c374f 100644
  			found = true;
  			break;
 diff --git a/src/ext-protocol/dwl-ipc.h b/src/ext-protocol/dwl-ipc.h
-index ab0bdb8d..7a5be561 100644
+index ab0bdb8..7a5be56 100644
 --- a/src/ext-protocol/dwl-ipc.h
 +++ b/src/ext-protocol/dwl-ipc.h
 @@ -55,7 +55,7 @@ void dwl_ipc_manager_bind(struct wl_client *client, void *data,
@@ -318,7 +317,7 @@ index ab0bdb8d..7a5be561 100644
  	}
  
 diff --git a/src/ext-protocol/ext-workspace.h b/src/ext-protocol/ext-workspace.h
-index 28aaeeeb..3bb9e946 100644
+index 28aaeee..3bb9e94 100644
 --- a/src/ext-protocol/ext-workspace.h
 +++ b/src/ext-protocol/ext-workspace.h
 @@ -1,5 +1,7 @@
@@ -430,7 +429,7 @@ index 28aaeeeb..3bb9e946 100644
 \ No newline at end of file
 +}
 diff --git a/src/fetch/monitor.h b/src/fetch/monitor.h
-index d2b4fe62..6c1e8a24 100644
+index d2b4fe6..6c1e8a2 100644
 --- a/src/fetch/monitor.h
 +++ b/src/fetch/monitor.h
 @@ -57,14 +57,14 @@ uint32_t get_tags_first_tag_num(uint32_t source_tags) {
@@ -470,7 +469,7 @@ index d2b4fe62..6c1e8a24 100644
  		return 1 << (i - 1);
  	}
 diff --git a/src/mango.c b/src/mango.c
-index bdafcc58..d1ca6973 100644
+index 3d36dd8..0932e8d 100644
 --- a/src/mango.c
 +++ b/src/mango.c
 @@ -117,7 +117,7 @@
@@ -482,7 +481,7 @@ index bdafcc58..d1ca6973 100644
  #define LISTEN(E, L, H) wl_signal_add((E), ((L)->notify = (H), (L)))
  #define ISFULLSCREEN(A)                                                        \
  	((A)->isfullscreen || (A)->ismaximizescreen ||                             \
-@@ -924,13 +924,12 @@ static struct {
+@@ -930,13 +930,12 @@ static struct {
  #include "config/preset.h"
  
  struct Pertag {
@@ -501,8 +500,8 @@ index bdafcc58..d1ca6973 100644
 +	const Layout **ltidxs;	  /* matrix of tags and layouts indexes  */
  };
  
- static struct wl_signal mango_print_status;
-@@ -2291,6 +2290,11 @@ void cleanupmon(struct wl_listener *listener, void *data) {
+ #include "config/parse_config.h"
+@@ -2302,6 +2301,11 @@ void cleanupmon(struct wl_listener *listener, void *data) {
  		m->skip_frame_timeout = NULL;
  	}
  	m->wlr_output->data = NULL;
@@ -514,7 +513,7 @@ index bdafcc58..d1ca6973 100644
  	free(m->pertag);
  	free(m);
  }
-@@ -3028,6 +3032,16 @@ void createmon(struct wl_listener *listener, void *data) {
+@@ -3038,6 +3042,16 @@ void createmon(struct wl_listener *listener, void *data) {
  
  	wl_list_insert(&mons, &m->link);
  	m->pertag = calloc(1, sizeof(Pertag));
@@ -531,16 +530,16 @@ index bdafcc58..d1ca6973 100644
  	if (chvt_backup_tag &&
  		regex_match(chvt_backup_selmon, m->wlr_output->name)) {
  		m->tagset[0] = m->tagset[1] = (1 << (chvt_backup_tag - 1)) & TAGMASK;
-@@ -3039,7 +3053,7 @@ void createmon(struct wl_listener *listener, void *data) {
+@@ -3049,7 +3063,7 @@ void createmon(struct wl_listener *listener, void *data) {
  		m->pertag->curtag = m->pertag->prevtag = 1;
  	}
  
 -	for (i = 0; i <= LENGTH(tags); i++) {
 +	for (i = 0; i <= tag_count; i++) {
- 		m->pertag->nmasters[i] = default_nmaster;
- 		m->pertag->mfacts[i] = default_mfact;
+ 		m->pertag->nmasters[i] = config.default_nmaster;
+ 		m->pertag->mfacts[i] = config.default_mfact;
  		m->pertag->ltidxs[i] = &layouts[0];
-@@ -3080,7 +3094,7 @@ void createmon(struct wl_listener *listener, void *data) {
+@@ -3089,7 +3103,7 @@ void createmon(struct wl_listener *listener, void *data) {
  		ext_manager, EXT_WORKSPACE_ENABLE_CAPS);
  	wlr_ext_workspace_group_handle_v1_output_enter(m->ext_group, m->wlr_output);
  
@@ -549,7 +548,7 @@ index bdafcc58..d1ca6973 100644
  		add_workspace_by_tag(i, m);
  	}
  
-@@ -6270,10 +6284,10 @@ void view_in_mon(const Arg *arg, bool want_animation, Monitor *m,
+@@ -6292,10 +6306,10 @@ void view_in_mon(const Arg *arg, bool want_animation, Monitor *m,
  		if (arg->ui == (~0 & TAGMASK))
  			m->pertag->curtag = 0;
  		else {
