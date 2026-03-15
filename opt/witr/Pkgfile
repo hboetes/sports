@@ -1,0 +1,16 @@
+# Description:  witr exists to answer a single question: Why is this running?
+# Dependencies: go
+
+name=witr
+version=git
+release=1
+source=(
+    https://github.com/pranshuparmar/witr.git
+)
+
+build()
+{
+    cd $name
+    export PATH=$PATH:/usr/local/go/bin
+    CC= CGO_ENABLED=0 GOBIN=$PKG/usr/local/bin go install
+}
