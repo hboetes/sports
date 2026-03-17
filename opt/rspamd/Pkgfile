@@ -18,7 +18,7 @@ build()
 
     cd $name
     git checkout $release
-    git submodule update --recursive --remote
+    git submodule update --recursive # --remote
     # cmake requires a special treatment.
     unset CXX CC
     cat << EOF >> CMakeLists.txt
@@ -38,7 +38,8 @@ EOF
           -DRUNDIR="/var/run/$name" \
           -DRSPAMD_USER="$name" \
           -DENABLE_LTO=OFF \
-          -DENABLE_LUAJIT=OFF
+          -DENABLE_LUAJIT=OFF \
+          -DCMAKE_POLICY_VERSION_MINIMUM=3.5
     make -j1
     make install DESTDIR=$PKG
 }
