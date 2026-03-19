@@ -1,5 +1,78 @@
+diff --git a/docs/bindings/keys.md b/docs/bindings/keys.md
+index 4c318fb3..225738b8 100644
+--- a/docs/bindings/keys.md
++++ b/docs/bindings/keys.md
+@@ -117,20 +117,20 @@ bindr=Super,Super_L,spawn,rofi -show run
+ 
+ | Command | Param | Description |
+ | :--- | :--- | :--- |
+-| `view` | `-1/0/1-9` or `mask [,synctag]` | View tag. `-1` = previous tagset, `0` = all tags, `1-9` = specific tag, mask e.g. `1\|3\|5`. Optional `synctag` (0/1) syncs the action to all monitors. |
++| `view` | `-1/0/[1, tag_count]` or `mask [,synctag]` | View tag. `-1` = previous tagset, `0` = all tags, mask e.g. `1\|3\|5`. Optional `synctag` (0/1) syncs the action to all monitors. |
+ | `viewtoleft` | `[synctag]` | View previous tag. Optional `synctag` (0/1) syncs to all monitors. |
+ | `viewtoright` | `[synctag]` | View next tag. Optional `synctag` (0/1) syncs to all monitors. |
+ | `viewtoleft_have_client` | `[synctag]` | View left tag and focus client if present. Optional `synctag` (0/1). |
+ | `viewtoright_have_client` | `[synctag]` | View right tag and focus client if present. Optional `synctag` (0/1). |
+ | `viewcrossmon` | `tag,monitor_spec` | View specified tag on specified monitor. |
+-| `tag` | `1-9 [,synctag]` | Move window to tag. Optional `synctag` (0/1) syncs to all monitors. |
+-| `tagsilent` | `1-9` | Move window to tag without focusing it. |
++| `tag` | `[1, tag_count] [,synctag]` | Move window to tag. Optional `synctag` (0/1) syncs to all monitors. |
++| `tagsilent` | `[1, tag_count]` | Move window to tag without focusing it. |
+ | `tagtoleft` | `[synctag]` | Move window to left tag. Optional `synctag` (0/1). |
+ | `tagtoright` | `[synctag]` | Move window to right tag. Optional `synctag` (0/1). |
+ | `tagcrossmon` | `tag,monitor_spec` | Move window to specified tag on specified monitor. |
+-| `toggletag` | `0-9` | Toggle tag on window (0 means all tags). |
+-| `toggleview` | `1-9` | Toggle tag view. |
+-| `comboview` | `1-9` | View multi tags pressed simultaneously. |
++| `toggletag` | `[0, tag_count]` | Toggle tag on window (0 means all tags). |
++| `toggleview` | `[1, tag_count]` | Toggle tag view. |
++| `comboview` | `[1, tag_count]` | View multi tags pressed simultaneously. |
+ | `focusmon` | `left/right/up/down/monitor_spec` | Focus monitor by direction or [monitor spec](/docs/configuration/monitors#monitor-spec-format). |
+ | `tagmon` | `left/right/up/down/monitor_spec,[keeptag]` | Move window to monitor by direction or [monitor spec](/docs/configuration/monitors#monitor-spec-format). `keeptag` is 0 or 1. |
+ 
+diff --git a/docs/configuration/miscellaneous.md b/docs/configuration/miscellaneous.md
+index 2e5a1e92..6b695e40 100644
+--- a/docs/configuration/miscellaneous.md
++++ b/docs/configuration/miscellaneous.md
+@@ -31,6 +31,7 @@ description: Advanced settings for XWayland, focus behavior, and system integrat
+ 
+ | Setting | Default | Description |
+ | :--- | :--- | :--- |
++| `tag_count` | `9` | Number of tags/workspaces available. Supports range `[1–32]`. **Requires restart to take effect.** |
+ | `focus_cross_monitor` | `0` | Allow directional focus to cross monitor boundaries. |
+ | `exchange_cross_monitor` | `0` | Allow exchanging clients across monitor boundaries. |
+ | `focus_cross_tag` | `0` | Allow directional focus to cross into other tags. |
+@@ -48,4 +49,5 @@ description: Advanced settings for XWayland, focus behavior, and system integrat
+ | `no_border_when_single` | `0` | Remove window borders when only one window is visible on the tag. |
+ | `idleinhibit_ignore_visible` | `0` | Allow invisible clients (e.g., background audio players) to inhibit idle. |
+ | `drag_tile_refresh_interval` | `8.0` | Interval (1.0–16.0) to refresh tiled window resize during drag. Too small may cause application lag. |
+-| `drag_floating_refresh_interval` | `8.0` | Interval (1.0–16.0) to refresh floating window resize during drag. Too small may cause application lag. |
+\ No newline at end of file
++| `drag_floating_refresh_interval` | `8.0` | Interval (1.0–16.0) to refresh floating window resize during drag. Too small may cause application lag. |
++
+diff --git a/docs/window-management/rules.md b/docs/window-management/rules.md
+index d37120de..195f7f44 100644
+--- a/docs/window-management/rules.md
++++ b/docs/window-management/rules.md
+@@ -45,7 +45,7 @@ windowrule=Parameter:Values,Parameter:Values,appid:Values,title:Values
+ | `offsetx` | integer | -999-999 | X offset from center (%), 100 is the edge of screen with outer gap |
+ | `offsety` | integer | -999-999 | Y offset from center (%), 100 is the edge of screen with outer gap |
+ | `monitor` | string | Any | Assign to monitor by [monitor spec](/docs/configuration/monitors#monitor-spec-format) (name, make, model, or serial) |
+-| `tags` | integer | 1-9 | Assign to specific tag |
++| `tags` | integer | `[1, tag_count]` | Assign to specific tag |
+ | `no_force_center` | integer | `0` / `1` | Window does not force center |
+ | `isnosizehint` | integer | `0` / `1` | Don't use min size and max size for size hints |
+ 
+@@ -172,7 +172,7 @@ tagrule=id:Values,monitor_make:xxx,monitor_model:xxx,Parameter:Values
+ 
+ | Parameter | Type | Values | Description |
+ | :--- | :--- | :--- | :--- |
+-| `id` | integer | 0-9 | Match by tag id, 0 means the ~0 tag |
++| `id` | integer | `[1, tag_count]` | Match by tag id, 0 means the ~0 tag |
+ | `monitor_name` | string | monitor name | Match by monitor name |
+ | `monitor_make` | string | monitor make | Match by monitor manufacturer |
+ | `monitor_model` | string | monitor model | Match by monitor model |
 diff --git a/mmsg/mmsg.c b/mmsg/mmsg.c
-index 4e0e1d8..017f3d2 100644
+index 4e0e1d8c..5b968444 100644
 --- a/mmsg/mmsg.c
 +++ b/mmsg/mmsg.c
 @@ -46,7 +46,7 @@ static int32_t Aflag;
@@ -58,7 +131,7 @@ index 4e0e1d8..017f3d2 100644
  			}
  
 -			if ((i - 1) > tagcount)
-+			if ((i - 1) > tag_count)
++			if (i == 0 || (i - 1) > tag_count)
  				die("bad tagset %s", tagset);
  
  			zdwl_ipc_output_v2_set_tags(dwl_ipc_output, mask, 0);
@@ -76,16 +149,17 @@ index 4e0e1d8..017f3d2 100644
  				}
  			}
 -			if ((i - 1) > tagcount)
-+			if ((i - 1) > tag_count)
++			if (i == 0 || (i - 1) > tag_count)
  				die("bad client tagset %s", client_tags);
  
  			zdwl_ipc_output_v2_set_client_tags(dwl_ipc_output, and, xor);
-@@ -395,11 +400,11 @@ static void dwl_ipc_output_frame(void *data,
+@@ -395,11 +400,12 @@ static void dwl_ipc_output_frame(void *data,
  
  			printf("%s clients %u\n", output_name, total_clients);
  
 -			char occ_str[10], seltags_str[10], urg_str[10];
-+			char occ_str[tag_count + 1], seltags_str[tag_count + 1], urg_str[tag_count + 1];
++			char occ_str[tag_count + 1], seltags_str[tag_count + 1],
++				urg_str[tag_count + 1];
  
 -			bin_str_9bits(occ_str, occ);
 -			bin_str_9bits(seltags_str, seltags);
@@ -97,14 +171,18 @@ index 4e0e1d8..017f3d2 100644
  			printf("%s tags %s %s %s\n", output_name, occ_str, seltags_str,
  				   urg_str);
 diff --git a/src/config/parse_config.h b/src/config/parse_config.h
-index 6ae9740..30d9f20 100644
+index fda401d9..7dd13418 100644
 --- a/src/config/parse_config.h
 +++ b/src/config/parse_config.h
-@@ -8,15 +8,26 @@
+@@ -8,15 +8,29 @@
  #define SYSCONFDIR "/etc"
  #endif
  
-+static bool config_initialized = false;
++// We don't want to allow config hot-reloading to change the tag_count and we
++// want to require a compositor reload. The code to support hot-reloading a
++// change in tag_count is a lot more involved than this minimal solution we have
++// for configuring the number of tags available in Mango.
++static uint32_t active_tag_count = 0;
 +
 +// Clamps value in range while preserving numeric type
 +#define CLAMP(x, min, max)                                                     \
@@ -124,14 +202,14 @@ index 6ae9740..30d9f20 100644
 +	CLAMP((int32_t)(x), (int32_t)(min), (int32_t)(max))
  
  // 浮点数版本 - 保留小数部分
-+// Deprecated: use CLAMP instead
- #define CLAMP_FLOAT(x, min, max)                                               \
+-#define CLAMP_FLOAT(x, min, max)                                               \
 -	((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
-+	CLAMP(x, min, max)
++// Deprecated: use CLAMP instead
++#define CLAMP_FLOAT(x, min, max) CLAMP(x, min, max)
  
  enum { NUM_TYPE_MINUS, NUM_TYPE_PLUS, NUM_TYPE_DEFAULT };
  
-@@ -159,7 +170,7 @@ typedef struct {
+@@ -159,7 +173,7 @@ typedef struct {
  } GestureBinding;
  
  typedef struct {
@@ -140,7 +218,7 @@ index 6ae9740..30d9f20 100644
  	char *layout_name;
  	char *monitor_name;
  	char *monitor_make;
-@@ -316,6 +327,7 @@ typedef struct {
+@@ -317,6 +331,7 @@ typedef struct {
  	int32_t log_level;
  	uint32_t capslock;
  
@@ -148,67 +226,62 @@ index 6ae9740..30d9f20 100644
  	ConfigTagRule *tag_rules; // 动态数组
  	int32_t tag_rules_count;  // 数量
  
-@@ -1125,7 +1137,7 @@ FuncType parse_func_name(char *func_name, Arg *arg, char *arg_value,
+@@ -1131,7 +1146,7 @@ FuncType parse_func_name(char *func_name, Arg *arg, char *arg_value,
  
  			while (token != NULL) {
  				int32_t num = atoi(token);
 -				if (num > 0 && num <= LENGTH(tags)) {
-+				if (num > 0 && num <= tag_count) {
++				if (num > 0 && num <= config.tag_count) {
  					mask |= (1 << (num - 1));
  				}
  				token = strtok_r(NULL, "|", &saveptr);
-@@ -1591,6 +1603,17 @@ bool parse_option(Config *config, char *key, char *value) {
+@@ -1599,6 +1614,20 @@ bool parse_option(Config *config, char *key, char *value) {
  		config->default_mfact = atof(value);
  	} else if (strcmp(key, "default_nmaster") == 0) {
  		config->default_nmaster = atoi(value);
 +	} else if (strcmp(key, "tag_count") == 0) {
 +		uint32_t requested = CLAMP(atoi(value), 1, 32);
-+		config->tag_count = requested;
-+		if (!config_initialized) {
-+			tag_count = requested;
-+		} else if (tag_count != requested) {
-+			wlr_log(WLR_INFO,
-+					"tag_count change requires restart (current: %u, "
-+					"requested: %u)",
-+					tag_count, requested);
++		bool is_initial_config_load = active_tag_count == 0;
++		if (is_initial_config_load) {
++			config->tag_count = requested;
++		} else {
++			config->tag_count = active_tag_count;
++			if (active_tag_count != requested) {
++				wlr_log(WLR_INFO,
++						"tag_count change requires restart (current: %u, "
++						"requested: %u)",
++						active_tag_count, requested);
++			}
 +		}
  	} else if (strcmp(key, "center_master_overspread") == 0) {
  		config->center_master_overspread = atoi(value);
  	} else if (strcmp(key, "center_when_single_stack") == 0) {
-@@ -1914,7 +1937,7 @@ bool parse_option(Config *config, char *key, char *value) {
+@@ -1923,7 +1952,7 @@ bool parse_option(Config *config, char *key, char *value) {
  				trim_whitespace(val);
  
  				if (strcmp(key, "id") == 0) {
 -					rule->id = CLAMP_INT(atoi(val), 0, LENGTH(tags));
-+					rule->id = CLAMP_INT(atoi(val), 0, tag_count);
++					rule->id = CLAMP_INT(atoi(val), 0, config->tag_count);
  				} else if (strcmp(key, "layout_name") == 0) {
  					rule->layout_name = strdup(val);
  				} else if (strcmp(key, "monitor_name") == 0) {
-@@ -3267,6 +3290,7 @@ void set_value_default() {
+@@ -3278,6 +3307,7 @@ void set_value_default() {
  	config.new_is_master = 1;
  	config.default_mfact = 0.55f;
  	config.default_nmaster = 1;
-+	config.tag_count = tag_count;
++	config.tag_count = 9;
  	config.center_master_overspread = 0;
  	config.center_when_single_stack = 1;
  
-@@ -3504,6 +3528,7 @@ bool parse_config(void) {
+@@ -3515,6 +3545,7 @@ bool parse_config(void) {
  	config.scroller_proportion_preset_count = 0;
  	config.circle_layout = NULL;
  	config.circle_layout_count = 0;
-+	config.tag_count = 9;
++	config.tag_count = 0;
  	config.tag_rules = NULL;
  	config.tag_rules_count = 0;
  	config.cursor_theme = NULL;
-@@ -3537,6 +3562,7 @@ bool parse_config(void) {
- 	parse_correct = parse_config_file(&config, filename, true);
- 	set_default_key_bindings(&config);
- 	override_config();
-+	config_initialized = true;
- 	return parse_correct;
- }
- 
-@@ -3702,9 +3728,9 @@ void reapply_pointer(void) {
+@@ -3713,9 +3744,9 @@ void reapply_pointer(void) {
  
  void reapply_master(void) {
  
@@ -216,11 +289,11 @@ index 6ae9740..30d9f20 100644
 +	uint32_t i;
  	Monitor *m = NULL;
 -	for (i = 0; i <= LENGTH(tags); i++) {
-+	for (i = 0; i <= tag_count; i++) {
++	for (i = 0; i <= config.tag_count; i++) {
  		wl_list_for_each(m, &mons, link) {
  			if (!m->wlr_output->enabled) {
  				continue;
-@@ -3720,12 +3746,12 @@ void reapply_master(void) {
+@@ -3731,12 +3762,12 @@ void reapply_master(void) {
  }
  
  void parse_tagrule(Monitor *m) {
@@ -231,35 +304,34 @@ index 6ae9740..30d9f20 100644
  	bool match_rule = false;
  
 -	for (i = 0; i <= LENGTH(tags); i++) {
-+	for (i = 0; i <= tag_count; i++) {
++	for (i = 0; i <= config.tag_count; i++) {
  		m->pertag->nmasters[i] = config.default_nmaster;
  		m->pertag->mfacts[i] = config.default_mfact;
  	}
-@@ -3783,7 +3809,7 @@ void parse_tagrule(Monitor *m) {
+@@ -3796,7 +3827,7 @@ void parse_tagrule(Monitor *m) {
  		}
  	}
  
 -	for (i = 1; i <= LENGTH(tags); i++) {
-+	for (i = 1; i <= tag_count; i++) {
++	for (i = 1; i <= config.tag_count; i++) {
  		wl_list_for_each(c, &clients, link) {
  			if ((c->tags & (1 << (i - 1)) & TAGMASK) && ISTILED(c)) {
  				if (m->pertag->mfacts[i] > 0.0f)
 diff --git a/src/config/preset.h b/src/config/preset.h
-index 6952518..80f5340 100644
+index 6952518e..3b0cb8dd 100644
 --- a/src/config/preset.h
 +++ b/src/config/preset.h
-@@ -1,8 +1,6 @@
+@@ -1,8 +1,5 @@
  #define MODKEY WLR_MODIFIER_ALT
  
 -static const char *tags[] = {
 -	"1", "2", "3", "4", "5", "6", "7", "8", "9",
 -};
-+uint32_t tag_count = 9;
  
  static const struct xkb_rule_names xkb_fallback_rules = {
  	.layout = "us",
 diff --git a/src/dispatch/bind_define.h b/src/dispatch/bind_define.h
-index 449adf3..cbae132 100644
+index 68309356..45ea836d 100644
 --- a/src/dispatch/bind_define.h
 +++ b/src/dispatch/bind_define.h
 @@ -1539,10 +1539,10 @@ int32_t viewtoright_have_client(const Arg *arg) {
@@ -267,16 +339,16 @@ index 449adf3..cbae132 100644
  	}
  
 -	if (current >= LENGTH(tags))
-+	if (current >= tag_count)
++	if (current >= config.tag_count)
  		return 0;
  
 -	for (n = current + 1; n <= LENGTH(tags); n++) {
-+	for (n = current + 1; n <= tag_count; n++) {
++	for (n = current + 1; n <= config.tag_count; n++) {
  		if (get_tag_status(n, selmon)) {
  			found = true;
  			break;
 diff --git a/src/ext-protocol/dwl-ipc.h b/src/ext-protocol/dwl-ipc.h
-index ab0bdb8..7a5be56 100644
+index ab0bdb8d..98b6a107 100644
 --- a/src/ext-protocol/dwl-ipc.h
 +++ b/src/ext-protocol/dwl-ipc.h
 @@ -55,7 +55,7 @@ void dwl_ipc_manager_bind(struct wl_client *client, void *data,
@@ -284,7 +356,7 @@ index ab0bdb8..7a5be56 100644
  								   dwl_ipc_manager_destroy);
  
 -	zdwl_ipc_manager_v2_send_tags(manager_resource, LENGTH(tags));
-+	zdwl_ipc_manager_v2_send_tags(manager_resource, tag_count);
++	zdwl_ipc_manager_v2_send_tags(manager_resource, config.tag_count);
  
  	for (uint32_t i = 0; i < LENGTH(layouts); i++)
  		zdwl_ipc_manager_v2_send_layout(manager_resource, layouts[i].symbol);
@@ -300,7 +372,7 @@ index ab0bdb8..7a5be56 100644
  	zdwl_ipc_output_v2_send_active(ipc_output->resource, monitor == selmon);
  
 -	for (tag = 0; tag < LENGTH(tags); tag++) {
-+	for (tag_idx = 0; tag_idx < tag_count; tag_idx++) {
++	for (tag_idx = 0; tag_idx < config.tag_count; tag_idx++) {
  		numclients = state = focused_client = 0;
 -		tagmask = 1 << tag;
 +		tagmask = 1 << tag_idx;
@@ -317,29 +389,19 @@ index ab0bdb8..7a5be56 100644
  	}
  
 diff --git a/src/ext-protocol/ext-workspace.h b/src/ext-protocol/ext-workspace.h
-index 28aaeee..3bb9e94 100644
+index 28aaeeeb..8bd041aa 100644
 --- a/src/ext-protocol/ext-workspace.h
 +++ b/src/ext-protocol/ext-workspace.h
-@@ -1,5 +1,7 @@
- #include "wlr_ext_workspace_v1.h"
- 
-+#define WORKSPACE_NAME_MAX_SIZE 12
-+
- #define EXT_WORKSPACE_ENABLE_CAPS                                              \
- 	EXT_WORKSPACE_HANDLE_V1_WORKSPACE_CAPABILITIES_ACTIVATE |                  \
- 		EXT_WORKSPACE_HANDLE_V1_WORKSPACE_CAPABILITIES_DEACTIVATE
-@@ -8,8 +10,8 @@ typedef struct Monitor Monitor;
+@@ -8,7 +8,7 @@ typedef struct Monitor Monitor;
  
  struct workspace {
  	struct wl_list link; // Link in global workspaces list
 -	uint32_t tag;		 // Numeric identifier (1-9, 0=overview)
--	Monitor *m;			 // Associated monitor
-+	uint32_t tag;        // Identifier (tag number) in [0=overview, tag_count]
-+	Monitor *m;          // Associated monitor
++	uint32_t tag;		 // Identifier (tag number) in [0=overview, tag_count]
+ 	Monitor *m;			 // Associated monitor
  	struct wlr_ext_workspace_handle_v1 *ext_workspace; // Protocol object
  	/* Event listeners */
- 	struct wl_listener activate;
-@@ -22,24 +24,24 @@ struct wlr_ext_workspace_manager_v1 *ext_manager;
+@@ -22,24 +22,24 @@ struct wlr_ext_workspace_manager_v1 *ext_manager;
  struct wl_list workspaces;
  
  void goto_workspace(struct workspace *target) {
@@ -370,7 +432,7 @@ index 28aaeee..3bb9e94 100644
  	}
  }
  
-@@ -69,10 +71,14 @@ static void handle_ext_workspace_deactivate(struct wl_listener *listener,
+@@ -69,10 +69,22 @@ static void handle_ext_workspace_deactivate(struct wl_listener *listener,
  	wlr_log(WLR_INFO, "ext deactivating workspace %d", workspace->tag);
  }
  
@@ -378,30 +440,39 @@ index 28aaeee..3bb9e94 100644
 -	static const char *names[] = {"overview", "1", "2", "3", "4",
 -								  "5",		  "6", "7", "8", "9"};
 -	return (tag < sizeof(names) / sizeof(names[0])) ? names[tag] : NULL;
-+static void get_name_from_tag_number(char *dst_buf, size_t dst_len,
-+									 uint32_t tag_number) {
-+	if (tag_number > tag_count)
-+		die("tag_number %u exceeds tag_count %u", tag_number, tag_count);
++// Returns the size_t that would have been written to dst_buf if dst_len was
++// large enough. Safe usage of this function is to call it with
++// dst_buf == NULL and dst_len == 0, then use the returned value to allocate the
++// destination buffer, then call it again passing in the buffer and size.
++static size_t get_name_from_tag_number(char *dst_buf, size_t dst_len,
++									   uint32_t tag_number) {
++	if (tag_number > config.tag_count)
++		die("tag_number %u exceeds tag_count %u", tag_number, config.tag_count);
++	int n;
 +	if (tag_number == 0)
-+		snprintf(dst_buf, dst_len, "overview");
++		n = snprintf(dst_buf, dst_len, "overview");
 +	else
-+		snprintf(dst_buf, dst_len, "%u", tag_number);
++		n = snprintf(dst_buf, dst_len, "%u", tag_number);
++	if (n < 0)
++		die("snprintf failed for tag_number %u", tag_number);
++	return (size_t)(n + 1);
  }
  
  void destroy_workspace(struct workspace *workspace) {
-@@ -102,8 +108,9 @@ static void remove_workspace_by_tag(uint32_t tag, Monitor *m) {
+@@ -102,8 +114,10 @@ static void remove_workspace_by_tag(uint32_t tag, Monitor *m) {
  	}
  }
  
 -static void add_workspace_by_tag(int32_t tag, Monitor *m) {
 -	const char *name = get_name_from_tag(tag);
 +static void add_workspace_by_tag(uint32_t tag, Monitor *m) {
-+	char name[WORKSPACE_NAME_MAX_SIZE];
-+	get_name_from_tag_number(name, sizeof(name), tag);
++	size_t name_len = get_name_from_tag_number(NULL, 0, tag);
++	char name[name_len];
++	get_name_from_tag_number(name, name_len, tag);
  
  	struct workspace *workspace = ecalloc(1, sizeof(*workspace));
  	wl_list_append(&workspaces, &workspace->link);
-@@ -162,16 +169,16 @@ void dwl_ext_workspace_printstatus(Monitor *m) {
+@@ -162,16 +176,16 @@ void dwl_ext_workspace_printstatus(Monitor *m) {
  }
  
  void refresh_monitors_workspaces_status(Monitor *m) {
@@ -410,18 +481,18 @@ index 28aaeee..3bb9e94 100644
  
  	if (m->isoverview) {
 -		for (i = 1; i <= LENGTH(tags); i++) {
-+		for (i = 1; i <= tag_count; i++) {
++		for (i = 1; i <= config.tag_count; i++) {
  			remove_workspace_by_tag(i, m);
  		}
  		add_workspace_by_tag(0, m);
  	} else {
  		remove_workspace_by_tag(0, m);
 -		for (i = 1; i <= LENGTH(tags); i++) {
-+		for (i = 1; i <= tag_count; i++) {
++		for (i = 1; i <= config.tag_count; i++) {
  			add_workspace_by_tag(i, m);
  		}
  	}
-@@ -184,4 +191,4 @@ void workspaces_init() {
+@@ -184,4 +198,4 @@ void workspaces_init() {
  	ext_manager = wlr_ext_workspace_manager_v1_create(dpy, 1);
  	/* Initialize the global workspaces list */
  	wl_list_init(&workspaces);
@@ -429,7 +500,7 @@ index 28aaeee..3bb9e94 100644
 \ No newline at end of file
 +}
 diff --git a/src/fetch/monitor.h b/src/fetch/monitor.h
-index d2b4fe6..6c1e8a2 100644
+index d2b4fe62..40cec9f2 100644
 --- a/src/fetch/monitor.h
 +++ b/src/fetch/monitor.h
 @@ -57,14 +57,14 @@ uint32_t get_tags_first_tag_num(uint32_t source_tags) {
@@ -437,7 +508,7 @@ index d2b4fe6..6c1e8a2 100644
  	}
  
 -	for (i = 0; !(tag & 1) && source_tags != 0 && i < LENGTH(tags); i++) {
-+	for (i = 0; !(tag & 1) && source_tags != 0 && i < tag_count; i++) {
++	for (i = 0; !(tag & 1) && source_tags != 0 && i < config.tag_count; i++) {
  		tag = source_tags >> i;
  	}
  
@@ -445,8 +516,8 @@ index d2b4fe6..6c1e8a2 100644
  		return 1;
 -	} else if (i > 9) {
 -		return 9;
-+	} else if (i > tag_count) {
-+		return tag_count;
++	} else if (i > config.tag_count) {
++		return config.tag_count;
  	} else {
  		return i;
  	}
@@ -455,7 +526,7 @@ index d2b4fe6..6c1e8a2 100644
  	}
  
 -	for (i = 0; !(tag & 1) && source_tags != 0 && i < LENGTH(tags); i++) {
-+	for (i = 0; !(tag & 1) && source_tags != 0 && i < tag_count; i++) {
++	for (i = 0; !(tag & 1) && source_tags != 0 && i < config.tag_count; i++) {
  		tag = source_tags >> i;
  	}
  
@@ -463,13 +534,13 @@ index d2b4fe6..6c1e8a2 100644
  		return 1;
 -	} else if (i > 9) {
 -		return 1 << 8;
-+	} else if (i > tag_count) {
-+		return 1 << (tag_count - 1);
++	} else if (i > config.tag_count) {
++		return 1 << (config.tag_count - 1);
  	} else {
  		return 1 << (i - 1);
  	}
 diff --git a/src/mango.c b/src/mango.c
-index 3d36dd8..0932e8d 100644
+index dcfd57ec..92f16aa4 100644
 --- a/src/mango.c
 +++ b/src/mango.c
 @@ -117,7 +117,7 @@
@@ -477,31 +548,33 @@ index 3d36dd8..0932e8d 100644
  #define LENGTH(X) (sizeof X / sizeof X[0])
  #define END(A) ((A) + LENGTH(A))
 -#define TAGMASK ((1 << LENGTH(tags)) - 1)
-+#define TAGMASK (tag_count == 32 ? ~0u : ((1u << tag_count) - 1))
++#define TAGMASK (config.tag_count == 32 ? ~0u : ((1u << config.tag_count) - 1))
  #define LISTEN(E, L, H) wl_signal_add((E), ((L)->notify = (H), (L)))
  #define ISFULLSCREEN(A)                                                        \
  	((A)->isfullscreen || (A)->ismaximizescreen ||                             \
-@@ -930,13 +930,12 @@ static struct {
+@@ -930,14 +930,13 @@ static struct {
  #include "config/preset.h"
  
  struct Pertag {
 -	uint32_t curtag, prevtag;			/* current and previous tag */
 -	int32_t nmasters[LENGTH(tags) + 1]; /* number of windows in master area */
 -	float mfacts[LENGTH(tags) + 1];		/* mfacts per tag */
--	bool no_hide[LENGTH(tags) + 1];		/* no_hide per tag */
--	bool no_render_border[LENGTH(tags) + 1]; /* no_render_border per tag */
+-	int32_t no_hide[LENGTH(tags) + 1];	/* no_hide per tag */
+-	int32_t no_render_border[LENGTH(tags) + 1]; /* no_render_border per tag */
+-	int32_t open_as_floating[LENGTH(tags) + 1]; /* open_as_floating per tag */
 -	const Layout
 -		*ltidxs[LENGTH(tags) + 1]; /* matrix of tags and layouts indexes  */
-+	uint32_t curtag, prevtag; /* current and previous tag */
-+	int32_t *nmasters;		  /* number of windows in master area */
-+	float *mfacts;			  /* mfacts per tag */
-+	bool *no_hide;			  /* no_hide per tag */
-+	bool *no_render_border;	  /* no_render_border per tag */
-+	const Layout **ltidxs;	  /* matrix of tags and layouts indexes  */
++	uint32_t curtag, prevtag;  /* current and previous tag */
++	int32_t *nmasters;		   /* number of windows in master area */
++	float *mfacts;			   /* mfacts per tag */
++	bool *no_hide;			   /* no_hide per tag */
++	bool *no_render_border;	   /* no_render_border per tag */
++	int32_t *open_as_floating; /* open_as_floating per tag */
++	const Layout **ltidxs;	   /* matrix of tags and layouts indexes  */
  };
  
  #include "config/parse_config.h"
-@@ -2302,6 +2301,11 @@ void cleanupmon(struct wl_listener *listener, void *data) {
+@@ -2328,6 +2327,12 @@ void cleanupmon(struct wl_listener *listener, void *data) {
  		m->skip_frame_timeout = NULL;
  	}
  	m->wlr_output->data = NULL;
@@ -509,55 +582,60 @@ index 3d36dd8..0932e8d 100644
 +	free(m->pertag->mfacts);
 +	free(m->pertag->no_hide);
 +	free(m->pertag->no_render_border);
++	free(m->pertag->open_as_floating);
 +	free(m->pertag->ltidxs);
  	free(m->pertag);
  	free(m);
  }
-@@ -3038,6 +3042,16 @@ void createmon(struct wl_listener *listener, void *data) {
+@@ -3063,7 +3068,20 @@ void createmon(struct wl_listener *listener, void *data) {
+ 	wlr_output_state_finish(&state);
  
  	wl_list_insert(&mons, &m->link);
++	if (active_tag_count == 0)
++		active_tag_count = config.tag_count;
  	m->pertag = calloc(1, sizeof(Pertag));
 +	if (!m->pertag)
 +		die("pertag calloc failed");
-+	m->pertag->nmasters = calloc(tag_count + 1, sizeof(int32_t));
-+	m->pertag->mfacts = calloc(tag_count + 1, sizeof(float));
-+	m->pertag->no_hide = calloc(tag_count + 1, sizeof(bool));
-+	m->pertag->no_render_border = calloc(tag_count + 1, sizeof(bool));
-+	m->pertag->ltidxs = calloc(tag_count + 1, sizeof(const Layout *));
++	m->pertag->nmasters = calloc(config.tag_count + 1, sizeof(int32_t));
++	m->pertag->mfacts = calloc(config.tag_count + 1, sizeof(float));
++	m->pertag->no_hide = calloc(config.tag_count + 1, sizeof(bool));
++	m->pertag->no_render_border = calloc(config.tag_count + 1, sizeof(bool));
++	m->pertag->open_as_floating = calloc(config.tag_count + 1, sizeof(int32_t));
++	m->pertag->ltidxs = calloc(config.tag_count + 1, sizeof(const Layout *));
 +	if (!m->pertag->nmasters || !m->pertag->mfacts || !m->pertag->no_hide ||
-+		!m->pertag->no_render_border || !m->pertag->ltidxs)
++		!m->pertag->no_render_border || !m->pertag->open_as_floating || !m->pertag->ltidxs)
 +		die("pertag member calloc failed");
  	if (chvt_backup_tag &&
  		regex_match(chvt_backup_selmon, m->wlr_output->name)) {
  		m->tagset[0] = m->tagset[1] = (1 << (chvt_backup_tag - 1)) & TAGMASK;
-@@ -3049,7 +3063,7 @@ void createmon(struct wl_listener *listener, void *data) {
+@@ -3075,7 +3093,7 @@ void createmon(struct wl_listener *listener, void *data) {
  		m->pertag->curtag = m->pertag->prevtag = 1;
  	}
  
 -	for (i = 0; i <= LENGTH(tags); i++) {
-+	for (i = 0; i <= tag_count; i++) {
++	for (i = 0; i <= config.tag_count; i++) {
  		m->pertag->nmasters[i] = config.default_nmaster;
  		m->pertag->mfacts[i] = config.default_mfact;
  		m->pertag->ltidxs[i] = &layouts[0];
-@@ -3089,7 +3103,7 @@ void createmon(struct wl_listener *listener, void *data) {
+@@ -3115,7 +3133,7 @@ void createmon(struct wl_listener *listener, void *data) {
  		ext_manager, EXT_WORKSPACE_ENABLE_CAPS);
  	wlr_ext_workspace_group_handle_v1_output_enter(m->ext_group, m->wlr_output);
  
 -	for (i = 1; i <= LENGTH(tags); i++) {
-+	for (i = 1; i <= tag_count; i++) {
++	for (i = 1; i <= config.tag_count; i++) {
  		add_workspace_by_tag(i, m);
  	}
  
-@@ -6292,10 +6306,10 @@ void view_in_mon(const Arg *arg, bool want_animation, Monitor *m,
+@@ -6320,10 +6338,10 @@ void view_in_mon(const Arg *arg, bool want_animation, Monitor *m,
  		if (arg->ui == (~0 & TAGMASK))
  			m->pertag->curtag = 0;
  		else {
 -			for (i = 0; !(arg->ui & 1 << i) && i < LENGTH(tags) && arg->ui != 0;
-+			for (i = 0; !(arg->ui & 1 << i) && i < tag_count && arg->ui != 0;
++			for (i = 0; !(arg->ui & 1u << i) && i < config.tag_count && arg->ui != 0;
  				 i++)
  				;
 -			m->pertag->curtag = i >= LENGTH(tags) ? LENGTH(tags) : i + 1;
-+			m->pertag->curtag = i >= tag_count ? tag_count : i + 1;
++			m->pertag->curtag = i >= config.tag_count ? config.tag_count : i + 1;
  		}
  
  		m->pertag->prevtag =
