@@ -1,0 +1,1 @@
+Good call. It's the kind of thing that should probably be the default with an --allow-empty-password flag to opt in, rather than the other way around — but that's a breaking change so a TODO is the right place for it for now.

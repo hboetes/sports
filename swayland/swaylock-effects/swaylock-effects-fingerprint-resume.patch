@@ -1,0 +1,222 @@
+fingerprint: handle suspend/resume correctly
+
+Three improvements to fingerprint behaviour across suspend/resume:
+
+- Subscribe to logind's PrepareForSleep signal. On suspend, proactively
+  stop the verify session and release the device before the USB stack
+  resets it. On resume, the existing retry loop reclaims the device
+  naturally.
+
+- When claiming the device fails, attempt to release it first to evict
+  any stale handle fprintd may be holding, then retry the claim.
+
+- Add a 2 second backoff between failed claim attempts to avoid hammering
+  fprintd while it is restarting, and show "Fingerprint not yet
+  available" in the indicator so the user knows what is happening.
+
+Also refactor the device teardown logic into stop_and_release_device()
+to avoid duplication between verify_result(), fingerprint_deinit() and
+the new PrepareForSleep handler.
+
+
+diff --git a/fingerprint/fingerprint.c b/fingerprint/fingerprint.c
+index 94bdfee..47ccf18 100644
+--- a/fingerprint/fingerprint.c
++++ b/fingerprint/fingerprint.c
+@@ -20,10 +20,12 @@
+  */
+ 
+ #include <stdbool.h>
++#include <stdint.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <locale.h>
++#include <time.h>
+ #include <gio/gio.h>
+ 
+ #include "fingerprint.h"
+@@ -89,9 +91,24 @@ static void open_device(struct FingerprintState *state) {
+ 	}
+ 
+ 	if (!fprint_dbus_device_call_claim_sync(dev, "", NULL, &error)) {
+-		// we need to wait while device can be claimed
+ 		swaylock_log(LOG_DEBUG, "failed to claim the device: %s(%d)", error->message, error->code);
+-		return;
++		// fprintd may be holding a stale handle from before suspend. Try to
++		// release it and claim again. This is safe to call even without having
++		// successfully claimed the device - it just tells fprintd to drop
++		// whatever handle it has.
++		g_autoptr(GError) release_error = NULL;
++		if (!fprint_dbus_device_call_release_sync(dev, NULL, &release_error)) {
++			swaylock_log(LOG_DEBUG, "release after failed claim also failed: %s",
++					release_error->message);
++			return;
++		}
++		g_clear_error(&error);
++		if (!fprint_dbus_device_call_claim_sync(dev, "", NULL, &error)) {
++			swaylock_log(LOG_DEBUG, "failed to claim the device after release: %s(%d)",
++					error->message, error->code);
++			return;
++		}
++		swaylock_log(LOG_DEBUG, "claimed device after releasing stale handle");
+ 	}
+ 
+ 	swaylock_log(LOG_DEBUG, "FPrint device opened %s", path);
+@@ -102,6 +119,7 @@ static void proxy_signal_cb(GDBusProxy *proxy, const gchar *sender_name,
+ 		const gchar *signal_name, GVariant *parameters, gpointer user_data);
+ static void release_callback(GObject *source_object, GAsyncResult *res,
+ 		gpointer user_data);
++static void stop_and_release_device(struct FingerprintState *state);
+ 
+ static void verify_result(GObject *object, const char *result, gboolean done, void *user_data) {
+ 	struct FingerprintState *state = user_data;
+@@ -123,18 +141,7 @@ static void verify_result(GObject *object, const char *result, gboolean done, vo
+ 
+ 	if (g_str_equal(result, "verify-disconnected") ||
+ 	    g_str_equal(result, "verify-unknown-error")) {
+-		GError *err = NULL;
+-		fprint_dbus_device_call_verify_stop_sync(state->device, NULL, &err);
+-		if (err) {
+-			swaylock_log(LOG_DEBUG, "VerifyStop on error: %s", err->message);
+-			g_error_free(err);
+-		}
+-		g_signal_handlers_disconnect_by_func(state->device, proxy_signal_cb, state);
+-		fprint_dbus_device_call_release(state->device, NULL, release_callback, NULL);
+-		g_clear_object(&state->device);
+-		state->started = FALSE;
+-		state->completed = FALSE;
+-		state->match = FALSE;
++		stop_and_release_device(state);
+ 
+ 		if (state->on_demand) {
+ 			state->active = 0;
+@@ -229,6 +236,44 @@ static void release_callback(GObject *source_object, GAsyncResult *res,
+ 							 gpointer user_data) {
+ }
+ 
++// Tear down an active verify session and release the device cleanly.
++// Safe to call at any point — checks state before each step.
++static void stop_and_release_device(struct FingerprintState *state) {
++	if (state->device == NULL) {
++		return;
++	}
++	if (state->started) {
++		GError *err = NULL;
++		fprint_dbus_device_call_verify_stop_sync(state->device, NULL, &err);
++		if (err) {
++			swaylock_log(LOG_DEBUG, "VerifyStop on sleep: %s", err->message);
++			g_error_free(err);
++		}
++		state->started = FALSE;
++	}
++	g_signal_handlers_disconnect_by_func(state->device, proxy_signal_cb, state);
++	fprint_dbus_device_call_release(state->device, NULL, release_callback, NULL);
++	g_clear_object(&state->device);
++	state->completed = FALSE;
++	state->match = FALSE;
++}
++
++static void prepare_for_sleep_cb(GDBusConnection *connection,
++		const gchar *sender_name, const gchar *object_path,
++		const gchar *interface_name, const gchar *signal_name,
++		GVariant *parameters, gpointer user_data) {
++	struct FingerprintState *state = user_data;
++	gboolean going_to_sleep;
++	g_variant_get(parameters, "(b)", &going_to_sleep);
++	if (going_to_sleep) {
++		swaylock_log(LOG_DEBUG, "PrepareForSleep: releasing fingerprint device before suspend");
++		stop_and_release_device(state);
++		display_message(state, "Fingerprint not yet available");
++	} else {
++		swaylock_log(LOG_DEBUG, "PrepareForSleep: resuming, fingerprint will reconnect");
++	}
++}
++
+ void fingerprint_init(struct FingerprintState *fingerprint_state,
+ 					  struct swaylock_state *swaylock_state) {
+ 	memset(fingerprint_state, 0, sizeof(struct FingerprintState));
+@@ -238,6 +283,25 @@ void fingerprint_init(struct FingerprintState *fingerprint_state,
+ 	if (fingerprint_state->manager == NULL || fingerprint_state->connection == NULL) {
+ 		return;
+ 	}
++
++	// Subscribe to logind's PrepareForSleep signal so we can cleanly release
++	// the fingerprint device before suspend and let it reconnect after resume.
++	fingerprint_state->sleep_subscription_id = g_dbus_connection_signal_subscribe(
++		fingerprint_state->connection,
++		"org.freedesktop.login1",
++		"org.freedesktop.login1.Manager",
++		"PrepareForSleep",
++		"/org/freedesktop/login1",
++		NULL,
++		G_DBUS_SIGNAL_FLAGS_NONE,
++		prepare_for_sleep_cb,
++		fingerprint_state,
++		NULL);
++	if (fingerprint_state->sleep_subscription_id == 0) {
++		swaylock_log(LOG_ERROR, "Failed to subscribe to PrepareForSleep signal");
++	} else {
++		swaylock_log(LOG_DEBUG, "Subscribed to PrepareForSleep");
++	}
+ }
+ 
+ int fingerprint_verify(struct FingerprintState *fingerprint_state) {
+@@ -252,8 +316,25 @@ int fingerprint_verify(struct FingerprintState *fingerprint_state) {
+ 	}
+ 
+ 	if (fingerprint_state->device == NULL) {
++		/* Backoff: don't hammer fprintd while it's restarting */
++		if (fingerprint_state->retry_after > 0) {
++			struct timespec now;
++			clock_gettime(CLOCK_BOOTTIME, &now);
++			int64_t now_ms = (int64_t)now.tv_sec * 1000 + now.tv_nsec / 1000000;
++			if (now_ms < fingerprint_state->retry_after) {
++				return false;
++			}
++			fingerprint_state->retry_after = 0;
++		}
++
+ 		open_device(fingerprint_state);
+ 		if (fingerprint_state->device == NULL) {
++			/* fprintd not ready yet - back off 2s and tell the user */
++			struct timespec now;
++			clock_gettime(CLOCK_BOOTTIME, &now);
++			fingerprint_state->retry_after =
++				(int64_t)now.tv_sec * 1000 + now.tv_nsec / 1000000 + 2000;
++			display_message(fingerprint_state, "Fingerprint not yet available");
+ 			return false;
+ 		}
+ 
+@@ -277,12 +358,10 @@ int fingerprint_verify(struct FingerprintState *fingerprint_state) {
+ }
+ 
+ void fingerprint_deinit(struct FingerprintState *fingerprint_state) {
+-	if (!fingerprint_state->device) {
+-		return;
++	if (fingerprint_state->sleep_subscription_id > 0) {
++		g_dbus_connection_signal_unsubscribe(fingerprint_state->connection,
++				fingerprint_state->sleep_subscription_id);
++		fingerprint_state->sleep_subscription_id = 0;
+ 	}
+-
+-	g_signal_handlers_disconnect_by_func(fingerprint_state->device, proxy_signal_cb,
+-										 fingerprint_state);
+-	fprint_dbus_device_call_release(fingerprint_state->device, NULL, release_callback, NULL);
+-	fingerprint_state->device = NULL;
++	stop_and_release_device(fingerprint_state);
+ }
+diff --git a/fingerprint/fingerprint.h b/fingerprint/fingerprint.h
+index df579fd..69ba711 100644
+--- a/fingerprint/fingerprint.h
++++ b/fingerprint/fingerprint.h
+@@ -32,6 +32,9 @@ struct FingerprintState {
+ 
+ 	char status[128];
+ 
++	int64_t retry_after; /* monotonic ms, 0 = retry immediately */
++	guint sleep_subscription_id; /* logind PrepareForSleep subscription */
++
+ 	FprintDBusManager *manager;
+ 	GDBusConnection *connection;
+ 	FprintDBusDevice *device;

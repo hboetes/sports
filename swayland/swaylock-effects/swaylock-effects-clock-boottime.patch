@@ -1,0 +1,41 @@
+loop: use CLOCK_BOOTTIME instead of CLOCK_MONOTONIC
+
+CLOCK_MONOTONIC is frozen during suspend, causing all timers to appear
+expired on resume. This makes loop_poll() calculate ms=0 and spin
+without blocking, preventing the Wayland display fd from processing
+events properly after resume.
+
+CLOCK_BOOTTIME advances during suspend, keeping timer expiry times
+correct across sleep/wake cycles.
+
+diff --git a/loop.c b/loop.c
+index 20d3b9e..fb10caf 100644
+--- a/loop.c
++++ b/loop.c
+@@ -67,7 +67,7 @@ void loop_poll(struct loop *loop) {
+ 	int ms = INT_MAX;
+ 	if (!wl_list_empty(&loop->timers)) {
+ 		struct timespec now;
+-		clock_gettime(CLOCK_MONOTONIC, &now);
++		clock_gettime(CLOCK_BOOTTIME, &now);
+ 		struct loop_timer *timer = NULL;
+ 		wl_list_for_each(timer, &loop->timers, link) {
+ 			int timer_ms = (timer->expiry.tv_sec - now.tv_sec) * 1000;
+@@ -106,7 +106,7 @@ void loop_poll(struct loop *loop) {
+ 	// Dispatch timers
+ 	if (!wl_list_empty(&loop->timers)) {
+ 		struct timespec now;
+-		clock_gettime(CLOCK_MONOTONIC, &now);
++		clock_gettime(CLOCK_BOOTTIME, &now);
+ 		struct loop_timer *timer = NULL, *tmp_timer = NULL;
+ 		wl_list_for_each_safe(timer, tmp_timer, &loop->timers, link) {
+ 			if (timer->removed) {
+@@ -165,7 +165,7 @@ struct loop_timer *loop_add_timer(struct loop *loop, int ms,
+ 	timer->callback = callback;
+ 	timer->data = data;
+ 
+-	clock_gettime(CLOCK_MONOTONIC, &timer->expiry);
++	clock_gettime(CLOCK_BOOTTIME, &timer->expiry);
+ 	timer->expiry.tv_sec += ms / 1000;
+ 
+ 	long int nsec = (ms % 1000) * 1000000;

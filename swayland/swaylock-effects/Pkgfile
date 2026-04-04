@@ -8,11 +8,17 @@ release=1
 branch=master
 source=(
     https://github.com/hboetes/swaylock-effects.git
+    swaylock-effects-clock-boottime.patch
+    swaylock-effects-single-instance.patch
+    swaylock-effects-fingerprint-resume.patch
 )
 
 build()
 {
     cd $name
+    patch_apply swaylock-effects-clock-boottime
+    patch_apply swaylock-effects-single-instance
+    patch_apply swaylock-effects-fingerprint-resume
 
     meson_build \
         --sysconfdir=/etc \
