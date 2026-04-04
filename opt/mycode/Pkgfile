@@ -10,15 +10,15 @@ source=(
     count_to_three.c
     dropscript.sh
     empty_message.c
-    slowcat.c
-    munlink.c
     find_unlinked.sh
     makeindexhtml.sh
+    munlink.c
     releaseupgrade.sh
     remind.sh
+    slowcat.c
     statusbar_right.c
-    whitelist-generator.py
     wallpaper.sh
+    whitelist-generator.py
 )
 
 build()
