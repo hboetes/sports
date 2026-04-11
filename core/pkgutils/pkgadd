@@ -209,7 +209,7 @@ tarcommand()
             message "Installing $name"
         fi
         rm -rf $rejects/$name
-        tar ${pattern} -zxpf $1 -C ${root:=/}
+        tar ${pattern} --keep-directory-symlink -zxpf $1 -C ${root:=/}
     else
         error 1 "Only root can add packages."
     fi
@@ -235,7 +235,7 @@ installrejects()
         done
         if [ -n "$unrejected" ]; then
             rm -f $unrejected
-            tar -zxpf $path_package -C ${root:=/} $unrejected
+            tar --keep-directory-symlink -zxpf $path_package -C ${root:=/} $unrejected
         fi
         # Remove all empty dirs in $rejects.
         find $rejects -mindepth 1 -type d -empty -delete
