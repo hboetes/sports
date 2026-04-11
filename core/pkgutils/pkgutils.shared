@@ -94,6 +94,12 @@ message()
     info "$n: $@"
 }
 
+run()
+{
+    message "$@"
+    "$@"
+}
+
 version()
 {
     message "pkgutils-$pkversion"

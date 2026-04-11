@@ -46,8 +46,7 @@ fi
 keep_work()
 {
     if [ "$PKGMK_KEEP_WORK" = no ]; then
-        message rm -rf $PKGMK_WORK_DIR
-        rm -rf $PKGMK_WORK_DIR
+        run rm -rf $PKGMK_WORK_DIR
     fi
 }
 
@@ -420,8 +419,7 @@ build_package()
     cd $PKGMK_ROOT
 
     if [ "$SHORTCIRCUIT" != yes ]; then
-        message rm -rf $PKGMK_WORK_DIR
-        rm -rf $PKGMK_WORK_DIR
+        run rm -rf $PKGMK_WORK_DIR
         mkdir -p $SRC $PKG
         if [ "$PKGMK_IGNORE_MD5SUM" = no ]; then
             check_md5sum
@@ -503,9 +501,7 @@ install_package()
     esac
     COMMAND="sudo pkgadd $OPTIONS $TARGET"
     cd $PKGMK_ROOT
-    info "$COMMAND"
-
-    ${COMMAND} 2> /dev/null
+    run ${=COMMAND} 2> /dev/null
     errorcode=$?
     # Give proper errormessages.
     if [ $errorcode -eq 12 ]; then
