@@ -25,7 +25,18 @@ build()
   install -D var/anubis -t "$PKG/usr/local/bin"
   install -D var/robots2policy "$PKG/usr/local/bin/anubis-robots2policy"
 
-  install -Dm644 run/anubis@.service -t "$PKG/usr/lib/systemd/system"
+  # Fix the path and add a trailing newline
+  mkdir -p "$PKG/usr/lib/systemd/system"
+  sed -e 's|/usr/bin|/usr/local/bin|' -e '$a\' run/anubis@.service \
+    > "$PKG/usr/lib/systemd/system/anubis@.service"
+
+  mkdir -p $PKG/etc/systemd/system/anubis@.service.d/
+
+  cat << EOF > $PKG/etc/systemd/system/anubis@.service.d/nginx-group.conf
+[Service]
+SupplementaryGroups=nginx
+EOF
+
   install -Dm644 run/default.env -t "$PKG/etc/anubis"
 
   local docdir="$PKG/usr/local/share/doc/$name"
