@@ -75,7 +75,7 @@ info()
 
 warning()
 {
-    echo "=======> WARNING: $@" >&2
+    printf '\033[33m=======> WARNING: %s\033[0m\n' "$*"
 }
 
 error()

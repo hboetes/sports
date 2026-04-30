@@ -330,6 +330,15 @@ mktempfiles
 # also removes conflicts
 find_conflicts
 
+# Load whitelisted hash and old function body before the old metadata is removed.
+whitelisted_hash=""
+old_post_install=""
+if [[ $UPGRADE == true ]] && [[ -f $dbase/$name-metadata ]]; then
+    source $dbase/$name-metadata
+    whitelisted_hash=$post_install_hash
+    old_post_install=$(typeset -f post-install 2>/dev/null)
+fi
+
 if [ "$UPGRADE" = true ]; then
     if isinstalled $name; then
         makepattern
@@ -391,15 +400,35 @@ fi
 # Only run post-install if it exists.
 typeset -f post-install > /dev/null || exit 0
 
+current_hash=$(typeset -f post-install | $MD5 | awk '{print $1}')
+
+if [[ -n $whitelisted_hash ]] && [[ $current_hash == $whitelisted_hash ]]; then
+    message "Running whitelisted post-install script."
+    echo "post_install_hash=$current_hash" >> $dbase/$name-metadata
+    post-install
+    exit $?
+fi
+
+if [[ -n $old_post_install ]] && ! diff -q <(echo "$old_post_install") <(typeset -f post-install) > /dev/null 2>&1; then
+    warning "post-install script changed since last install:"
+    diff -u --label old --label new <(echo "$old_post_install") <(typeset -f post-install)
+fi
+
 message "Request to execute these commands with root permissions:"
 print '\001\033[31m\001'
 typeset -f post-install
 print '\001\033[0m\001'
-print -n '\aRun this post-install script? [y/N] '
+print -n '\aRun this post-install script? (w=whitelist) [y/N/w] '
 read -sk1 answer
 case $answer in
     y*|Y*)
         replaceyn Y
+        post-install
+        exit $?
+        ;;
+    w*|W*)
+        replaceyn W
+        echo "post_install_hash=$current_hash" >> $dbase/$name-metadata
         post-install
         exit $?
         ;;
