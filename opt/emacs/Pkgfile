@@ -6,8 +6,8 @@
 name=emacs
 version=31
 release=git
-# branch=emacs-31
-branch=master
+branch=emacs-31
+# branch=master
 source=(git://git.savannah.gnu.org/emacs.git)
 
 
