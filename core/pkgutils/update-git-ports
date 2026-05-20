@@ -3,9 +3,10 @@
 local packages=($@)
 local all=false
 local reinstall=()
+local failed=()
 # Don't build these packages automatically, they _always_ have changes
 # and are massive hogs to build.
-local weekly=(emacs sccache rspamd atuin yazi ImageMagick)
+local weekly=(emacs sccache rspamd atuin yazi ImageMagick mangowm)
 unset depends
 if [[ -z $packages ]]; then
     packages=($(prt-get listinst))
@@ -38,7 +39,7 @@ for i in $packages; do
                     update-git-ports $dep
                 done
                 pkgmk -f
-            ) && reinstall+=$i
+            ) && reinstall+=$i || failed+=$i
         fi
     else
         [[ $all == false ]] && echo "$i is not a git package"
@@ -52,4 +53,7 @@ if [[ -n $reinstall ]]; then
         read -sk1 niets
     fi
     prt-get update $reinstall
+fi
+if [[ -n $failed ]]; then
+    echo "Upgraded failed for: $failed"
 fi
