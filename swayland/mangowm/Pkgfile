@@ -2,18 +2,19 @@
 # Dependencies: dnf install wlroots-devel xcb-util-wm-devel
 # Dependencies: scenefx
 
-name=mangowc
+name=mangowm
 version=git
 release=1
 branch=main
 source=(
-    https://github.com/DreamMaoMao/mangowc.git
+    https://github.com/mangowm/mango.git
     739.diff
 )
 
 build()
 {
     cd $name
+    git checkout $(git rev-list -n 1 --before="2026-04-27" main)
     patch_apply 739
     meson_build --sysconfdir=/etc
 }
