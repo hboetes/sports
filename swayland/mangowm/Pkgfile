@@ -8,13 +8,12 @@ release=1
 branch=main
 source=(
     https://github.com/mangowm/mango.git
-    739.diff
+    676.diff
 )
 
 build()
 {
     cd $name
-    git checkout $(git rev-list -n 1 --before="2026-04-27" main)
-    patch_apply 739
+    patch_apply 676
     meson_build --sysconfdir=/etc
 }
