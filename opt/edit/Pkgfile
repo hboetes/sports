@@ -5,12 +5,16 @@
 name=edit
 version=git
 release=1
-source=(https://github.com/microsoft/edit.git)
+source=(
+    https://github.com/microsoft/edit.git
+    release.diff
+)
 
 build()
 {
     export PATH=$PATH:~/.cargo/bin
     cd $name
-    cargo build --config .cargo/release.toml --release
+    patch_apply release
+    cargo build --config ./.cargo/release.toml --release
     install -D target/release/$name   $PKG/usr/local/bin/$name
 }

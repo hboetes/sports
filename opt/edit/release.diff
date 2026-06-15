@@ -1,0 +1,14 @@
+diff --git a/.cargo/release.toml b/.cargo/release.toml
+index c441121..739583a 100644
+--- a/.cargo/release.toml
++++ b/.cargo/release.toml
+@@ -18,9 +18,6 @@ rustflags = [
+ 
+ # The backtrace code for panics in Rust is almost as large as the entire editor.
+ # = Huge reduction in binary size by removing all that.
+-[profile.release]
+-panic = "immediate-abort"
+ 
+ [unstable]
+-panic-immediate-abort = true
+ build-std = ["std", "panic_abort"]
