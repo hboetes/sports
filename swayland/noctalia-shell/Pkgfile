@@ -3,7 +3,7 @@
 
 name=noctalia-shell
 version=git
-release=4.7.8
+release=4.7.7
 branch=main
 source=(
     https://github.com/noctalia-dev/noctalia-shell.git
@@ -13,7 +13,7 @@ build()
 {
     install_path=usr/local/share/quickshell
     cd $name
-    git checkout $branch # v$release
+    git checkout v$release
     cd ..
 
     mkdir -p $PKG/$install_path
