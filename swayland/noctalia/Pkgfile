@@ -1,0 +1,19 @@
+# Description: beautiful shell based on quick-shell
+# URL:         https://github.com/noctalia-dev/noctalia-shell.git
+# Dependencies: meson gcc-c++ just wayland-devel wayland-protocols-devel libEGL-devel mesa-libGLES-devel freetype-devel fontconfig-devel cairo-devel pango-devel harfbuzz-devel libxkbcommon-devel glib2-devel sdbus-cpp-devel pipewire-devel pam-devel polkit-devel libcurl-devel libwebp-devel librsvg2-devel libqalculate-devel libxml2-devel jemalloc-devel
+
+name=noctalia
+version=git
+release=1
+branch=main
+source=(
+    https://github.com/noctalia-dev/noctalia.git
+)
+
+build()
+{
+    cd $SRC/$name
+    just configure release
+    just build release
+    DESTDIR=$PKG just install release
+}
