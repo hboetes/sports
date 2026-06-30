@@ -12,6 +12,6 @@ build()
 {
     cd $name
     make
-    install -D tint $PKG/usr/bin/tint
-    install -D tint.6 $PKG/usr/share/man/man6.tint.6
+    install -D tint   $PKG/usr/local/bin/tint
+    install -D tint.6 $PKG/usr/local/share/man/man6/tint.6
 }
