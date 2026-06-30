@@ -1,0 +1,19 @@
+# Description:  terminal file manager written in Rust, based on non-blocking async I/O.
+# URL:          https://github.com/hmatuschek/qdmr.git
+# Dependencies: dnf install -y qt6-qtbase-devel qt6-qttools-devel qt6-qtpositioning-devel qt6-qtserialport-devel qt6-qtmultimedia-devel yaml-cpp-devel librsvg2-tools libusb1-devel make gcc-c++ cmake git
+
+name=qdmr
+version=git
+release=1
+branch=main
+source=(https://github.com/hmatuschek/qdmr.git)
+
+build()
+{
+    cd $name
+    mkdir build
+    cd build
+    cmake ..
+    cmake --build .
+    make install DESTDIR=$PKG
+}
