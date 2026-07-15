@@ -4,7 +4,7 @@
 name=scenefx
 version=git
 release=1
-branch=0.4.1
+branch=main
 source=(
     https://github.com/wlrfx/scenefx.git
 )
