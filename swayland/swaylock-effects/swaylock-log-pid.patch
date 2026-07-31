@@ -1,0 +1,27 @@
+diff --git a/log.c b/log.c
+--- a/log.c
++++ b/log.c
+@@ -39,8 +39,8 @@
+ 	char buffer[26];
+ 
+ 	// generate time prefix
+-	strftime(buffer, sizeof(buffer), "%F %T - ", tm_info);
+-	fprintf(stderr, "%s", buffer);
++	strftime(buffer, sizeof(buffer), "%F %T", tm_info);
++	fprintf(stderr, "%s [%d] - ", buffer, (int)getpid());
+ 
+ 	unsigned c = (verbosity < LOG_IMPORTANCE_LAST)
+ 		? verbosity : LOG_IMPORTANCE_LAST - 1;
+diff --git a/main.c b/main.c
+--- a/main.c
++++ b/main.c
+@@ -2120,7 +2120,8 @@
+ 					// Lock acquired. lockfd is deliberately left open for
+ 					// the lifetime of the process; the lock drops on exit.
+ 				} else if (errno == EACCES || errno == EAGAIN) {
+-					fprintf(stderr, "swaylock: already running\n");
++					fprintf(stderr, "swaylock: already running (pid %d)\n",
++							(int)getpid());
+ 					return 1;
+ 				} else {
+ 					fprintf(stderr, "swaylock: cannot lock %s: %s. Locking "
