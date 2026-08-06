@@ -8,12 +8,10 @@ release=1
 branch=main
 source=(
     https://github.com/mangowm/mango.git
-    676.diff
 )
 
 build()
 {
     cd $name
-    patch_apply 676
     meson_build --sysconfdir=/etc
 }
