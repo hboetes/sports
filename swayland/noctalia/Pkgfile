@@ -8,13 +8,11 @@ release=1
 branch=main
 source=(
     https://github.com/noctalia-dev/noctalia.git
-    https://github.com/noctalia-dev/noctalia/pull/3826.diff
 )
 
 build()
 {
     cd $SRC/$name
-    patch_apply 3826
     just configure release
     just build release
     DESTDIR=$PKG just install release
