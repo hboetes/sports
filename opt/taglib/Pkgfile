@@ -1,5 +1,4 @@
-# Description: really simple gain
-# dnf install cmake fmt-devel inih-devel taglib-devel libebur128-devel fmt-devel
+# Description: library for reading and editing the metadata of several popular audio formats
 
 name=taglib
 version=git
@@ -14,7 +13,7 @@ build()
     git submodule update --init
     mkdir build
     cd build
-    cmake .. -DCMAKE_BUILD_TYPE=Release
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON
     make
     make install DESTDIR=$PKG
 }

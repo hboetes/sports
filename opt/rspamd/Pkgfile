@@ -3,7 +3,7 @@
 
 name=rspamd
 version=git
-release=3.9.1
+release=4.1.5
 source=(
     https://github.com/rspamd/rspamd.git
     $name.service
