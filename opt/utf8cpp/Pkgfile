@@ -1,10 +1,10 @@
 # Description: library for reading and editing the metadata of several popular audio formats
 
-name=taglib
+name=utf8cpp
 version=git
 release=1
 source=(
-    https://github.com/taglib/taglib.git
+    https://github.com/nemtrif/utfcpp.git
 )
 
 build()
