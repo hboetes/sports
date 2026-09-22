@@ -1,4 +1,4 @@
-# Description: library for reading and editing the metadata of several popular audio formats
+# Description: small library for handling UTF-8 encoded strings.
 
 name=utf8cpp
 version=git
