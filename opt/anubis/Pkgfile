@@ -1,6 +1,6 @@
 # Description: Reverse proxy to protect against scraper bots
 # URL:         https://anubis.techaro.lol/
-# Depends:     brotli esbuild git go npm zstd
+# Depends:     brotli esbuild git go npm zstd rust-std-static-wasm32-unknown-unknown
 
 name=anubis
 version=1.20.0
