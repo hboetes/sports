@@ -12,7 +12,7 @@ build()
     cd $name
     mkdir build
     cd build
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -Dutf8cpp_INCLUDE_DIR=/usr/local/include
     make
     make install DESTDIR=$PKG
 }
