@@ -1,0 +1,15 @@
+# Description:  A fast music player for the terminal and the desktop, written in Rust.
+# Dependencies: rust
+
+name=spotatui
+version=git
+release=1
+source=(https://github.com/LargeModGames/spotatui.git)
+
+build()
+{
+    export PATH=$PATH:~/.cargo/bin
+    cd $name
+    cargo build --release
+    install -D target/release/$name   $PKG/usr/local/bin/$name
+}
