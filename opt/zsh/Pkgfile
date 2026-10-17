@@ -10,18 +10,22 @@ source=(
     _find
     # http://www.zsh.org/pub/$name-$version.tar.xz
     Makefile.in
+    55209-fix.patch
 )
 
 
 build()
 {
     cd zsh*
+    patch_apply 55209-fix
+
     export CPPFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib"
     Util/preconfig
 
     # building yodl/icmake/bobcat is a trip into a madhouse.
     cp $SRC/Makefile.in .
 
+    export CFLAGS="-g -O0"
     ./configure \
         --prefix=/usr/local \
         --mandir=/usr/local/man \
@@ -37,7 +41,8 @@ build()
         --enable-multibyte \
         --enable-pcre \
         --disable-gdbm \
-        --disable-zsh-mem
+        --disable-zsh-mem \
+        --enable-zsh-debug
 
     gmake
     gmake DESTDIR=$PKG install

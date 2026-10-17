@@ -1,0 +1,22 @@
+diff --git a/Src/Zle/computil.c b/Src/Zle/computil.c
+index e666d93ba..e87eb51a2 100644
+--- a/Src/Zle/computil.c
++++ b/Src/Zle/computil.c
+@@ -2367,6 +2367,8 @@ ca_parse_line(Cadef d, Cadef all, int multi, int first)
+ 	}
+ 	/* Do the end-pattern test if needed. */
+ 
++    cont:
++
+ 	if (state.def && state.curopt &&
+ 	    (state.def->type == CAA_RREST || state.def->type == CAA_RARGS)) {
+ 	    if (state.def->end)
+@@ -2389,8 +2391,6 @@ ca_parse_line(Cadef d, Cadef all, int multi, int first)
+ 
+ 	/* Copy the state into the global one. */
+ 
+-    cont:
+-
+ 	if (cur + 1 == compcurrent) {
+ 	    memcpy(&ca_laststate, &state, sizeof(state));
+ 	    ca_laststate.ddef = NULL;
