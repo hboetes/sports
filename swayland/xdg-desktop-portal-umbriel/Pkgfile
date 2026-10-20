@@ -1,0 +1,15 @@
+# Description: Wayland Compositor
+# Dependencies: dnf install sdbus-c++ >= 2.0
+# Dependencies libpipewire-0.3 wayland-client wayland-protocols >= 1.39 libdrm gbm cairo tomlplusplus GTK4 (optional, for the share picker)
+
+name=xdg-desktop-portal-umbriel
+version=git
+release=1
+branch=main
+source=(https://github.com/noctalia-dev/xdg-desktop-portal-umbriel.git)
+
+build()
+{
+    cd $name
+    meson_build
+}
