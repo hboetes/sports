@@ -1,0 +1,15 @@
+# Description:  rust bitwarden client
+# Dependencies: rust pinentry
+
+name=rbw
+version=git
+release=1
+branch=main
+source=(https://github.com/doy/rbw.git)
+
+build()
+{
+    export PATH=$PATH:/home/han/.cargo/bin
+    cd $name
+    cargo install --locked --no-track --root "$PKG/usr/local" rbw
+}
