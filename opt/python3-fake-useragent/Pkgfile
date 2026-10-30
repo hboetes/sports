@@ -2,11 +2,11 @@
 # URL:         https://pypi.org/project/fake-useragent
 
 name=python3-fake-useragent
-version=0.1.11
+version=2.2.0
 release=1
 branch=master
 source=(
-    https://files.pythonhosted.org/packages/d1/79/af647635d6968e2deb57a208d309f6069d31cb138066d7e821e575112a80/fake-useragent-0.1.11.tar.gz
+    https://files.pythonhosted.org/packages/41/43/948d10bf42735709edb5ae51e23297d034086f17fc7279fef385a7acb473/fake_useragent-2.2.0.tar.gz
 )
 
 build()
