@@ -13,7 +13,7 @@ build()
     install -D $name.service $PKG/usr/lib/systemd/user/$name.service
     sed -i 's|/usr/bin|/usr/local/bin|' $PKG/usr/lib/systemd/user/$name.service
     install -D 90-wluma-backlight.rules $PKG/etc/udev/rules.d/90-wluma-backlight.rules
-    command -v cargo >& /dev/null || export PATH=$PATH:$HOME/.cargo/bin
+    export PATH=$PATH:$HOME/.cargo/bin
     cargo build --release
     install -D target/release/$name $PKG/usr/local/bin/$name
 }
