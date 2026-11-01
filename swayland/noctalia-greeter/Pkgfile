@@ -1,0 +1,17 @@
+# Description: noctalia greeter for greetd
+
+name=noctalia-greeter
+version=git
+release=1
+branch=main
+source=(
+    https://github.com/noctalia-dev/noctalia-greeter.git
+)
+
+build()
+{
+    cd $SRC/$name
+    meson setup build-release --buildtype=release
+    meson compile -C build-release
+    DESTDIR=$PKG meson install -C build-release
+}
