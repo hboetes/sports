@@ -1,10 +1,9 @@
 # Description: GPU-accelerated terminal emulator
-# URL:         https://github.com/jwilm/alacritty
 
 name=alacritty
 version=git
 release=1
-source=(https://github.com/jwilm/alacritty.git)
+source=(https://github.com/alacritty/alacritty.git)
 
 build()
 {
@@ -12,7 +11,12 @@ build()
     export PATH="$PATH:$HOME/.cargo/bin"
     cd $name
     cargo build --release
-    install -D target/release/alacritty     $PKG/usr/bin/$name
-    install -D extra/alacritty.man          $PKG/usr/share/man/man1/alacritty.1
-    install -D extra/completions/_alacritty $PKG/usr/share/zsh/vendor-completions/_alacritty
+    install -D target/release/alacritty     $PKG/usr/local/bin/$name
+    install -D extra/completions/_alacritty $PKG/usr/local/share/zsh/vendor-completions/_alacritty
+    for f in extra/man/*.scd; do
+        page=$(basename "$f" .scd)
+        sec=${page##*.}
+        install -d "$PKG/usr/local/share/man/man$sec"
+        scdoc < "$f" | gzip -9 > "$PKG/usr/local/share/man/man$sec/$page.gz"
+    done
 }

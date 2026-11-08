@@ -14,4 +14,6 @@ build()
     meson setup build-release --buildtype=release
     meson compile -C build-release
     DESTDIR=$PKG meson install -C build-release
+    # use the right name, check the user setting in /etc/greetd/config.toml
+    sed -i 's|greeter greeter|greetd greetd|' $PKG/usr/local/lib/tmpfiles.d/noctalia-greeter.conf
 }
