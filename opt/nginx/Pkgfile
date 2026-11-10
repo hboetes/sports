@@ -1,7 +1,7 @@
 # Description: nginx with ngx_http_auth_pam_module built in statically
 # URL:         https://github.com/nginx/nginx
-# Build deps (rpm): gcc make redhat-rpm-config openssl-devel pcre2-devel
-#                   zlib-devel pam-devel zlib-devel
+# Build deps (rpm): gcc make redhat-rpm-config openssl-devel pcre2-devel zlib-devel pam-devel
+
 
 name=nginx
 version=git
@@ -10,10 +10,13 @@ release=1
 source=(
     https://github.com/nginx/nginx.git
     https://github.com/sto/ngx_http_auth_pam_module/archive/v1.5.5/ngx_http_auth_pam_module-1.5.5.tar.gz
+    nginx.service
 )
 
 build()
 {
+    install -m 644 -D nginx.service $PKG/usr/lib/systemd/system/nginx.service
+
     cd $name
 
     # Fedora's remove-Werror patch: -Werror conflicts with _FORTIFY_SOURCE
@@ -67,6 +70,19 @@ build()
     make
     make DESTDIR=$PKG install
 
-    # Don't create empty dirs belonging to hier(7)
-    rm -rf $PKG/etc $PKG/run $PKG/var
+    # avoid conflicts
+    rm -rf  $PKG/run $PKG/var #$PKG/etc
+    # Keep the same .default files, but don't overwrite the originals
+    rm $PKG/etc/nginx/{fastcgi.conf,fastcgi_params,mime.types,nginx.conf,scgi_params,uwsgi_params}
+}
+
+post-install()
+{
+    getent group nginx > /dev/null || groupadd -r nginx
+    getent passwd nginx > /dev/null || \
+        useradd -r -g nginx -M -d /var/lib/nginx -s /usr/sbin/nologin -c 'Nginx web server' nginx
+
+    [[ -d /var/log/nginx ]]     || install -d -o root  -g root -m 0711 /var/log/nginx
+    [[ -d /var/lib/nginx ]]     || install -d -o nginx -g root -m 0770 /var/lib/nginx
+    [[ -d /var/lib/nginx/tmp ]] || install -d -o nginx -g root -m 0770 /var/lib/nginx/tmp
 }
