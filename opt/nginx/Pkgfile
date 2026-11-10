@@ -1,7 +1,7 @@
 # Description: nginx with ngx_http_auth_pam_module built in statically
 # URL:         https://github.com/nginx/nginx
 # Build deps (rpm): gcc make redhat-rpm-config openssl-devel pcre2-devel
-#                   zlib-devel pam-devel gperftools-devel
+#                   zlib-devel pam-devel zlib-devel
 
 name=nginx
 version=git
