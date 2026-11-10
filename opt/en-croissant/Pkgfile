@@ -5,12 +5,13 @@
 name=en-croissant
 version=git
 release=next
-branch=next
+branch=master
 source=(https://github.com/franciscoBSalgueiro/en-croissant.git)
 
 build()
 {
     export PATH=$PATH:~/.cargo/bin
+    export RUSTFLAGS="${RUSTFLAGS:+$RUSTFLAGS }-C link-arg=-Wl,-u,duckdb_register_static_extensions"
     cd $SRC/$name
     pnpm install
     pnpm build
