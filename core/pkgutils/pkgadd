@@ -221,16 +221,14 @@ installrejects()
     (
         unset unrejected
         cd $rejects/$name 2> /dev/null || return 1
-        for i in $(find . ! -type d); do
+        for i in ${(f)"$(find . ! -type d)"}; do
             j=${i#./}
             if cmp -s "${root:=/}$j" "$j"; then
                 rm "$j"
             fi
 
-            if [ ! -e "${root:=/}$j" ] && grep -q "^$j$" $filesnewpackage; then
-                # Workaround files with spaces.
-                k="echo $j | sed -e 's| |\\ |g'"
-                unrejected=($unrejected $k)
+            if [ ! -e "${root:=/}$j" ] && grep -qxF -- "$j" $filesnewpackage; then
+                unrejected=($unrejected $j)
             fi
         done
         if [ -n "$unrejected" ]; then
