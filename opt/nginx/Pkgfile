@@ -67,6 +67,6 @@ build()
     make
     make DESTDIR=$PKG install
 
-    # /etc/nginx stays the admin's, not the package's
-    rm -rf $PKG/etc
+    # Don't create empty dirs belonging to hier(7)
+    rm -rf $PKG/etc $PKG/run $PKG/var
 }
