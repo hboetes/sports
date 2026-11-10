@@ -353,7 +353,7 @@ if [ "$UPGRADE" = true ]; then
     fi
 else
     if ! isinstalled $name ; then
-        unset pattern
+        makepattern
         tarcommand $path_package
     else
         error 11 "package \`$name' is already installed, use $n -u to upgrade."
