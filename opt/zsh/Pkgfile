@@ -10,14 +10,12 @@ source=(
     _find
     # http://www.zsh.org/pub/$name-$version.tar.xz
     Makefile.in
-    55209-fix.patch
 )
 
 
 build()
 {
     cd zsh*
-    patch_apply 55209-fix
 
     export CPPFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib"
     Util/preconfig
